@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -8,29 +8,47 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useCanvasRef } from '@shopify/react-native-skia';
 
+import { PaywallSheet } from '@/components/PaywallSheet';
 import { AdjustPanel } from '@/components/editor/AdjustPanel';
 import { BeautyPanel } from '@/components/editor/BeautyPanel';
 import { EditorToolbar, type EditorTool } from '@/components/editor/EditorToolbar';
-import { ExportPanel, showExportAlert } from '@/components/editor/ExportPanel';
+import { ExportPanel } from '@/components/editor/ExportPanel';
 import { LutSkiaViewport } from '@/components/editor/LutSkiaViewport';
 import { MoodPanel } from '@/components/editor/MoodPanel';
 import { TextPanel } from '@/components/editor/TextPanel';
 import { theme } from '@/constants/theme';
 import { fetchLuts, fetchManifest, saveProject } from '@/lib/api';
+import { hasProEntitlement, unlockProDemo } from '@/lib/entitlements';
+import { shareCanvasExport } from '@/lib/export-image';
+import { saveLocalProject } from '@/lib/local-projects';
 import {
   DEFAULT_EDIT_RECIPE,
-  EXPORT_PRESETS,
   mergeEditRecipe,
   type ExportPresetId,
   type LutDefinition,
   type TextLayer,
 } from '@moodlab/shared';
 
+const WORKFLOW_LUTS: Record<string, string> = {
+  'beat-cover': 'afrobeat-warm-cover',
+  'artist-release': 'film-memory-gold',
+  portrait: 'melanin-gold',
+  thumbnail: 'street-flash',
+};
+
 export default function EditorScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const params = useLocalSearchParams<{ uri?: string }>();
+  const canvasRef = useCanvasRef();
+  const savedProjectId = useRef<string | undefined>(undefined);
+  const params = useLocalSearchParams<{
+    uri?: string;
+    workflow?: string;
+    projectId?: string;
+    recipe?: string;
+  }>();
   const imageUri = params.uri ? decodeURIComponent(params.uri) : '';
 
   const [tool, setTool] = useState<EditorTool>('mood');
@@ -41,30 +59,65 @@ export default function EditorScreen() {
   const [recipe, setRecipe] = useState(DEFAULT_EDIT_RECIPE);
   const [showOriginal, setShowOriginal] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+  const [paywallLut, setPaywallLut] = useState<LutDefinition | null>(null);
+
+  useEffect(() => {
+    hasProEntitlement().then(setIsPro);
+  }, []);
+
+  useEffect(() => {
+    if (params.recipe) {
+      try {
+        const parsed = JSON.parse(decodeURIComponent(params.recipe));
+        setRecipe((r) => mergeEditRecipe(r, parsed));
+      } catch {
+        // ignore malformed recipe param
+      }
+    }
+    if (params.projectId) {
+      savedProjectId.current = params.projectId;
+    }
+  }, [params.recipe, params.projectId]);
 
   useEffect(() => {
     fetchLuts()
       .then((items) => {
         setLuts(items);
-        if (!recipe.lutId && items[0]) {
-          setRecipe((r) =>
-            mergeEditRecipe(r, {
-              lutId: items[0].id,
-              lutStrength: items[0].defaultStrength,
-              beauty: {
-                ...r.beauty,
-                skinProtection: items[0].skinProtectionDefault,
-              },
-            }),
-          );
-        }
+        if (recipe.lutId) return;
+
+        const workflowLut = params.workflow ? WORKFLOW_LUTS[params.workflow] : undefined;
+        const preferred = workflowLut
+          ? items.find((l) => l.id === workflowLut)
+          : items.find((l) => l.plan === 'free');
+        const first = preferred ?? items[0];
+        if (!first) return;
+
+        setRecipe((r) =>
+          mergeEditRecipe(r, {
+            lutId: first.id,
+            lutStrength: first.defaultStrength,
+            beauty: {
+              ...r.beauty,
+              skinProtection: first.skinProtectionDefault,
+              melaninGuard: true,
+            },
+            adjustments: {
+              ...r.adjustments,
+              grain: first.recommendedEffects?.grain ?? r.adjustments.grain,
+              vignette: first.recommendedEffects?.vignette ?? r.adjustments.vignette,
+              glow: first.recommendedEffects?.glow ?? r.adjustments.glow,
+            },
+          }),
+        );
       })
       .catch(() => setLuts([]));
 
     fetchManifest()
       .then((m) => setTextTemplates(m.textTemplates))
       .catch(() => setTextTemplates([]));
-  }, []);
+  }, [params.workflow]);
 
   const selectedLut = useMemo(
     () => luts.find((l) => l.id === recipe.lutId),
@@ -87,6 +140,7 @@ export default function EditorScreen() {
         ...recipe.adjustments,
         grain: lut.recommendedEffects?.grain ?? recipe.adjustments.grain,
         vignette: lut.recommendedEffects?.vignette ?? recipe.adjustments.vignette,
+        glow: lut.recommendedEffects?.glow ?? recipe.adjustments.glow,
       },
     });
   }
@@ -108,12 +162,22 @@ export default function EditorScreen() {
     if (!imageUri) return;
     setSaving(true);
     try {
-      await saveProject({
-        name: selectedLut?.name ?? 'Untitled edit',
+      const name = selectedLut?.name ?? 'Untitled edit';
+      const local = await saveLocalProject({
+        id: savedProjectId.current,
+        name,
         sourceUri: imageUri,
         recipe,
       });
-      Alert.alert('Saved', 'Project saved to API store.');
+      savedProjectId.current = local.id;
+
+      try {
+        await saveProject({ name, sourceUri: imageUri, recipe });
+      } catch {
+        // API optional — local save is source of truth for V1
+      }
+
+      Alert.alert('Saved', `"${name}" saved to Projects.`);
     } catch (e) {
       Alert.alert('Save failed', e instanceof Error ? e.message : 'Could not save');
     } finally {
@@ -121,8 +185,24 @@ export default function EditorScreen() {
     }
   }
 
-  function handleExport(presetId: ExportPresetId) {
-    showExportAlert(EXPORT_PRESETS[presetId].label);
+  async function handleExport(presetId: ExportPresetId) {
+    setExporting(true);
+    try {
+      await shareCanvasExport(canvasRef, presetId);
+    } catch (e) {
+      Alert.alert('Export failed', e instanceof Error ? e.message : 'Could not export');
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function handleUnlockPro() {
+    await unlockProDemo();
+    setIsPro(true);
+    setPaywallLut(null);
+    if (paywallLut) {
+      selectLut(paywallLut);
+    }
   }
 
   if (!imageUri) {
@@ -150,15 +230,28 @@ export default function EditorScreen() {
 
       <View style={styles.canvas}>
         <LutSkiaViewport
+          canvasRef={canvasRef}
           imageUri={imageUri}
           lutId={recipe.lutId}
           lutStrength={recipe.lutStrength}
+          adjustments={recipe.adjustments}
+          beauty={recipe.beauty}
           skinProtection={recipe.beauty.skinProtection}
           faceLutStrength={recipe.beauty.faceLutStrength}
           showOriginal={showOriginal}
           style={styles.viewport}>
           {recipe.textLayers.map((layer) => (
-            <View key={layer.id} style={styles.textOverlay} pointerEvents="none">
+            <View
+              key={layer.id}
+              style={[
+                styles.textOverlay,
+                {
+                  left: `${Math.round(layer.x * 100)}%`,
+                  top: `${Math.round(layer.y * 100)}%`,
+                  transform: [{ translateX: -80 }, { scale: layer.scale }],
+                },
+              ]}
+              pointerEvents="none">
               <Text style={styles.overlayText}>{layer.text}</Text>
             </View>
           ))}
@@ -171,8 +264,10 @@ export default function EditorScreen() {
             luts={luts}
             selectedId={recipe.lutId}
             strength={recipe.lutStrength}
+            isPro={isPro}
             onSelectLut={selectLut}
             onStrengthChange={(v) => updateRecipe({ lutStrength: v })}
+            onLockedLutPress={(lut) => setPaywallLut(lut)}
           />
         ) : null}
         {tool === 'adjust' ? (
@@ -199,6 +294,7 @@ export default function EditorScreen() {
         ) : null}
         {tool === 'export' ? (
           <ExportPanel
+            exporting={exporting}
             onExport={handleExport}
             onSaveProject={handleSaveProject}
           />
@@ -211,6 +307,13 @@ export default function EditorScreen() {
           <Text style={styles.savingText}>Saving…</Text>
         </View>
       ) : null}
+
+      <PaywallSheet
+        visible={paywallLut !== null}
+        lutName={paywallLut?.name}
+        onClose={() => setPaywallLut(null)}
+        onUnlockDemo={handleUnlockPro}
+      />
     </View>
   );
 }
@@ -247,12 +350,11 @@ const styles = StyleSheet.create({
   },
   textOverlay: {
     position: 'absolute',
-    bottom: '18%',
-    alignSelf: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: 'rgba(0,0,0,0.45)',
     borderRadius: theme.radius.sm,
+    maxWidth: '80%',
   },
   overlayText: {
     color: theme.color.text.primary,

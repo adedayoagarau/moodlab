@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode, type RefObject } from 'react';
 import { LayoutChangeEvent, StyleSheet, View, type ViewStyle } from 'react-native';
 import {
   AlphaType,
@@ -8,9 +8,16 @@ import {
   ImageShader,
   Shader,
   Skia,
+  useCanvasRef,
   useImage,
+  type CanvasRef,
 } from '@shopify/react-native-skia';
-import { skinProtectionMultiplier } from '@moodlab/shared';
+import {
+  shaderAdjustmentUniforms,
+  skinProtectionMultiplier,
+  type AdjustmentStack,
+  type BeautySettings,
+} from '@moodlab/shared';
 
 import { getLutShaderSource, getLutStripTexture } from '@/lib/lut-cache';
 
@@ -18,23 +25,31 @@ type Props = {
   imageUri: string;
   lutId?: string;
   lutStrength: number;
+  adjustments?: AdjustmentStack;
+  beauty?: BeautySettings;
   skinProtection?: 'off' | 'low' | 'medium' | 'high';
   faceLutStrength?: number;
   showOriginal?: boolean;
   style?: ViewStyle;
   children?: ReactNode;
+  canvasRef?: RefObject<CanvasRef | null>;
 };
 
 export function LutSkiaViewport({
   imageUri,
   lutId,
   lutStrength,
+  adjustments = {},
+  beauty = {},
   skinProtection = 'medium',
   faceLutStrength = 0.55,
   showOriginal = false,
   style,
   children,
+  canvasRef,
 }: Props) {
+  const internalCanvasRef = useCanvasRef();
+  const activeCanvasRef = canvasRef ?? internalCanvasRef;
   const photo = useImage(imageUri);
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [lutStrip, setLutStrip] = useState<{
@@ -87,8 +102,11 @@ export function LutSkiaViewport({
   const shaderEffect = useMemo(() => Skia.RuntimeEffect.Make(getLutShaderSource()), []);
 
   const skinStrength = lutStrength * faceLutStrength * skinProtectionMultiplier(skinProtection);
+  const postFx = useMemo(
+    () => shaderAdjustmentUniforms(adjustments, beauty),
+    [adjustments, beauty],
+  );
 
-  // Normalized face band — approximate portrait region for skin-safe LUT.
   const faceX = 0.2;
   const faceY = 0.22;
   const faceW = 0.6;
@@ -111,24 +129,25 @@ export function LutSkiaViewport({
     lutStrip &&
     !lutError;
 
+  const shaderUniforms = {
+    strength: lutStrength,
+    skinStrength,
+    lutSize: lutStrip?.size ?? 33,
+    imageWidth: layout.width,
+    imageHeight: layout.height,
+    faceX,
+    faceY,
+    faceW,
+    faceH,
+    ...postFx,
+  };
+
   return (
     <View style={[styles.container, style]} onLayout={onLayout}>
       {canRenderLut ? (
-        <Canvas style={{ width: layout.width, height: layout.height }}>
+        <Canvas ref={activeCanvasRef} style={{ width: layout.width, height: layout.height }}>
           <Fill>
-            <Shader
-              source={shaderEffect}
-              uniforms={{
-                strength: lutStrength,
-                skinStrength,
-                lutSize: lutStrip.size,
-                imageWidth: layout.width,
-                imageHeight: layout.height,
-                faceX,
-                faceY,
-                faceW,
-                faceH,
-              }}>
+            <Shader source={shaderEffect} uniforms={shaderUniforms}>
               <ImageShader
                 image={photo}
                 fit="contain"
@@ -148,7 +167,7 @@ export function LutSkiaViewport({
           </Fill>
         </Canvas>
       ) : photo && layout.width > 0 ? (
-        <Canvas style={{ width: layout.width, height: layout.height }}>
+        <Canvas ref={activeCanvasRef} style={{ width: layout.width, height: layout.height }}>
           <Fill>
             <ImageShader
               image={photo}

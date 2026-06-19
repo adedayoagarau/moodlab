@@ -19,17 +19,27 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchManifest()
       .then((m) => setBuildCards(m.buildMyPost))
-      .catch(() => setBuildCards([]));
+      .catch(() =>
+        setBuildCards([
+          { id: 'beat-cover', title: 'Beat Cover', subtitle: 'Type beat / producer post' },
+          { id: 'artist-release', title: 'Artist Release', subtitle: 'Single rollout visual' },
+          { id: 'portrait', title: 'Portrait', subtitle: 'Profile or promo shot' },
+          { id: 'thumbnail', title: 'YouTube Thumbnail', subtitle: '16:9 creator thumb' },
+        ]),
+      );
   }, []);
 
-  function openEditor(imageUri: string) {
+  function openEditor(imageUri: string, workflow?: string) {
     router.push({
       pathname: '/editor',
-      params: { uri: encodeURIComponent(imageUri) },
+      params: {
+        uri: encodeURIComponent(imageUri),
+        ...(workflow ? { workflow } : {}),
+      },
     });
   }
 
-  async function pickPhoto() {
+  async function pickPhoto(workflow?: string) {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permission.granted) {
       Alert.alert('Permission needed', 'Allow photo access to edit images.');
@@ -42,55 +52,52 @@ export default function HomeScreen() {
     });
 
     if (!result.canceled && result.assets[0]?.uri) {
-      openEditor(result.assets[0].uri);
+      openEditor(result.assets[0].uri, workflow);
     }
   }
 
-  function tryDemoPhoto() {
-    openEditor(DEMO_IMAGE_URI);
+  function tryDemoPhoto(workflow?: string) {
+    openEditor(DEMO_IMAGE_URI, workflow);
   }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>MoodLab</Text>
-      <Text style={styles.subtitle}>Photo first. Mood second. Export ready.</Text>
+      <Text style={styles.subtitle}>
+        Cover-art studio for creators — mood grades that protect melanin.
+      </Text>
 
-      <PlatformStatusCard status={platform} />
+      {__DEV__ ? <PlatformStatusCard status={platform} /> : null}
 
-      <Pressable style={styles.primaryCta} onPress={pickPhoto}>
+      <Pressable style={styles.primaryCta} onPress={() => pickPhoto()}>
         <Text style={styles.primaryCtaText}>Edit Photo</Text>
-        <Text style={styles.primaryCtaHint}>Import from gallery — GPU LUT preview</Text>
+        <Text style={styles.primaryCtaHint}>Import → pick a mood → export in under 60 seconds</Text>
       </Pressable>
 
-      <Pressable style={styles.secondaryCta} onPress={tryDemoPhoto}>
+      <Pressable style={styles.secondaryCta} onPress={() => tryDemoPhoto()}>
         <Text style={styles.secondaryCtaText}>Try demo portrait</Text>
         <Text style={styles.secondaryCtaHint}>
           {Platform.OS === 'web'
-            ? 'Opens editor with a sample image (no gallery needed)'
-            : 'Sample portrait — test moods without picking a photo'}
+            ? 'Sample image — no gallery needed'
+            : 'Test Melanin Guard and moods instantly'}
         </Text>
       </Pressable>
 
       <Text style={styles.sectionLabel}>Build My Post</Text>
-      {buildCards.length === 0 ? (
-        <Text style={styles.emptyCards}>
-          {platform.loading ? 'Loading templates…' : 'Templates appear when API is online'}
-        </Text>
-      ) : (
-        buildCards.map((card) => (
-          <Pressable key={card.id} onPress={pickPhoto}>
-            <GlassPanel style={styles.card}>
-              <Text style={styles.cardTitle}>{card.title}</Text>
-              <Text style={styles.cardSubtitle}>{card.subtitle}</Text>
-            </GlassPanel>
-          </Pressable>
-        ))
-      )}
+      {buildCards.map((card) => (
+        <Pressable key={card.id} onPress={() => pickPhoto(card.id)}>
+          <GlassPanel style={styles.card}>
+            <Text style={styles.cardTitle}>{card.title}</Text>
+            <Text style={styles.cardSubtitle}>{card.subtitle}</Text>
+            <Text style={styles.cardAction}>Opens editor with a workflow mood →</Text>
+          </GlassPanel>
+        </Pressable>
+      ))}
 
       <GlassPanel style={styles.note}>
         <Text style={styles.noteText}>
-          Editor applies real .cube LUTs via Skia GPU shaders. Skin-safe blending uses a face-region
-          mask until Vision / ML Kit segmentation ships.
+          GPU LUT preview with skin-safe blending, live adjustments, Melanin Guard, and share-sheet
+          export. Pro moods unlock premium packs for beat covers and rollouts.
         </Text>
       </GlassPanel>
     </ScrollView>
@@ -159,11 +166,6 @@ const styles = StyleSheet.create({
     marginBottom: theme.space[3],
     letterSpacing: 0.5,
   },
-  emptyCards: {
-    fontSize: 14,
-    color: theme.color.text.muted,
-    marginBottom: theme.space[3],
-  },
   card: {
     marginBottom: theme.space[3],
   },
@@ -176,6 +178,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.color.text.secondary,
     marginTop: 4,
+  },
+  cardAction: {
+    fontSize: 12,
+    color: theme.color.accent.gold,
+    marginTop: 8,
+    fontWeight: '600',
   },
   note: {
     marginTop: theme.space[4],

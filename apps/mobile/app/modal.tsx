@@ -2,21 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { API_BASE_URL } from '@/lib/config';
 
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>About MoodLab</Text>
       <Text style={styles.body}>
-        MoodLab explores mood, tone, and emotional resonance in language — at the intersection of
-        poetry and product content.
+        MoodLab is a creator-first photo studio. Pick a mood LUT, protect skin with Melanin Guard,
+        polish portraits in Beauty Studio, add promo text, and export cover art and social posts.
       </Text>
-      <Text style={styles.label}>API</Text>
-      <Text style={styles.mono}>{API_BASE_URL}</Text>
-      <Text style={styles.hint}>
-        Start the API with `pnpm dev:api` from the repo root. Journal entries sync when the API is
-        reachable.
+      <Text style={styles.label}>Built for</Text>
+      <Text style={styles.body}>
+        Music producers, artists, and social creators who want camera-roll photos to look like cover
+        art — not generic filtered selfies.
       </Text>
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
@@ -44,15 +42,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 4,
-  },
-  mono: {
-    fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' }),
-    fontSize: 14,
-    marginBottom: 16,
-  },
-  hint: {
-    fontSize: 14,
-    opacity: 0.7,
-    lineHeight: 20,
   },
 });

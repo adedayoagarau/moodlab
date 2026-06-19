@@ -1,43 +1,47 @@
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '@/constants/theme';
 import { EXPORT_PRESETS, type ExportPresetId } from '@moodlab/shared';
 
 type Props = {
+  exporting?: boolean;
   onExport: (presetId: ExportPresetId) => void;
   onSaveProject: () => void;
 };
 
 const PRESET_IDS = Object.keys(EXPORT_PRESETS) as ExportPresetId[];
 
-export function ExportPanel({ onExport, onSaveProject }: Props) {
+export function ExportPanel({ exporting, onExport, onSaveProject }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Export</Text>
+      <Text style={styles.subheading}>Pick a platform — share sheet opens with your edited image</Text>
       <View style={styles.grid}>
         {PRESET_IDS.map((id) => {
           const preset = EXPORT_PRESETS[id];
           return (
-            <Pressable key={id} style={styles.exportBtn} onPress={() => onExport(id)}>
+            <Pressable
+              key={id}
+              style={[styles.exportBtn, exporting && styles.exportBtnDisabled]}
+              disabled={exporting}
+              onPress={() => onExport(id)}>
               <Text style={styles.exportLabel}>{preset.label}</Text>
-              <Text style={styles.exportMeta}>{preset.aspect}</Text>
+              <Text style={styles.exportMeta}>{preset.aspect} · {preset.width}×{preset.height}</Text>
             </Pressable>
           );
         })}
       </View>
-      <Pressable style={styles.saveBtn} onPress={onSaveProject}>
+      <Pressable style={styles.saveBtn} onPress={onSaveProject} disabled={exporting}>
         <Text style={styles.saveBtnText}>Save project</Text>
       </Pressable>
-      <Text style={styles.hint}>
-        V1 scaffold: export confirms format selection. Native export pipeline writes full-res files
-        from RenderCore.
-      </Text>
+      {exporting ? (
+        <View style={styles.exportingRow}>
+          <ActivityIndicator color={theme.color.accent.gold} />
+          <Text style={styles.exportingText}>Capturing edit…</Text>
+        </View>
+      ) : null}
     </View>
   );
-}
-
-export function showExportAlert(presetLabel: string) {
-  Alert.alert('Export ready', `${presetLabel} — native full-res export lands with RenderCore.`);
 }
 
 const styles = StyleSheet.create({
@@ -54,6 +58,11 @@ const styles = StyleSheet.create({
     color: theme.color.text.muted,
     letterSpacing: 0.5,
   },
+  subheading: {
+    fontSize: 13,
+    color: theme.color.text.secondary,
+    marginTop: -4,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -65,13 +74,16 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.md,
     backgroundColor: theme.color.surface.elevated,
   },
+  exportBtnDisabled: {
+    opacity: 0.6,
+  },
   exportLabel: {
     fontSize: 14,
     fontWeight: '600',
     color: theme.color.text.primary,
   },
   exportMeta: {
-    fontSize: 12,
+    fontSize: 11,
     color: theme.color.text.muted,
     marginTop: 2,
   },
@@ -86,9 +98,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: theme.color.surface.base,
   },
-  hint: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: theme.color.text.muted,
+  exportingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    justifyContent: 'center',
+  },
+  exportingText: {
+    fontSize: 13,
+    color: theme.color.text.secondary,
   },
 });

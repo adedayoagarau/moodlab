@@ -1,33 +1,55 @@
-import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { GlassPanel } from '@/components/GlassPanel';
 import { theme } from '@/constants/theme';
-import { fetchProjects } from '@/lib/api';
-import type { EditProject } from '@moodlab/shared';
+import { loadLocalProjects, type LocalProject } from '@/lib/local-projects';
 
 export default function ProjectsScreen() {
-  const [projects, setProjects] = useState<EditProject[]>([]);
+  const router = useRouter();
+  const [projects, setProjects] = useState<LocalProject[]>([]);
 
-  useEffect(() => {
-    fetchProjects().then(setProjects).catch(() => setProjects([]));
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadLocalProjects().then(setProjects);
+    }, []),
+  );
+
+  function openProject(project: LocalProject) {
+    router.push({
+      pathname: '/editor',
+      params: {
+        uri: encodeURIComponent(project.sourceUri),
+        projectId: project.id,
+        recipe: encodeURIComponent(JSON.stringify(project.recipe)),
+      },
+    });
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Projects</Text>
-      <Text style={styles.subtitle}>Saved edit recipes — syncs when API is running</Text>
+      <Text style={styles.subtitle}>Saved edits on this device — tap to continue editing</Text>
       <FlatList
         data={projects}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={<Text style={styles.empty}>No projects yet. Edit a photo to start.</Text>}
+        ListEmptyComponent={
+          <Text style={styles.empty}>No projects yet. Edit a photo and tap Save project.</Text>
+        }
         renderItem={({ item }) => (
-          <GlassPanel style={styles.card}>
-            <Text style={styles.cardTitle}>{item.name}</Text>
-            <Text style={styles.cardMeta}>
-              LUT: {item.recipe.lutId ?? 'none'} · strength {Math.round(item.recipe.lutStrength * 100)}%
-            </Text>
-          </GlassPanel>
+          <Pressable onPress={() => openProject(item)}>
+            <GlassPanel style={styles.card}>
+              <Text style={styles.cardTitle}>{item.name}</Text>
+              <Text style={styles.cardMeta}>
+                LUT: {item.recipe.lutId ?? 'none'} · strength{' '}
+                {Math.round(item.recipe.lutStrength * 100)}%
+              </Text>
+              <Text style={styles.cardDate}>
+                Updated {new Date(item.updatedAt).toLocaleDateString()}
+              </Text>
+            </GlassPanel>
+          </Pressable>
         )}
       />
     </View>
@@ -66,5 +88,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: theme.color.text.secondary,
     marginTop: 4,
+  },
+  cardDate: {
+    fontSize: 12,
+    color: theme.color.text.muted,
+    marginTop: 6,
   },
 });

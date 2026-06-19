@@ -10,6 +10,7 @@ const SLIDERS: { key: keyof AdjustmentStack; label: string; steps: number[] }[] 
   { key: 'saturation', label: 'Saturation', steps: [-0.2, 0, 0.2] },
   { key: 'grain', label: 'Grain', steps: [0, 0.15, 0.3] },
   { key: 'vignette', label: 'Vignette', steps: [0, 0.15, 0.3] },
+  { key: 'glow', label: 'Glow', steps: [0, 0.15, 0.25] },
 ];
 
 type Props = {

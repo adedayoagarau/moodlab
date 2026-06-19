@@ -151,3 +151,8 @@ export {
   skinProtectionMultiplier,
   type SkinProtectionLevel,
 } from './editor-utils';
+
+export {
+  shaderAdjustmentUniforms,
+  type ShaderAdjustmentUniforms,
+} from './adjustment-uniforms';

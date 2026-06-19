@@ -7,7 +7,7 @@
       "categories": ["Sunny", "Portrait"],
       "plan": "free",
       "coverColor": "#F5B85B",
-      "lutIds": ["sunny-cover-glow", "clean-viral", "blue-sky-summer", "golden-hour-film"]
+      "lutIds": ["sunny-cover-glow", "clean-viral", "blue-sky-summer", "golden-hour-film", "creamy-indoor", "green-remover"]
     },
     {
       "id": "dark-cinematic",
@@ -25,7 +25,7 @@
       "categories": ["Portrait", "Luxury"],
       "plan": "pro",
       "coverColor": "#C4923A",
-      "lutIds": ["melanin-gold", "afrobeat-warm-cover", "brown-editorial", "luxury-matte-black"]
+      "lutIds": ["melanin-gold", "afrobeat-warm-cover", "brown-editorial", "luxury-matte-black", "highlife-soft", "shadow-skin"]
     },
     {
       "id": "creator-cover",

@@ -1,5 +1,6 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { StrengthSlider } from '@/components/editor/StrengthSlider';
 import { theme } from '@/constants/theme';
 import type { LutDefinition } from '@moodlab/shared';
 import { getLutPreviewTint } from '@/lib/render-preview';
@@ -8,11 +9,21 @@ type Props = {
   luts: LutDefinition[];
   selectedId?: string;
   strength: number;
+  isPro: boolean;
   onSelectLut: (lut: LutDefinition) => void;
   onStrengthChange: (value: number) => void;
+  onLockedLutPress: (lut: LutDefinition) => void;
 };
 
-export function MoodPanel({ luts, selectedId, strength, onSelectLut, onStrengthChange }: Props) {
+export function MoodPanel({
+  luts,
+  selectedId,
+  strength,
+  isPro,
+  onSelectLut,
+  onStrengthChange,
+  onLockedLutPress,
+}: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Mood / LUT</Text>
@@ -25,34 +36,24 @@ export function MoodPanel({ luts, selectedId, strength, onSelectLut, onStrengthC
         renderItem={({ item }) => {
           const tint = getLutPreviewTint(item);
           const selected = item.id === selectedId;
+          const locked = item.plan === 'pro' && !isPro;
           return (
             <Pressable
-              style={[styles.lutCard, selected && styles.lutCardSelected]}
-              onPress={() => onSelectLut(item)}>
+              style={[styles.lutCard, selected && styles.lutCardSelected, locked && styles.lutCardLocked]}
+              onPress={() => (locked ? onLockedLutPress(item) : onSelectLut(item))}>
               <View
                 style={[
                   styles.swatch,
                   { backgroundColor: tint?.overlay ?? theme.color.accent.gold },
                 ]} />
+              {locked ? <View style={styles.lockOverlay}><Text style={styles.lockText}>🔒</Text></View> : null}
               <Text style={styles.lutName} numberOfLines={1}>{item.name}</Text>
               {item.plan === 'pro' ? <Text style={styles.proBadge}>PRO</Text> : null}
             </Pressable>
           );
         }}
       />
-      <View style={styles.sliderRow}>
-        <Text style={styles.sliderLabel}>Strength</Text>
-        <View style={styles.strengthButtons}>
-          {[0.25, 0.5, 0.75, 1].map((v) => (
-            <Pressable
-              key={v}
-              style={[styles.strengthBtn, Math.abs(strength - v) < 0.05 && styles.strengthBtnActive]}
-              onPress={() => onStrengthChange(v)}>
-              <Text style={styles.strengthBtnText}>{Math.round(v * 100)}%</Text>
-            </Pressable>
-          ))}
-        </View>
-      </View>
+      <StrengthSlider label="Strength" value={strength} onChange={onStrengthChange} />
     </View>
   );
 }
@@ -83,15 +84,30 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.surface.elevated,
     borderWidth: 1,
     borderColor: 'transparent',
+    position: 'relative',
   },
   lutCardSelected: {
     borderColor: theme.color.accent.gold,
+  },
+  lutCardLocked: {
+    opacity: 0.85,
   },
   swatch: {
     width: 56,
     height: 56,
     borderRadius: theme.radius.sm,
     marginBottom: 6,
+  },
+  lockOverlay: {
+    position: 'absolute',
+    top: 16,
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lockText: {
+    fontSize: 18,
   },
   lutName: {
     fontSize: 11,
@@ -103,32 +119,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: theme.color.accent.gold,
     marginTop: 2,
-  },
-  sliderRow: {
-    marginTop: 4,
-  },
-  sliderLabel: {
-    fontSize: 12,
-    color: theme.color.text.secondary,
-    marginBottom: 8,
-  },
-  strengthButtons: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  strengthBtn: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: theme.radius.sm,
-    backgroundColor: theme.color.surface.elevated,
-    alignItems: 'center',
-  },
-  strengthBtnActive: {
-    backgroundColor: theme.color.accent.gold,
-  },
-  strengthBtnText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: theme.color.text.primary,
   },
 });
