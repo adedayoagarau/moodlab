@@ -12,7 +12,15 @@
     "web": "pnpm --filter @moodlab/mobile web",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "lut:generate": "tsx tools/lut-studio/generate.ts",
+    "lut:validate": "tsx tools/lut-studio/validate.ts",
+    "lut:sync-catalog": "tsx tools/lut-studio/sync-catalog.ts",
+    "lut:analyze": "tsx tools/lut-studio/analyze.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4",
+    "yaml": "^2.7.0"
   },
   "packageManager": "pnpm@9.15.4",
   "engines": {

@@ -1,0 +1,301 @@
+# MoodLab LUT Registry — single source of truth for .cube generation and catalog metadata.
+# Edit this file, then: pnpm lut:generate → pnpm lut:validate → pnpm lut:sync-catalog
+
+packs:
+  - id: sunny-starts
+    name: Sunny Starts
+    description: Warm, bright moods for portraits and daytime posts.
+    categories: [Sunny, Portrait]
+    plan: free
+    coverColor: "#F5B85B"
+  - id: dark-cinematic
+    name: Dark Cinematic
+    description: Moody blues, purple nights, and cover-art darkness.
+    categories: [Dark, Music Cover, Cinematic]
+    plan: free
+    coverColor: "#3D4F7C"
+  - id: melanin-gold
+    name: Melanin Gold
+    description: Skin-safe warmth for brown and deep skin tones.
+    categories: [Portrait, Luxury]
+    plan: pro
+    coverColor: "#C4923A"
+  - id: creator-cover
+    name: Creator Cover
+    description: Beat covers, rollout posts, and thumbnail-ready grades.
+    categories: [Music Cover, Viral, Streetwear]
+    plan: pro
+    coverColor: "#FF7A33"
+
+luts:
+  - id: sunny-cover-glow
+    name: Sunny Cover Glow
+    packId: sunny-starts
+    categories: [Sunny, Portrait, Music Cover]
+    plan: free
+    tags: [sunny, cover, warm]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.12, lift: 0.04, saturation: 0.08 }
+    metadata:
+      defaultStrength: 0.78
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.12, glow: 0.18, vignette: 0.1 }
+
+  - id: afrobeat-warm-cover
+    name: Afrobeat Warm Cover
+    packId: melanin-gold
+    categories: [Music Cover, Portrait]
+    plan: pro
+    tags: [afrobeat, warm, cover]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.14, saturation: 0.06, lift: 0.03 }
+    metadata:
+      defaultStrength: 0.72
+      skinProtectionDefault: high
+      recommendedEffects: { grain: 0.14, glow: 0.2 }
+
+  - id: dark-room-blue
+    name: Dark Room Blue
+    packId: dark-cinematic
+    categories: [Dark, Cinematic]
+    plan: free
+    tags: [dark, blue, moody]
+    grade:
+      type: cool_moody
+      params: { cool: 0.16, saturation: -0.05, lift: -0.02 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.22, grain: 0.1 }
+
+  - id: luxury-matte-black
+    name: Luxury Matte Black
+    packId: melanin-gold
+    categories: [Luxury, Portrait]
+    plan: pro
+    tags: [luxury, matte, editorial]
+    grade:
+      type: film_fade
+      params: { fade: 0.08, saturation: -0.12, contrast: 0.05 }
+    metadata:
+      defaultStrength: 0.7
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.08, vignette: 0.15 }
+
+  - id: film-memory-gold
+    name: Film Memory Gold
+    packId: creator-cover
+    categories: [Film, Music Cover]
+    plan: pro
+    tags: [film, gold, nostalgia, portrait]
+    grade:
+      type: film_fade
+      params: { warmth: 0.1, fade: 0.06, saturation: -0.04 }
+    metadata:
+      defaultStrength: 0.76
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.18, glow: 0.12 }
+
+  - id: street-flash
+    name: Street Flash
+    packId: creator-cover
+    categories: [Streetwear, Viral]
+    plan: pro
+    tags: [street, flash, viral]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.08, contrast: 0.12, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.82
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.1, grain: 0.1 }
+
+  - id: melanin-gold
+    name: Melanin Gold
+    packId: melanin-gold
+    categories: [Portrait, Luxury]
+    plan: pro
+    tags: [melanin, gold, skin-safe]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.16, saturation: 0.08, lift: 0.05 }
+    metadata:
+      defaultStrength: 0.74
+      skinProtectionDefault: high
+      recommendedEffects: { glow: 0.16 }
+
+  - id: lagos-night
+    name: Lagos Night
+    packId: dark-cinematic
+    categories: [Dark, Cinematic]
+    plan: free
+    tags: [night, urban, moody]
+    grade:
+      type: cool_moody
+      params: { cool: 0.14, saturation: -0.08, lift: -0.04 }
+    metadata:
+      defaultStrength: 0.79
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.2 }
+
+  - id: clean-viral
+    name: Clean Viral
+    packId: sunny-starts
+    categories: [Viral, Portrait]
+    plan: free
+    tags: [clean, viral, social]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.04, lift: 0.02, saturation: 0.04 }
+    metadata:
+      defaultStrength: 0.7
+      skinProtectionDefault: medium
+
+  - id: analog-fade
+    name: Analog Fade
+    packId: creator-cover
+    categories: [Film]
+    plan: pro
+    tags: [analog, fade, film]
+    grade:
+      type: film_fade
+      params: { fade: 0.12, saturation: -0.1, warmth: -0.02 }
+    metadata:
+      defaultStrength: 0.68
+      skinProtectionDefault: low
+      recommendedEffects: { grain: 0.22 }
+
+  - id: green-remover
+    name: Green Remover
+    packId: sunny-starts
+    categories: [Portrait]
+    plan: free
+    tags: [green, cast, fix]
+    grade:
+      type: rgb_multiply
+      params: { rMult: 1.02, gMult: 0.98, bMult: 0.96 }
+    metadata:
+      defaultStrength: 0.65
+      skinProtectionDefault: medium
+
+  - id: blue-sky-summer
+    name: Blue Sky Summer
+    packId: sunny-starts
+    categories: [Sunny]
+    plan: free
+    tags: [summer, sky, bright]
+    grade:
+      type: cool_moody
+      params: { cool: 0.1, saturation: 0.06, lift: 0.02 }
+    metadata:
+      defaultStrength: 0.72
+      skinProtectionDefault: medium
+
+  - id: brown-editorial
+    name: Brown Editorial
+    packId: melanin-gold
+    categories: [Portrait, Luxury]
+    plan: pro
+    tags: [brown, editorial, fashion]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.12, saturation: 0.04, lift: 0.02 }
+    metadata:
+      defaultStrength: 0.73
+      skinProtectionDefault: high
+
+  - id: highlife-soft
+    name: Highlife Soft
+    packId: melanin-gold
+    categories: [Portrait, Music Cover]
+    plan: pro
+    tags: [soft, warm, music]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.06, saturation: 0.02, lift: 0.04 }
+    metadata:
+      defaultStrength: 0.71
+      skinProtectionDefault: high
+
+  - id: rnb-purple-night
+    name: R&B Purple Night
+    packId: dark-cinematic
+    categories: [Dark, Music Cover]
+    plan: free
+    tags: [rnb, purple, night, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.12, warmth: 0.08, saturation: 0.04 }
+    metadata:
+      defaultStrength: 0.81
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.18, glow: 0.08 }
+
+  - id: golden-hour-film
+    name: Golden Hour Film
+    packId: sunny-starts
+    categories: [Sunny, Film]
+    plan: free
+    tags: [golden, film, sunset]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.16, lift: 0.05, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.77
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.2, grain: 0.1 }
+
+  - id: amapiano-neon-warm
+    name: Amapiano Neon Warm
+    packId: creator-cover
+    categories: [Music Cover, Viral]
+    plan: pro
+    tags: [amapiano, neon, warm, portrait]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.12, saturation: 0.1, contrast: 0.08 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: medium
+
+  - id: magazine-bw
+    name: Magazine BW
+    packId: dark-cinematic
+    categories: [Black and White, Luxury]
+    plan: pro
+    tags: [bw, editorial, magazine]
+    grade:
+      type: bw_editorial
+      params: { contrast: 0.1, fade: 0.02 }
+    metadata:
+      defaultStrength: 0.85
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.12 }
+
+  - id: creamy-indoor
+    name: Creamy Indoor
+    packId: sunny-starts
+    categories: [Portrait]
+    plan: free
+    tags: [indoor, soft, cream]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.08, lift: 0.06, saturation: -0.02 }
+    metadata:
+      defaultStrength: 0.69
+      skinProtectionDefault: medium
+
+  - id: shadow-skin
+    name: Shadow Skin
+    packId: melanin-gold
+    categories: [Portrait]
+    plan: pro
+    tags: [shadow, skin, depth]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: -0.02, saturation: -0.04, lift: -0.03 }
+    metadata:
+      defaultStrength: 0.75
+      skinProtectionDefault: high

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="tungsten" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE4B5"/>
+      <stop offset="100%" stop-color="#CD853F"/>
+    </linearGradient>
+    <radialGradient id="skin" cx="50%" cy="40%" r="35%">
+      <stop offset="0%" stop-color="#D4956A"/>
+      <stop offset="100%" stop-color="#A0623E"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#tungsten)"/>
+  <ellipse cx="400" cy="420" rx="180" ry="220" fill="url(#skin)"/>
+  <text x="400" y="920" text-anchor="middle" fill="#333" font-family="sans-serif" font-size="24">Portrait  Indoor Tungsten (QA placeholder)</text>
+</svg>

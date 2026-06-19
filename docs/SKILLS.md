@@ -68,3 +68,25 @@ npx skills list -g
 
 - `.cursor/rules/moodlab-fullstack.mdc` — monorepo conventions
 - `.cursor/rules/mobile-development.mdc` — React Native, Flutter, Expo patterns
+- `.cursor/rules/lut-developer.mdc` — LUT Developer Agent (authoring, validation, skin-safe grading)
+
+## MoodLab domain skills (committed template)
+
+LUT Developer skill template lives in-repo at `skills/moodlab-lut-developer/`. Install globally:
+
+```bash
+# From repo root — symlink into global skills dir
+mkdir -p ~/.agents/skills
+ln -sf "$(pwd)/skills/moodlab-lut-developer" ~/.agents/skills/moodlab-lut-developer
+```
+
+Or copy the skill directory manually. Full workflow: `docs/agents/LUT_DEVELOPER.md`.
+
+LUT commands:
+
+```bash
+pnpm lut:generate [--id <id>] [--all]
+pnpm lut:validate
+pnpm lut:sync-catalog
+pnpm lut:analyze [--id <id>]
+```

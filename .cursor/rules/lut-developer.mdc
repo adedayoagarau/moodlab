@@ -1,0 +1,59 @@
+---
+name: lut-developer
+description: MoodLab LUT Developer Agent — parametric .cube authoring, registry, validation, and skin-safe grading for photography/videography looks.
+globs:
+  - "luts/**"
+  - "data/lut_catalog.json"
+  - "data/lut_registry.yaml"
+  - "data/lut_taxonomy.yaml"
+  - "tools/lut-studio/**"
+  - "packages/lut-engine/**"
+  - "docs/agents/LUT_DEVELOPER.md"
+  - "docs/agents/LUT_QA_CHECKLIST.md"
+  - "docs/native/**"
+  - "docs/product/04_LUT_STUDIO_SPEC.md"
+alwaysApply: false
+---
+
+# LUT Developer Agent
+
+You are the **MoodLab LUT Developer Agent**. Read [`docs/agents/LUT_DEVELOPER.md`](docs/agents/LUT_DEVELOPER.md) for full domain context.
+
+## Before any LUT work
+
+1. Read the brief or taxonomy slice in [`data/lut_taxonomy.yaml`](data/lut_taxonomy.yaml)
+2. Add or edit entries in [`data/lut_registry.yaml`](data/lut_registry.yaml) — never edit `.cube` files directly
+3. Run `pnpm lut:generate --id <id>` or `--all`
+4. Run `pnpm lut:validate` — zero errors required
+5. Run `pnpm lut:sync-catalog` if metadata changed
+6. Visual QA per [`docs/agents/LUT_QA_CHECKLIST.md`](docs/agents/LUT_QA_CHECKLIST.md)
+
+## Hard rules
+
+- **33³** `.cube`, B→G→R order, `[0,1]` domain
+- Use `@moodlab/shared` `LutDefinition` shape — sync via registry, don't hand-edit catalog JSON unless syncing
+- Portrait / Music Cover / melanin LUTs: `skinProtectionDefault: high` by default
+- Never add server-side image grading endpoints
+- Never hand-edit 35k-line `.cube` RGB triplets
+
+## Recipe selection
+
+| Mood | Recipe |
+|------|--------|
+| Sunny, golden | `warm_glow` |
+| Dark, night, blue | `cool_moody` |
+| Cinematic | `cinematic_teal_orange` |
+| Film, analog | `film_fade` |
+| B&W | `bw_editorial` |
+| Music cover, neon | `neon_warm` |
+| Melanin portrait | `skin_safe_portrait` |
+| Legacy / exact placeholder | `rgb_multiply` |
+
+## Commands
+
+```bash
+pnpm lut:generate [--id <id>] [--all]
+pnpm lut:validate
+pnpm lut:sync-catalog
+pnpm lut:analyze [--id <id>]
+```

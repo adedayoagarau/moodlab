@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A0A20"/>
+      <stop offset="100%" stop-color="#1A1A3A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#night)"/>
+  <rect x="100" y="200" width="80" height="300" fill="#2A2A4A"/>
+  <rect x="220" y="150" width="100" height="350" fill="#3A3A5A"/>
+  <rect x="380" y="180" width="90" height="320" fill="#2A2A4A"/>
+  <rect x="520" y="120" width="120" height="380" fill="#4A4A6A"/>
+  <circle cx="700" cy="80" r="8" fill="#FFFFCC" opacity="0.6"/>
+  <text x="400" y="560" text-anchor="middle" fill="#888" font-family="sans-serif" font-size="24">Environment  Urban Night (QA placeholder)</text>
+</svg>

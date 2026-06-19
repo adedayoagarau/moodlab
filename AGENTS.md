@@ -9,8 +9,11 @@ apps/mobile/           Expo Router app (@moodlab/mobile)
 apps/api/              Hono REST API (@moodlab/api)
 packages/shared/       Edit recipe, LUT types, export presets (@moodlab/shared)
 packages/lut-engine/   .cube parser (@moodlab/lut-engine)
-data/                  lut_catalog.json, preset_manifest.json
+data/                  lut_catalog.json, lut_registry.yaml, preset_manifest.json
 luts/original/         Original .cube LUT assets
+luts/qa/references/    Visual QA reference images
+docs/agents/           Specialized agent docs (LUT Developer)
+tools/lut-studio/      Parametric LUT authoring toolchain
 docs/product/          Master blueprint, feature matrix, pillar specs
 docs/design/           UI spec, design tokens
 docs/architecture/     E2E infrastructure
@@ -26,7 +29,10 @@ pnpm dev:api          # API only (http://localhost:8787)
 pnpm dev:mobile       # Expo only
 pnpm typecheck
 pnpm test
-python3 tools/generate_original_luts.py   # regenerate placeholder .cube files
+pnpm lut:generate [--id <id>] [--all]   # generate .cube from lut_registry.yaml
+pnpm lut:validate                        # validate registry, cubes, catalog
+pnpm lut:sync-catalog                    # sync lut_catalog.json from registry
+pnpm lut:analyze [--id <id>]             # infer metadata heuristics
 ```
 
 ## Product principles
@@ -60,3 +66,11 @@ python3 tools/generate_original_luts.py   # regenerate placeholder .cube files
 ## Cursor skills
 
 Agent skills are installed globally (`~/.agents/skills`). See `docs/SKILLS.md`. Do not commit `.agents/` to this repo.
+
+## Specialized agents
+
+| Agent | Doc | Rule |
+|-------|-----|------|
+| LUT Developer | `docs/agents/LUT_DEVELOPER.md` | `.cursor/rules/lut-developer.mdc` |
+
+LUT authoring: edit `data/lut_registry.yaml` → `pnpm lut:generate` → `pnpm lut:validate` → `pnpm lut:sync-catalog`. Visual QA: `docs/agents/LUT_QA_CHECKLIST.md`.

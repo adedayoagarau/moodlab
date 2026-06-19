@@ -1,0 +1,158 @@
+# MoodLab LUT Taxonomy — planning matrix for scaling to ~1000 LUTs
+# The LUT Developer Agent uses this to propose structured batches.
+
+naming:
+  idFormat: kebab-case
+  displayName: mood-first, creator-native (e.g. "Sunny Cover Glow")
+  tagVocabulary:
+    - sunny
+    - warm
+    - cool
+    - dark
+    - film
+    - portrait
+    - cover
+    - viral
+    - street
+    - luxury
+    - melanin
+    - skin-safe
+    - cinematic
+    - neon
+    - editorial
+    - bw
+    - night
+    - urban
+    - soft
+    - golden
+
+categories:
+  Sunny:
+    subMoods:
+      - golden-hour
+      - blue-sky
+      - clean-bright
+      - summer-pop
+      - hazy-dream
+    targetCount: 100
+    defaultSkinProtection: medium
+
+  Cinematic:
+    subMoods:
+      - teal-orange
+      - bleach-bypass
+      - noir
+      - anamorphic-flare
+      - muted-blockbuster
+    targetCount: 120
+    defaultSkinProtection: high
+
+  Dark:
+    subMoods:
+      - blue-room
+      - purple-night
+      - urban-noir
+      - low-key-portrait
+      - cover-darkness
+    targetCount: 100
+    defaultSkinProtection: high
+
+  Film:
+    subMoods:
+      - kodak-gold
+      - faded-memory
+      - cross-process
+      - analog-grain
+      - expired-stock
+    targetCount: 100
+    defaultSkinProtection: medium
+
+  Portrait:
+    subMoods:
+      - soft-flattering
+      - editorial-fashion
+      - melanin-safe
+      - indoor-cream
+      - outdoor-natural
+    targetCount: 150
+    defaultSkinProtection: high
+
+  Music Cover:
+    subMoods:
+      - afrobeat-warm
+      - amapiano-neon
+      - rnb-moody
+      - hip-hop-punch
+      - alt-indie-soft
+    targetCount: 120
+    defaultSkinProtection: high
+
+  Streetwear:
+    subMoods:
+      - flash-punch
+      - desaturated-urban
+      - high-contrast
+      - skate-grit
+      - hype-color
+    targetCount: 80
+    defaultSkinProtection: medium
+
+  Luxury:
+    subMoods:
+      - matte-editorial
+      - gold-warmth
+      - cool-minimal
+      - fashion-runway
+      - premium-bw
+    targetCount: 80
+    defaultSkinProtection: medium
+
+  Viral:
+    subMoods:
+      - clean-social
+      - punchy-scroll
+      - pastel-pop
+      - high-saturation
+      - tiktok-bright
+    targetCount: 100
+    defaultSkinProtection: medium
+
+  Black and White:
+    subMoods:
+      - high-contrast
+      - soft-matte
+      - magazine-editorial
+      - film-noir
+      - warm-sepia
+    targetCount: 50
+    defaultSkinProtection: medium
+
+packTiers:
+  free:
+    targetLutCount: 200
+    description: Starter packs for onboarding and viral loops
+  pro:
+    targetLutCount: 600
+    description: Premium packs, melanin-safe, music cover, cinematic
+  marketplace:
+    targetLutCount: 200
+    description: Creator-submitted LUTs (future)
+
+batchPlanning:
+  recommendedBatchSize: 50
+  qaSampleRate:
+    portrait: 1.0
+    nonPortrait: 0.2
+  workflow:
+    - Pick category + sub-mood from taxonomy
+    - Assign packId and plan tier
+    - Add N entries to lut_registry.yaml
+    - pnpm lut:generate --all
+    - pnpm lut:validate
+    - Visual QA per LUT_QA_CHECKLIST.md
+    - pnpm lut:sync-catalog
+
+currentScale:
+  luts: 20
+  packs: 4
+  target: 1000
