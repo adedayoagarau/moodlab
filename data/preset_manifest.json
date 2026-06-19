@@ -1,10 +1,15 @@
 {
   "beautyPresets": [
+    { "id": "natural", "name": "Natural", "plan": "free" },
     { "id": "clean-skin", "name": "Clean Skin", "plan": "free" },
-    { "id": "melanin-gold", "name": "Melanin Gold", "plan": "pro" },
+    { "id": "no-filter-skin", "name": "No Filter Skin", "plan": "free" },
     { "id": "soft-glow", "name": "Soft Glow", "plan": "free" },
+    { "id": "flash-fix", "name": "Flash Fix", "plan": "free" },
+    { "id": "sunny-skin", "name": "Sunny Skin", "plan": "free" },
+    { "id": "melanin-gold", "name": "Melanin Gold", "plan": "pro" },
     { "id": "studio-face", "name": "Studio Face", "plan": "pro" },
-    { "id": "no-filter-skin", "name": "No Filter Skin", "plan": "free" }
+    { "id": "brown-editorial", "name": "Brown Editorial", "plan": "pro" },
+    { "id": "glam", "name": "Glam", "plan": "pro" }
   ],
   "textTemplates": [
     { "id": "posting-beat", "label": "Posting My Beat", "text": "Posting my beat 🔥" },

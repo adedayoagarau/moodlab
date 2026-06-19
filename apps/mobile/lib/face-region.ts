@@ -1,16 +1,17 @@
-export type FaceRegion = {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-};
+import {
+  DEFAULT_FACE_GEOMETRY,
+  DEFAULT_FACE_REGION,
+  deriveFaceGeometry,
+  type FaceGeometry,
+  type FaceRegion,
+} from '@moodlab/shared';
 
-/** Fallback portrait band when detection unavailable. */
-export const DEFAULT_FACE_REGION: FaceRegion = {
-  x: 0.2,
-  y: 0.22,
-  w: 0.6,
-  h: 0.38,
+export {
+  DEFAULT_FACE_GEOMETRY,
+  DEFAULT_FACE_REGION,
+  deriveFaceGeometry,
+  type FaceGeometry,
+  type FaceRegion,
 };
 
 /**
@@ -28,7 +29,6 @@ export async function detectFaceRegion(imageUri: string): Promise<FaceRegion> {
         const squareish = Math.abs(width - height) / Math.max(width, height) < 0.08;
 
         if (portrait || squareish) {
-          // Upper-center face band for portraits and cover-art squares
           resolve({
             x: 0.16,
             y: 0.1,
@@ -38,7 +38,6 @@ export async function detectFaceRegion(imageUri: string): Promise<FaceRegion> {
           return;
         }
 
-        // Landscape — subject often center-left or center
         resolve({
           x: 0.22,
           y: 0.18,
@@ -49,4 +48,9 @@ export async function detectFaceRegion(imageUri: string): Promise<FaceRegion> {
       () => resolve(DEFAULT_FACE_REGION),
     );
   });
+}
+
+export async function detectFaceGeometry(imageUri: string): Promise<FaceGeometry> {
+  const face = await detectFaceRegion(imageUri);
+  return deriveFaceGeometry(face);
 }

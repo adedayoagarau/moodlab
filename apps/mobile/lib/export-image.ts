@@ -8,7 +8,7 @@ import {
 } from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 
-import type { FaceRegion } from '@/lib/face-region';
+import type { FaceGeometry } from '@/lib/face-region';
 import { renderRecipeToPngBytes } from '@/lib/render-recipe-export';
 import { EXPORT_PRESETS, type EditRecipe, type ExportPresetId } from '@moodlab/shared';
 
@@ -47,7 +47,7 @@ export async function shareRecipeExport(
   imageUri: string,
   recipe: EditRecipe,
   presetId: ExportPresetId,
-  face: FaceRegion,
+  geometry: FaceGeometry,
   canvasRef?: RefObject<CanvasRef | null>,
 ): Promise<void> {
   const preset = EXPORT_PRESETS[presetId];
@@ -55,7 +55,7 @@ export async function shareRecipeExport(
   const outPath = `${cacheDirectory ?? ''}${filename}`;
 
   try {
-    const pngBytes = await renderRecipeToPngBytes(imageUri, recipe, presetId, face);
+    const pngBytes = await renderRecipeToPngBytes(imageUri, recipe, presetId, geometry);
     await writePngAndShare(
       outPath,
       pngBytes,

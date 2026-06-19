@@ -75,6 +75,10 @@ export type BeautySettings = {
   faceLutStrength?: number;
   backgroundLutStrength?: number;
   melaninGuard?: boolean;
+  /** Reduce ashy/blue shadows on melanin-rich skin (0–1). */
+  melaninAshFix?: number;
+  /** Preserve warm undertones under strong LUTs (0–1). */
+  melaninWarmthProtect?: number;
 };
 
 export type TextLayer = {
@@ -153,6 +157,23 @@ export {
 } from './editor-utils';
 
 export {
+  beautyShaderUniforms,
   shaderAdjustmentUniforms,
+  type BeautyShaderUniforms,
   type ShaderAdjustmentUniforms,
 } from './adjustment-uniforms';
+
+export {
+  BEAUTY_PRESETS,
+  applyBeautyPreset,
+  getBeautyPreset,
+  type BeautyPresetDefinition,
+} from './beauty-presets';
+
+export {
+  DEFAULT_FACE_GEOMETRY,
+  DEFAULT_FACE_REGION,
+  deriveFaceGeometry,
+  type FaceGeometry,
+  type FaceRegion,
+} from './face-geometry';

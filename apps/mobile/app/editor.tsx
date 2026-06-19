@@ -22,9 +22,10 @@ import { theme } from '@/constants/theme';
 import { fetchLuts, fetchManifest, saveProject } from '@/lib/api';
 import { hasProEntitlement, unlockProDemo } from '@/lib/entitlements';
 import { shareRecipeExport } from '@/lib/export-image';
-import { detectFaceRegion, DEFAULT_FACE_REGION, type FaceRegion } from '@/lib/face-region';
+import { detectFaceGeometry, DEFAULT_FACE_GEOMETRY, type FaceGeometry } from '@/lib/face-region';
 import { saveLocalProject } from '@/lib/local-projects';
 import {
+  applyBeautyPreset,
   DEFAULT_EDIT_RECIPE,
   mergeEditRecipe,
   type ExportPresetId,
@@ -63,11 +64,12 @@ export default function EditorScreen() {
   const [exporting, setExporting] = useState(false);
   const [isPro, setIsPro] = useState(false);
   const [paywallLut, setPaywallLut] = useState<LutDefinition | null>(null);
-  const [faceRegion, setFaceRegion] = useState<FaceRegion>(DEFAULT_FACE_REGION);
+  const [paywallBeauty, setPaywallBeauty] = useState<{ id: string; name: string } | null>(null);
+  const [faceGeometry, setFaceGeometry] = useState<FaceGeometry>(DEFAULT_FACE_GEOMETRY);
 
   useEffect(() => {
     if (!imageUri) return;
-    detectFaceRegion(imageUri).then(setFaceRegion);
+    detectFaceGeometry(imageUri).then(setFaceGeometry);
   }, [imageUri]);
 
   useEffect(() => {
@@ -195,7 +197,7 @@ export default function EditorScreen() {
   async function handleExport(presetId: ExportPresetId) {
     setExporting(true);
     try {
-      await shareRecipeExport(imageUri, recipe, presetId, faceRegion, canvasRef);
+      await shareRecipeExport(imageUri, recipe, presetId, faceGeometry, canvasRef);
     } catch (e) {
       Alert.alert('Export failed', e instanceof Error ? e.message : 'Could not export');
     } finally {
@@ -206,10 +208,20 @@ export default function EditorScreen() {
   async function handleUnlockPro() {
     await unlockProDemo();
     setIsPro(true);
+    const lockedLut = paywallLut;
+    const lockedBeauty = paywallBeauty;
     setPaywallLut(null);
-    if (paywallLut) {
-      selectLut(paywallLut);
+    setPaywallBeauty(null);
+    if (lockedLut) {
+      selectLut(lockedLut);
     }
+    if (lockedBeauty) {
+      updateRecipe({ beauty: applyBeautyPreset(recipe.beauty, lockedBeauty.id) });
+    }
+  }
+
+  function applyBeautyPresetById(presetId: string) {
+    updateRecipe({ beauty: applyBeautyPreset(recipe.beauty, presetId) });
   }
 
   if (!imageUri) {
@@ -245,7 +257,7 @@ export default function EditorScreen() {
           beauty={recipe.beauty}
           skinProtection={recipe.beauty.skinProtection}
           faceLutStrength={recipe.beauty.faceLutStrength}
-          faceRegion={faceRegion}
+          faceGeometry={faceGeometry}
           showOriginal={showOriginal}
           style={styles.viewport}>
           {recipe.textLayers.map((layer) => (
@@ -266,7 +278,7 @@ export default function EditorScreen() {
         </LutSkiaViewport>
       </View>
 
-      <View style={styles.panel}>
+      <View style={[styles.panel, tool === 'beauty' && styles.panelBeauty]}>
         {tool === 'mood' ? (
           <MoodPanel
             luts={luts}
@@ -289,7 +301,10 @@ export default function EditorScreen() {
         {tool === 'beauty' ? (
           <BeautyPanel
             beauty={recipe.beauty}
+            isPro={isPro}
             onChange={(patch) => updateRecipe({ beauty: { ...recipe.beauty, ...patch } })}
+            onApplyPreset={applyBeautyPresetById}
+            onLockedPreset={(id, name) => setPaywallBeauty({ id, name })}
           />
         ) : null}
         {tool === 'text' ? (
@@ -317,9 +332,18 @@ export default function EditorScreen() {
       ) : null}
 
       <PaywallSheet
-        visible={paywallLut !== null}
-        lutName={paywallLut?.name}
-        onClose={() => setPaywallLut(null)}
+        visible={paywallLut !== null || paywallBeauty !== null}
+        title={
+          paywallLut
+            ? `"${paywallLut.name}" is a Pro mood`
+            : paywallBeauty
+              ? `"${paywallBeauty.name}" is a Pro beauty look`
+              : 'Unlock MoodLab Pro'
+        }
+        onClose={() => {
+          setPaywallLut(null);
+          setPaywallBeauty(null);
+        }}
         onUnlockDemo={handleUnlockPro}
       />
     </View>
@@ -372,6 +396,9 @@ const styles = StyleSheet.create({
   },
   panel: {
     maxHeight: 280,
+  },
+  panelBeauty: {
+    maxHeight: 340,
   },
   empty: {
     flex: 1,

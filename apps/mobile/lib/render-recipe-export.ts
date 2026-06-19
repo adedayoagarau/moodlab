@@ -10,7 +10,7 @@ import {
 
 import { getLutShaderSource, getLutStripTexture } from '@/lib/lut-cache';
 import { buildLutShaderUniforms } from '@/lib/shader-uniforms';
-import type { FaceRegion } from '@/lib/face-region';
+import type { FaceGeometry } from '@/lib/face-region';
 import type { EditRecipe, ExportPresetId } from '@moodlab/shared';
 import { EXPORT_PRESETS } from '@moodlab/shared';
 
@@ -55,7 +55,7 @@ export async function renderRecipeToPngBytes(
   imageUri: string,
   recipe: EditRecipe,
   presetId: ExportPresetId,
-  face: FaceRegion,
+  geometry: FaceGeometry,
 ): Promise<Uint8Array> {
   const preset = EXPORT_PRESETS[presetId];
   const bytes = await loadImageBytes(imageUri);
@@ -106,7 +106,7 @@ export async function renderRecipeToPngBytes(
       lutSize: lutStrip.size,
       canvasWidth: outW,
       canvasHeight: outH,
-      face,
+      geometry,
       adjustments: recipe.adjustments,
       beauty: recipe.beauty,
     });

@@ -4,23 +4,28 @@ import { theme } from '@/constants/theme';
 
 type Props = {
   visible: boolean;
-  lutName?: string;
+  title?: string;
+  subtitle?: string;
   onClose: () => void;
   onUnlockDemo: () => void;
 };
 
-export function PaywallSheet({ visible, lutName, onClose, onUnlockDemo }: Props) {
+export function PaywallSheet({
+  visible,
+  title = 'Unlock MoodLab Pro',
+  subtitle,
+  onClose,
+  onUnlockDemo,
+}: Props) {
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.backdrop}>
         <View style={styles.sheet}>
           <Text style={styles.kicker}>MoodLab Pro</Text>
-          <Text style={styles.title}>
-            {lutName ? `"${lutName}" is a Pro mood` : 'Unlock premium moods'}
-          </Text>
+          <Text style={styles.title}>{title}</Text>
           <Text style={styles.body}>
-            Pro unlocks Melanin Gold, Creator Cover, premium beauty presets, high-res export, and
-            no watermark — built for beat covers, rollouts, and campaign visuals.
+            {subtitle ??
+              'Pro unlocks premium moods, Melanin Gold beauty presets, Studio Face, Glam looks, high-res export, and creator cover workflows.'}
           </Text>
           <Pressable style={styles.primary} onPress={onUnlockDemo}>
             <Text style={styles.primaryText}>Start Pro (demo unlock)</Text>
@@ -28,7 +33,9 @@ export function PaywallSheet({ visible, lutName, onClose, onUnlockDemo }: Props)
           <Pressable style={styles.secondary} onPress={onClose}>
             <Text style={styles.secondaryText}>Maybe later</Text>
           </Pressable>
-          <Text style={styles.footnote}>RevenueCat billing replaces demo unlock before App Store ship.</Text>
+          <Text style={styles.footnote}>
+            RevenueCat billing replaces demo unlock before App Store ship.
+          </Text>
         </View>
       </View>
     </Modal>

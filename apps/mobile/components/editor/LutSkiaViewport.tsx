@@ -14,7 +14,10 @@ import {
 } from '@shopify/react-native-skia';
 import type { AdjustmentStack, BeautySettings } from '@moodlab/shared';
 
-import { DEFAULT_FACE_REGION, type FaceRegion } from '@/lib/face-region';
+import {
+  DEFAULT_FACE_GEOMETRY,
+  type FaceGeometry,
+} from '@/lib/face-region';
 import { getLutShaderSource, getLutStripTexture } from '@/lib/lut-cache';
 import { buildLutShaderUniforms } from '@/lib/shader-uniforms';
 
@@ -26,7 +29,7 @@ type Props = {
   beauty?: BeautySettings;
   skinProtection?: 'off' | 'low' | 'medium' | 'high';
   faceLutStrength?: number;
-  faceRegion?: FaceRegion;
+  faceGeometry?: FaceGeometry;
   showOriginal?: boolean;
   style?: ViewStyle;
   children?: ReactNode;
@@ -41,7 +44,7 @@ export function LutSkiaViewport({
   beauty = {},
   skinProtection = 'medium',
   faceLutStrength = 0.55,
-  faceRegion = DEFAULT_FACE_REGION,
+  faceGeometry = DEFAULT_FACE_GEOMETRY,
   showOriginal = false,
   style,
   children,
@@ -109,15 +112,15 @@ export function LutSkiaViewport({
       lutSize: lutStrip.size,
       canvasWidth: layout.width,
       canvasHeight: layout.height,
-      face: faceRegion,
+      geometry: faceGeometry,
       adjustments,
       beauty: { ...beauty, skinProtection, faceLutStrength },
     });
   }, [
     adjustments,
     beauty,
+    faceGeometry,
     faceLutStrength,
-    faceRegion,
     layout.height,
     layout.width,
     lutStrength,
