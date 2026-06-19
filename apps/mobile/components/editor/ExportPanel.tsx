@@ -29,8 +29,8 @@ export function ExportPanel({ onExport, onSaveProject }: Props) {
         <Text style={styles.saveBtnText}>Save project</Text>
       </Pressable>
       <Text style={styles.hint}>
-        V1 scaffold: export confirms format selection. Native export pipeline writes full-res files
-        from RenderCore.
+        iOS: exports via Apple CIColorCube when dev build is installed. Other platforms: format
+        selection scaffold until native export ships.
       </Text>
     </View>
   );

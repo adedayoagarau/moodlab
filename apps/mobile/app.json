@@ -8,14 +8,19 @@
     "scheme": "moodlab",
     "userInterfaceStyle": "dark",
     "extra": {
-      "apiUrl": "http://localhost:8787"
+      "apiUrl": "http://localhost:8787",
+      "supabaseUrl": "",
+      "supabaseAnonKey": "",
+      "revenueCatIosKey": ""
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.moodlab.app"
     },
     "android": {
+      "package": "com.moodlab.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#070708",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -29,6 +34,7 @@
     },
     "plugins": [
       "expo-router",
+      "moodlab-render-core",
       [
         "expo-splash-screen",
         {

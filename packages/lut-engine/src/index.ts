@@ -1,6 +1,15 @@
 export { parseCubeFile, type ParsedCubeLut } from './cube-parser';
 export { cubeToStripTexture, type LutStripTexture } from './cube-to-strip';
+export {
+  cubeToHaldTexture,
+  HALD_TEXTURE_SIZE,
+  HALD_GRID_DIM,
+  HALD_SLICE_SIZE,
+  type HaldTexture,
+} from './cube-to-hald';
+export { validateCubeLut, type CubeValidationResult } from './cube-validation';
 export { LUT_STRIP_SHADER_SOURCE } from './lut-shader';
+export { LUT_HALD_SHADER_SOURCE } from './lut-hald-shader';
 
 /** Blend factor for LUT strength (0 = original, 1 = full LUT). */
 export function blendLutStrength(strength: number): number {

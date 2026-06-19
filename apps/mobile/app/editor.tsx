@@ -18,6 +18,9 @@ import { MoodPanel } from '@/components/editor/MoodPanel';
 import { TextPanel } from '@/components/editor/TextPanel';
 import { theme } from '@/constants/theme';
 import { fetchLuts, fetchManifest, saveProject } from '@/lib/api';
+import { exportWithNativeColorCube } from '@/lib/face-region';
+import { getLutCubeLocalPath } from '@/lib/lut-cache';
+import { syncProjectToSupabase } from '@/lib/supabase';
 import {
   DEFAULT_EDIT_RECIPE,
   EXPORT_PRESETS,
@@ -108,12 +111,16 @@ export default function EditorScreen() {
     if (!imageUri) return;
     setSaving(true);
     try {
-      await saveProject({
+      const project = await saveProject({
         name: selectedLut?.name ?? 'Untitled edit',
         sourceUri: imageUri,
         recipe,
       });
-      Alert.alert('Saved', 'Project saved to API store.');
+      const synced = await syncProjectToSupabase(project);
+      Alert.alert(
+        'Saved',
+        synced ? 'Project saved locally and synced to Supabase.' : 'Project saved to API store.',
+      );
     } catch (e) {
       Alert.alert('Save failed', e instanceof Error ? e.message : 'Could not save');
     } finally {
@@ -121,8 +128,25 @@ export default function EditorScreen() {
     }
   }
 
-  function handleExport(presetId: ExportPresetId) {
-    showExportAlert(EXPORT_PRESETS[presetId].label);
+  async function handleExport(presetId: ExportPresetId) {
+    const label = EXPORT_PRESETS[presetId].label;
+    if (recipe.lutId) {
+      try {
+        const cubePath = await getLutCubeLocalPath(recipe.lutId);
+        const exported = await exportWithNativeColorCube(
+          imageUri,
+          cubePath,
+          recipe.lutStrength,
+        );
+        if (exported) {
+          Alert.alert('Exported', `${label} via Apple CIColorCube.\n${exported}`);
+          return;
+        }
+      } catch {
+        // fall through to scaffold message
+      }
+    }
+    showExportAlert(label);
   }
 
   if (!imageUri) {

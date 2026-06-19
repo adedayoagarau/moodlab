@@ -12,7 +12,8 @@ import {
 } from '@shopify/react-native-skia';
 import { skinProtectionMultiplier } from '@moodlab/shared';
 
-import { getLutShaderSource, getLutStripTexture } from '@/lib/lut-cache';
+import { detectFaceRegion, type FaceRegion, DEFAULT_FACE_REGION } from '@/lib/face-region';
+import { getLutGpuTexture, getLutShaderSource, LUT_TEX_SIZE } from '@/lib/lut-cache';
 
 type Props = {
   imageUri: string;
@@ -37,31 +38,38 @@ export function LutSkiaViewport({
 }: Props) {
   const photo = useImage(imageUri);
   const [layout, setLayout] = useState({ width: 0, height: 0 });
-  const [lutStrip, setLutStrip] = useState<{
-    size: number;
-    width: number;
-    height: number;
-    rgba: Uint8Array;
-  } | null>(null);
+  const [lutTex, setLutTex] = useState<Awaited<ReturnType<typeof getLutGpuTexture>> | null>(null);
   const [lutError, setLutError] = useState(false);
+  const [faceRegion, setFaceRegion] = useState<FaceRegion>(DEFAULT_FACE_REGION);
+
+  useEffect(() => {
+    if (!imageUri || showOriginal) return;
+    let cancelled = false;
+    detectFaceRegion(imageUri).then((region) => {
+      if (!cancelled) setFaceRegion(region);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [imageUri, showOriginal]);
 
   useEffect(() => {
     if (!lutId || showOriginal) {
-      setLutStrip(null);
+      setLutTex(null);
       setLutError(false);
       return;
     }
     let cancelled = false;
-    getLutStripTexture(lutId)
-      .then((strip) => {
+    getLutGpuTexture(lutId)
+      .then((tex) => {
         if (!cancelled) {
-          setLutStrip(strip);
+          setLutTex(tex);
           setLutError(false);
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setLutStrip(null);
+          setLutTex(null);
           setLutError(true);
         }
       });
@@ -71,28 +79,22 @@ export function LutSkiaViewport({
   }, [lutId, showOriginal]);
 
   const lutSkImage = useMemo(() => {
-    if (!lutStrip) return null;
+    if (!lutTex) return null;
     return Skia.Image.MakeImage(
       {
-        width: lutStrip.width,
-        height: lutStrip.height,
+        width: lutTex.width,
+        height: lutTex.height,
         alphaType: AlphaType.Opaque,
         colorType: ColorType.RGBA_8888,
       },
-      Skia.Data.fromBytes(lutStrip.rgba),
-      lutStrip.width * 4,
+      Skia.Data.fromBytes(lutTex.rgba),
+      lutTex.width * 4,
     );
-  }, [lutStrip]);
+  }, [lutTex]);
 
   const shaderEffect = useMemo(() => Skia.RuntimeEffect.Make(getLutShaderSource()), []);
 
   const skinStrength = lutStrength * faceLutStrength * skinProtectionMultiplier(skinProtection);
-
-  // Normalized face band — approximate portrait region for skin-safe LUT.
-  const faceX = 0.2;
-  const faceY = 0.22;
-  const faceW = 0.6;
-  const faceH = 0.38;
 
   function onLayout(e: LayoutChangeEvent) {
     const { width, height } = e.nativeEvent.layout;
@@ -108,7 +110,7 @@ export function LutSkiaViewport({
     shaderEffect &&
     layout.width > 0 &&
     layout.height > 0 &&
-    lutStrip &&
+    lutTex &&
     !lutError;
 
   return (
@@ -121,13 +123,16 @@ export function LutSkiaViewport({
               uniforms={{
                 strength: lutStrength,
                 skinStrength,
-                lutSize: lutStrip.size,
+                lutSize: lutTex.size,
+                gridDim: lutTex.gridDim,
                 imageWidth: layout.width,
                 imageHeight: layout.height,
-                faceX,
-                faceY,
-                faceW,
-                faceH,
+                lutWidth: LUT_TEX_SIZE,
+                lutHeight: LUT_TEX_SIZE,
+                faceX: faceRegion.x,
+                faceY: faceRegion.y,
+                faceW: faceRegion.width,
+                faceH: faceRegion.height,
               }}>
               <ImageShader
                 image={photo}
@@ -140,8 +145,8 @@ export function LutSkiaViewport({
                 rect={{
                   x: 0,
                   y: 0,
-                  width: lutStrip.width,
-                  height: lutStrip.height,
+                  width: lutTex.width,
+                  height: lutTex.height,
                 }}
               />
             </Shader>

@@ -2,26 +2,51 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { GlassPanel } from '@/components/GlassPanel';
 import { API_BASE_URL } from '@/lib/config';
+import { useIntegrationsBootstrap } from '@/lib/use-integrations-bootstrap';
 import { theme } from '@/constants/theme';
 
 export default function ProfileScreen() {
+  const integrations = useIntegrationsBootstrap();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
+
       <GlassPanel>
         <Text style={styles.label}>Platform API</Text>
         <Text style={styles.mono}>{API_BASE_URL}</Text>
-        <Text style={styles.body}>
-          V1 uses local editing + cloud catalog. Accounts, RevenueCat entitlements, and Supabase sync
-          land in the next platform milestone — see docs/architecture/.
-        </Text>
       </GlassPanel>
+
       <GlassPanel style={styles.card}>
-        <Text style={styles.label}>Product docs</Text>
-        <Text style={styles.body}>
-          Master blueprint, UI spec, and E2E architecture live in docs/product, docs/design, and
-          docs/architecture.
-        </Text>
+        <Text style={styles.label}>Integration stack</Text>
+        {integrations ? (
+          <>
+            <Text style={styles.row}>
+              Skia GPU LUT: {integrations.skia ? '✓' : '—'}
+            </Text>
+            <Text style={styles.row}>
+              ML Kit faces: {integrations.mlKit ? '✓ (dev build)' : '—'}
+            </Text>
+            <Text style={styles.row}>
+              Vision / CIColorCube: {integrations.visionNative ? '✓' : 'iOS dev build'}
+            </Text>
+            <Text style={styles.row}>
+              Supabase: {integrations.supabase ? '✓ configured' : 'add keys to .env'}
+            </Text>
+            <Text style={styles.row}>
+              RevenueCat: {integrations.revenueCat ? '✓ configured' : 'add iOS key to .env'}
+            </Text>
+          </>
+        ) : (
+          <Text style={styles.body}>Loading integrations…</Text>
+        )}
+      </GlassPanel>
+
+      <GlassPanel style={styles.card}>
+        <Text style={styles.label}>References wired in app</Text>
+        {integrations?.references.map((ref) => (
+          <Text key={ref} style={styles.refItem}>{ref}</Text>
+        ))}
       </GlassPanel>
     </View>
   );
@@ -55,6 +80,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     color: theme.color.text.secondary,
+  },
+  row: {
+    fontSize: 14,
+    color: theme.color.text.secondary,
+    marginBottom: 4,
+  },
+  refItem: {
+    fontSize: 13,
+    color: theme.color.text.muted,
+    marginBottom: 4,
   },
   card: {
     marginTop: 4,
