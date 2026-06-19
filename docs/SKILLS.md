@@ -68,9 +68,15 @@ npx skills list -g
 
 - `.cursor/rules/moodlab-fullstack.mdc` — monorepo conventions
 - `.cursor/rules/mobile-development.mdc` — React Native, Flutter, Expo patterns
-- `.cursor/rules/lut-developer.mdc` — LUT Developer Agent (authoring, validation, skin-safe grading)
+- `.cursor/rules/lut-developer.mdc` — LUT path context when editing LUT files
 
-## MoodLab domain skills (committed template)
+## Cursor subagents (committed)
+
+- [`.cursor/agents/lut-developer.md`](.cursor/agents/lut-developer.md) — **LUT Developer Agent** (invoke in Cursor Agent mode)
+
+Ask Agent: *"Use the lut-developer subagent to create…"* or see [`docs/agents/CURSOR_LUT_WORKFLOW.md`](docs/agents/CURSOR_LUT_WORKFLOW.md).
+
+## MoodLab domain skills (optional)
 
 LUT Developer skill template lives in-repo at `skills/moodlab-lut-developer/`. Install globally:
 

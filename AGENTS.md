@@ -69,8 +69,10 @@ Agent skills are installed globally (`~/.agents/skills`). See `docs/SKILLS.md`. 
 
 ## Specialized agents
 
-| Agent | Doc | Rule |
-|-------|-----|------|
-| LUT Developer | `docs/agents/LUT_DEVELOPER.md` | `.cursor/rules/lut-developer.mdc` |
+| Agent | Cursor subagent | Doc |
+|-------|-----------------|-----|
+| LUT Developer | [`.cursor/agents/lut-developer.md`](.cursor/agents/lut-developer.md) | [`docs/agents/LUT_DEVELOPER.md`](docs/agents/LUT_DEVELOPER.md) |
 
-LUT authoring: edit `data/lut_registry.yaml` → `pnpm lut:generate` → `pnpm lut:validate` → `pnpm lut:sync-catalog`. Visual QA: `docs/agents/LUT_QA_CHECKLIST.md`.
+**Use in Cursor:** Ask Agent to delegate to `lut-developer`, or say *"Act as the LUT Developer"*. Full workflow: [`docs/agents/CURSOR_LUT_WORKFLOW.md`](docs/agents/CURSOR_LUT_WORKFLOW.md).
+
+LUT authoring: edit `data/lut_registry.yaml` → `pnpm lut:generate` → `pnpm lut:validate` → `pnpm lut:sync-catalog` → app picks up via API.
