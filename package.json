@@ -1,0 +1,21 @@
+{
+  "name": "moodlab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MoodLab — mobile app and API for exploring mood, tone, and emotional resonance in language",
+  "scripts": {
+    "dev": "pnpm run --parallel dev:api dev:mobile",
+    "dev:mobile": "pnpm --filter @moodlab/mobile start",
+    "dev:api": "pnpm --filter @moodlab/api dev",
+    "android": "pnpm --filter @moodlab/mobile android",
+    "ios": "pnpm --filter @moodlab/mobile ios",
+    "web": "pnpm --filter @moodlab/mobile web",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=20"
+  }
+}

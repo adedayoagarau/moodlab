@@ -1,0 +1,43 @@
+---
+name: moodlab-fullstack
+description: MoodLab monorepo conventions for Expo mobile app, Hono API, and shared TypeScript packages. Apply when editing apps/mobile, apps/api, or packages/shared.
+globs:
+  - "apps/mobile/**"
+  - "apps/api/**"
+  - "packages/shared/**"
+alwaysApply: false
+---
+
+# MoodLab full-stack mobile
+
+## Monorepo
+
+- **pnpm workspaces** — install from repo root; never add duplicate deps without checking workspace packages
+- **Shared types** — `MoodEntry`, validation, and API contracts live in `@moodlab/shared`
+- **Mobile** — `@moodlab/mobile` (Expo Router, TypeScript)
+- **API** — `@moodlab/api` (Hono, in-memory store until persistence is added)
+
+## Mobile (Expo)
+
+- Use Expo Router file-based routing under `apps/mobile/app/`
+- API calls go through `apps/mobile/lib/api.ts`; base URL from `EXPO_PUBLIC_API_URL`
+- Prefer `FlatList` for lists; handle loading and error states
+- Support light/dark via existing themed components
+- Run `pnpm --filter @moodlab/mobile typecheck` after TS changes
+
+## API (Hono)
+
+- REST under `/api/v1/`; JSON responses as `{ data }` or `{ error }`
+- Validate inputs with `@moodlab/shared` validators
+- Keep handlers thin; persistence in `store.ts` (replace with DB module later)
+- CORS enabled for Expo web and dev clients
+
+## Testing
+
+- `packages/shared` and `apps/api` use Vitest
+- Add mobile tests with Jest/RTL or Maestro when features stabilize
+
+## Skills & rules
+
+- Mobile platform rules: `.cursor/rules/mobile-development.mdc`
+- Flutter/Android/iOS agent skills: installed globally — see `docs/SKILLS.md`

@@ -1,0 +1,130 @@
+---
+name: mobile-development
+description: Mobile development rules for React Native, Flutter, Expo, and native iOS/Android. Apply when editing mobile app code, navigation, platform APIs, or mobile project structure.
+globs:
+  - "**/android/**"
+  - "**/ios/**"
+  - "**/*.native.{js,jsx,ts,tsx}"
+  - "**/app.json"
+  - "**/App.{js,jsx,ts,tsx}"
+  - "**/pubspec.yaml"
+  - "**/expo-env.d.ts"
+alwaysApply: false
+---
+
+# CURSOR IDE Rules for Mobile Development
+
+Source: [araguaci/cursor-skills](https://github.com/araguaci/cursor-skills) — [cursor-skills.vercel.app/mobile](https://cursor-skills.vercel.app/mobile/)
+
+Templates and examples: `.cursor/resources/araguaci-cursor-skills/mobile/`
+
+## Overview
+
+Rules and best practices for mobile development in Cursor. Covers React Native, Flutter, Expo, and general mobile patterns.
+
+## Environment Setup
+
+### Recommended extensions
+
+- React Native Tools
+- Flutter + Dart
+- Expo Tools
+- Mobile Development tooling
+- Android Studio integration
+
+### Standard project layout
+
+```
+project/
+├── src/
+├── tests/
+├── docs/
+├── assets/
+├── android/
+├── ios/
+├── package.json
+└── .env
+```
+
+### Mandatory requirements
+
+- Follow mobile development principles
+- Use proper error handling
+- Implement testing
+- Use secure communication
+- Follow platform best practices
+
+## Framework guidelines
+
+### React Native
+
+- Follow RN conventions for components and navigation
+- Use built-in APIs and components where appropriate
+- Implement navigation with a maintained library (React Navigation, Expo Router)
+- Use RN testing tools (Jest, React Native Testing Library)
+- Optimize lists (`FlatList`), avoid unnecessary re-renders, profile with Flipper
+
+### Flutter
+
+- Follow widget and state-management conventions
+- Prefer composition over deep widget trees
+- Use `flutter test` and integration tests
+- Set `dart.flutterSdkPath` in workspace settings when needed
+
+### Expo
+
+- Prefer managed workflow unless bare workflow is required
+- Use `expo-dev-client` for custom native code
+- Follow EAS Build/Update practices for deployment
+- Keep `app.json` / `app.config` consistent with native projects
+
+## Code quality
+
+- Consistent naming and formatting (Prettier, ESLint, `dart format`)
+- Document components, APIs, deployment, and troubleshooting
+- Minimum 80% test coverage target for critical paths
+- Unit, integration, and E2E tests for user journeys
+
+## Security
+
+- Validate all inputs; sanitize before processing
+- Encrypt sensitive local data; use secure storage (Keychain, Keystore)
+- HTTPS for all network traffic
+- Follow OWASP mobile guidelines
+- Proper auth and authorization on API calls
+
+## Performance
+
+- Optimize images (WebP, lazy loading, caching)
+- Lazy-load screens and heavy modules
+- Monitor memory and bundle size
+- Use platform-specific optimizations when needed
+- Profile before optimizing
+
+## Platform considerations
+
+- Test on both iOS and Android
+- Use platform-specific code only when necessary (`Platform.select`, `.ios.tsx` / `.android.tsx`)
+- Follow Apple HIG and Material Design where applicable
+- Test multiple screen sizes and orientations
+
+## Deployment & CI/CD
+
+- Environment-specific config via env vars, not hardcoded secrets
+- Automate test + build in CI
+- Use feature flags or staged rollouts for risky changes
+- Monitor crashes and performance in production
+
+## Reference material
+
+| Resource | Path |
+|----------|------|
+| Rules (full) | `.cursor/resources/araguaci-cursor-skills/mobile/CURSOR.md` |
+| Analysis (PT) | `.cursor/resources/araguaci-cursor-skills/mobile/README.md` |
+| React Native starter | `.cursor/resources/araguaci-cursor-skills/mobile/templates/react-native-starter/` |
+| Flutter starter | `.cursor/resources/araguaci-cursor-skills/mobile/templates/flutter-starter/` |
+| Expo starter | `.cursor/resources/araguaci-cursor-skills/mobile/templates/expo-starter/` |
+| Native starter | `.cursor/resources/araguaci-cursor-skills/mobile/templates/native-starter/` |
+| Expo camera example | `.cursor/resources/araguaci-cursor-skills/mobile/examples/expo-camera-example/` |
+| Flutter widget example | `.cursor/resources/araguaci-cursor-skills/mobile/examples/flutter-widget-example/` |
+| RN navigation example | `.cursor/resources/araguaci-cursor-skills/mobile/examples/react-native-navigation-example/` |

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Agent skills (install globally or via docs/SKILLS.md — do not commit skill blobs)
+.agents/
+skills-lock.json
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+ios/Pods/
+android/.gradle/
+android/app/build/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS & editors
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.idea/
+.vscode/*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+
+# Misc
+.turbo/
+.cache/

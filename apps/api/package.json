@@ -1,0 +1,25 @@
+{
+  "name": "@moodlab/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "echo \"No linter configured yet\""
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.4",
+    "@moodlab/shared": "workspace:*",
+    "hono": "^4.7.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "tsx": "^4.19.4",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.0"
+  }
+}

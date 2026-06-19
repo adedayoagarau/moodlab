@@ -1,49 +1,88 @@
 # MoodLab
 
-A lab for exploring **mood**, **tone**, and **emotional resonance** in language — at the intersection of poetry and product content.
+A full-stack mobile lab for exploring **mood**, **tone**, and **emotional resonance** in language — at the intersection of poetry and product content.
 
-MoodLab is an early-stage project by [Adedayo Agarau](https://github.com/adedayoagarau): poet, content designer, and builder of AI tools for UX writing. The goal is to make mood legible in text — how a line feels, how tone shifts across a flow, and how emotional register shapes trust, clarity, and belonging.
+Built by [Adedayo Agarau](https://github.com/adedayoagarau): poet, content designer, and builder of AI tools for UX writing.
 
-## Why MoodLab
+## Stack
 
-Content designers routinely ask whether copy *sounds right*. Poets ask whether a line *feels true*. MoodLab brings those questions into the same workspace:
+| Layer | Tech |
+|-------|------|
+| Mobile | Expo SDK 56, Expo Router, React Native, TypeScript |
+| API | Hono, Node.js, TypeScript |
+| Shared | `@moodlab/shared` — types, mood tags, validation |
+| Monorepo | pnpm workspaces |
 
-- **Analyze** how mood and tone read across microcopy, dialogue, and longer-form text
-- **Compare** emotional register before and after edits
-- **Experiment** with prompts, agents, and scoring tools for tone-aware writing
+## Repository structure
 
-Related work from this author:
+```
+moodlab/
+├── apps/
+│   ├── mobile/          # Expo app — journal + mood exploration
+│   └── api/             # REST API for mood entries
+├── packages/
+│   └── shared/          # Shared TypeScript contracts
+├── .cursor/rules/       # Cursor rules for mobile full-stack work
+├── docs/SKILLS.md       # Agent skills setup (global install)
+└── AGENTS.md            # Context for AI coding assistants
+```
 
-- [cd-agency](https://github.com/adedayoagarau/cd-agency) — Content Design agent agency with tone evaluation and voice scoring
-- [content-design-prompt-library](https://github.com/adedayoagarau/content-design-prompt-library) — Prompt library for UX writing and content design
+## Quick start
 
-## Status
-
-**Early development.** The repository is being set up. APIs, tooling, and examples will land here as the project takes shape.
-
-## Getting started
-
-Clone the repository:
+**Requirements:** Node.js 20+, pnpm 9+, optional Android Studio / Xcode for native simulators.
 
 ```bash
 git clone https://github.com/adedayoagarau/moodlab.git
 cd moodlab
+pnpm install
+
+# Copy env and adjust if needed
+cp .env.example .env
+
+# Run API + mobile together
+pnpm dev
 ```
 
-Watch this repo for updates, or open an issue if you want to collaborate or suggest direction.
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | API (`:8787`) + Expo dev server |
+| `pnpm dev:api` | API only |
+| `pnpm dev:mobile` | Expo only |
+| `pnpm android` / `pnpm ios` / `pnpm web` | Platform targets |
+| `pnpm typecheck` | TypeScript across all packages |
+| `pnpm test` | Vitest (shared + API) |
 
-## Contributing
+### API endpoints
 
-Contributions are welcome once the project structure is in place. For now, feel free to:
+- `GET /health` — service health
+- `GET /api/v1/moods` — list journal entries
+- `POST /api/v1/moods` — create entry `{ text, moodTag?, toneNotes? }`
+- `PATCH /api/v1/moods/:id` — update entry
+- `DELETE /api/v1/moods/:id` — delete entry
 
-- Open issues with ideas, use cases, or references
-- Share examples of mood/tone analysis you would find useful
-- Propose experiments that bridge poetry and product content
+### Mobile configuration
+
+Set `EXPO_PUBLIC_API_URL` in `.env` or `apps/mobile/.env` (default `http://localhost:8787`).
+
+For physical devices, use your machine's LAN IP instead of `localhost`.
+
+## Cursor & agent skills
+
+This repo is configured for **mobile full-stack development** in Cursor:
+
+- `.cursor/rules/moodlab-fullstack.mdc` — monorepo conventions
+- `.cursor/rules/mobile-development.mdc` — Expo / RN / Flutter patterns
+- Agent skills (Flutter, Expo, iOS, Android, testing) — install globally; see [docs/SKILLS.md](docs/SKILLS.md)
+
+## Related work
+
+- [cd-agency](https://github.com/adedayoagarau/cd-agency) — Content Design agent agency
+- [content-design-prompt-library](https://github.com/adedayoagarau/content-design-prompt-library) — UX writing prompts
 
 ## Author
 
-**Adedayo Agarau** — poet and content designer. [GitHub](https://github.com/adedayoagarau) · [Twitter](https://twitter.com/adedayoagarau)
+**Adedayo Agarau** — [GitHub](https://github.com/adedayoagarau) · [Twitter](https://twitter.com/adedayoagarau)
 
 ## License
 
-License to be determined. Check back as the project matures.
+MIT (pending formal LICENSE file)
