@@ -4,15 +4,36 @@ Cursor agent skills are installed **globally** on this machine (`~/.agents/skill
 
 ## Superpowers (workflow)
 
+Install the full pack (14 skills):
+
+```bash
+npx skills add obra/superpowers -g -y --agent cursor
+```
+
+Or a single skill:
+
 ```bash
 npx skills add obra/superpowers --skill using-superpowers -g -y --agent cursor
 ```
 
 | Skill | Purpose |
 |-------|---------|
-| `using-superpowers` | Invoke relevant skills before acting; process vs implementation skill priority |
+| `using-superpowers` | Invoke relevant skills before acting; skill priority rules |
+| `brainstorming` | Explore intent and design before implementation |
+| `writing-plans` | Multi-step implementation plans |
+| `executing-plans` | Execute plans in batches with checkpoints |
+| `subagent-driven-development` | Dispatch subagents for plan steps |
+| `dispatching-parallel-agents` | Parallel subagent workflows |
+| `test-driven-development` | RED-GREEN-REFACTOR discipline |
+| `systematic-debugging` | Structured root-cause debugging |
+| `verification-before-completion` | Verify before claiming done |
+| `requesting-code-review` | Pre-review checklist before asking for review |
+| `receiving-code-review` | How to handle review feedback |
+| `using-git-worktrees` | Isolated branches/worktrees for features |
+| `finishing-a-development-branch` | Merge/PR/cleanup when feature is done |
+| `writing-skills` | Author new agent skills |
 
-Source: [obra/superpowers](https://github.com/obra/superpowers/blob/main/skills/using-superpowers/SKILL.md)
+Source: [obra/superpowers](https://github.com/obra/superpowers)
 
 ## Restore mobile-focused skills
 
