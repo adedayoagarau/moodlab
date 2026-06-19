@@ -1,9 +1,9 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { LutThumbnail } from '@/components/editor/LutThumbnail';
 import { StrengthSlider } from '@/components/editor/StrengthSlider';
 import { theme } from '@/constants/theme';
 import type { LutDefinition } from '@moodlab/shared';
-import { getLutPreviewTint } from '@/lib/render-preview';
 
 type Props = {
   luts: LutDefinition[];
@@ -34,18 +34,13 @@ export function MoodPanel({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.carousel}
         renderItem={({ item }) => {
-          const tint = getLutPreviewTint(item);
           const selected = item.id === selectedId;
           const locked = item.plan === 'pro' && !isPro;
           return (
             <Pressable
               style={[styles.lutCard, selected && styles.lutCardSelected, locked && styles.lutCardLocked]}
               onPress={() => (locked ? onLockedLutPress(item) : onSelectLut(item))}>
-              <View
-                style={[
-                  styles.swatch,
-                  { backgroundColor: tint?.overlay ?? theme.color.accent.gold },
-                ]} />
+              <LutThumbnail lut={item} />
               {locked ? <View style={styles.lockOverlay}><Text style={styles.lockText}>🔒</Text></View> : null}
               <Text style={styles.lutName} numberOfLines={1}>{item.name}</Text>
               {item.plan === 'pro' ? <Text style={styles.proBadge}>PRO</Text> : null}
@@ -91,12 +86,6 @@ const styles = StyleSheet.create({
   },
   lutCardLocked: {
     opacity: 0.85,
-  },
-  swatch: {
-    width: 56,
-    height: 56,
-    borderRadius: theme.radius.sm,
-    marginBottom: 6,
   },
   lockOverlay: {
     position: 'absolute',

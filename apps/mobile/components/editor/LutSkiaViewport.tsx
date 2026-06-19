@@ -12,14 +12,11 @@ import {
   useImage,
   type CanvasRef,
 } from '@shopify/react-native-skia';
-import {
-  shaderAdjustmentUniforms,
-  skinProtectionMultiplier,
-  type AdjustmentStack,
-  type BeautySettings,
-} from '@moodlab/shared';
+import type { AdjustmentStack, BeautySettings } from '@moodlab/shared';
 
+import { DEFAULT_FACE_REGION, type FaceRegion } from '@/lib/face-region';
 import { getLutShaderSource, getLutStripTexture } from '@/lib/lut-cache';
+import { buildLutShaderUniforms } from '@/lib/shader-uniforms';
 
 type Props = {
   imageUri: string;
@@ -29,6 +26,7 @@ type Props = {
   beauty?: BeautySettings;
   skinProtection?: 'off' | 'low' | 'medium' | 'high';
   faceLutStrength?: number;
+  faceRegion?: FaceRegion;
   showOriginal?: boolean;
   style?: ViewStyle;
   children?: ReactNode;
@@ -43,6 +41,7 @@ export function LutSkiaViewport({
   beauty = {},
   skinProtection = 'medium',
   faceLutStrength = 0.55,
+  faceRegion = DEFAULT_FACE_REGION,
   showOriginal = false,
   style,
   children,
@@ -101,16 +100,30 @@ export function LutSkiaViewport({
 
   const shaderEffect = useMemo(() => Skia.RuntimeEffect.Make(getLutShaderSource()), []);
 
-  const skinStrength = lutStrength * faceLutStrength * skinProtectionMultiplier(skinProtection);
-  const postFx = useMemo(
-    () => shaderAdjustmentUniforms(adjustments, beauty),
-    [adjustments, beauty],
-  );
-
-  const faceX = 0.2;
-  const faceY = 0.22;
-  const faceW = 0.6;
-  const faceH = 0.38;
+  const shaderUniforms = useMemo(() => {
+    if (!lutStrip || layout.width === 0) {
+      return null;
+    }
+    return buildLutShaderUniforms({
+      lutStrength,
+      lutSize: lutStrip.size,
+      canvasWidth: layout.width,
+      canvasHeight: layout.height,
+      face: faceRegion,
+      adjustments,
+      beauty: { ...beauty, skinProtection, faceLutStrength },
+    });
+  }, [
+    adjustments,
+    beauty,
+    faceLutStrength,
+    faceRegion,
+    layout.height,
+    layout.width,
+    lutStrength,
+    lutStrip,
+    skinProtection,
+  ]);
 
   function onLayout(e: LayoutChangeEvent) {
     const { width, height } = e.nativeEvent.layout;
@@ -124,23 +137,11 @@ export function LutSkiaViewport({
     photo &&
     lutSkImage &&
     shaderEffect &&
+    shaderUniforms &&
     layout.width > 0 &&
     layout.height > 0 &&
     lutStrip &&
     !lutError;
-
-  const shaderUniforms = {
-    strength: lutStrength,
-    skinStrength,
-    lutSize: lutStrip?.size ?? 33,
-    imageWidth: layout.width,
-    imageHeight: layout.height,
-    faceX,
-    faceY,
-    faceW,
-    faceH,
-    ...postFx,
-  };
 
   return (
     <View style={[styles.container, style]} onLayout={onLayout}>

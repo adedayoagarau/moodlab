@@ -8,7 +8,9 @@ import {
 } from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 
-import { EXPORT_PRESETS, type ExportPresetId } from '@moodlab/shared';
+import type { FaceRegion } from '@/lib/face-region';
+import { renderRecipeToPngBytes } from '@/lib/render-recipe-export';
+import { EXPORT_PRESETS, type EditRecipe, type ExportPresetId } from '@moodlab/shared';
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = '';
@@ -19,14 +21,54 @@ function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-export async function shareCanvasExport(
-  canvasRef: RefObject<CanvasRef | null>,
+async function writePngAndShare(outPath: string, pngBytes: Uint8Array, presetLabel: string) {
+  await writeAsStringAsync(outPath, bytesToBase64(pngBytes), {
+    encoding: EncodingType.Base64,
+  });
+
+  if (Platform.OS === 'web') {
+    Alert.alert('Export ready', `${presetLabel} saved (${pngBytes.length} bytes).`);
+    return;
+  }
+
+  const canShare = await Sharing.isAvailableAsync();
+  if (!canShare) {
+    Alert.alert('Export saved', `${presetLabel} saved to cache.`);
+    return;
+  }
+
+  await Sharing.shareAsync(outPath, {
+    mimeType: 'image/png',
+    dialogTitle: `Share ${presetLabel}`,
+  });
+}
+
+export async function shareRecipeExport(
+  imageUri: string,
+  recipe: EditRecipe,
   presetId: ExportPresetId,
+  face: FaceRegion,
+  canvasRef?: RefObject<CanvasRef | null>,
 ): Promise<void> {
   const preset = EXPORT_PRESETS[presetId];
-  const snapshot = canvasRef.current?.makeImageSnapshot();
+  const filename = `moodlab-${presetId}-${Date.now()}.png`;
+  const outPath = `${cacheDirectory ?? ''}${filename}`;
+
+  try {
+    const pngBytes = await renderRecipeToPngBytes(imageUri, recipe, presetId, face);
+    await writePngAndShare(
+      outPath,
+      pngBytes,
+      `${preset.label} (${preset.width}×${preset.height})`,
+    );
+    return;
+  } catch {
+    // Fall back to preview-resolution canvas capture
+  }
+
+  const snapshot = canvasRef?.current?.makeImageSnapshot();
   if (!snapshot) {
-    throw new Error('Could not capture editor preview — try again after the image loads');
+    throw new Error('Export failed — ensure the image and mood are loaded');
   }
 
   const pngBytes = snapshot.encodeToBytes();
@@ -34,28 +76,9 @@ export async function shareCanvasExport(
     throw new Error('PNG encode failed');
   }
 
-  const filename = `moodlab-${presetId}-${Date.now()}.png`;
-  const outPath = `${cacheDirectory ?? ''}${filename}`;
-  await writeAsStringAsync(outPath, bytesToBase64(pngBytes), {
-    encoding: EncodingType.Base64,
-  });
-
-  if (Platform.OS === 'web') {
-    Alert.alert(
-      'Export ready',
-      `${preset.label} captured at preview resolution (${snapshot.width()}×${snapshot.height()}). Full ${preset.width}×${preset.height} export ships with RenderCore.`,
-    );
-    return;
-  }
-
-  const canShare = await Sharing.isAvailableAsync();
-  if (!canShare) {
-    Alert.alert('Export saved', `${preset.label} saved to cache.`);
-    return;
-  }
-
-  await Sharing.shareAsync(outPath, {
-    mimeType: 'image/png',
-    dialogTitle: `Share ${preset.label}`,
-  });
+  await writePngAndShare(
+    outPath,
+    pngBytes,
+    `${preset.label} (preview ${snapshot.width()}×${snapshot.height()})`,
+  );
 }

@@ -21,7 +21,8 @@ import { TextPanel } from '@/components/editor/TextPanel';
 import { theme } from '@/constants/theme';
 import { fetchLuts, fetchManifest, saveProject } from '@/lib/api';
 import { hasProEntitlement, unlockProDemo } from '@/lib/entitlements';
-import { shareCanvasExport } from '@/lib/export-image';
+import { shareRecipeExport } from '@/lib/export-image';
+import { detectFaceRegion, DEFAULT_FACE_REGION, type FaceRegion } from '@/lib/face-region';
 import { saveLocalProject } from '@/lib/local-projects';
 import {
   DEFAULT_EDIT_RECIPE,
@@ -34,7 +35,7 @@ import {
 const WORKFLOW_LUTS: Record<string, string> = {
   'beat-cover': 'afrobeat-warm-cover',
   'artist-release': 'film-memory-gold',
-  portrait: 'melanin-gold',
+  portrait: 'sunny-cover-glow',
   thumbnail: 'street-flash',
 };
 
@@ -62,6 +63,12 @@ export default function EditorScreen() {
   const [exporting, setExporting] = useState(false);
   const [isPro, setIsPro] = useState(false);
   const [paywallLut, setPaywallLut] = useState<LutDefinition | null>(null);
+  const [faceRegion, setFaceRegion] = useState<FaceRegion>(DEFAULT_FACE_REGION);
+
+  useEffect(() => {
+    if (!imageUri) return;
+    detectFaceRegion(imageUri).then(setFaceRegion);
+  }, [imageUri]);
 
   useEffect(() => {
     hasProEntitlement().then(setIsPro);
@@ -188,7 +195,7 @@ export default function EditorScreen() {
   async function handleExport(presetId: ExportPresetId) {
     setExporting(true);
     try {
-      await shareCanvasExport(canvasRef, presetId);
+      await shareRecipeExport(imageUri, recipe, presetId, faceRegion, canvasRef);
     } catch (e) {
       Alert.alert('Export failed', e instanceof Error ? e.message : 'Could not export');
     } finally {
@@ -238,6 +245,7 @@ export default function EditorScreen() {
           beauty={recipe.beauty}
           skinProtection={recipe.beauty.skinProtection}
           faceLutStrength={recipe.beauty.faceLutStrength}
+          faceRegion={faceRegion}
           showOriginal={showOriginal}
           style={styles.viewport}>
           {recipe.textLayers.map((layer) => (

@@ -1,28 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { GlassPanel } from '@/components/GlassPanel';
-import { API_BASE_URL } from '@/lib/config';
 import { theme } from '@/constants/theme';
+import { resetOnboarding } from '@/lib/onboarding';
 
 export default function ProfileScreen() {
+  const router = useRouter();
+
+  async function replayOnboarding() {
+    await resetOnboarding();
+    router.push('/onboarding');
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <GlassPanel>
-        <Text style={styles.label}>Platform API</Text>
-        <Text style={styles.mono}>{API_BASE_URL}</Text>
+        <Text style={styles.label}>MoodLab Pro</Text>
         <Text style={styles.body}>
-          V1 uses local editing + cloud catalog. Accounts, RevenueCat entitlements, and Supabase sync
-          land in the next platform milestone — see docs/architecture/.
+          Unlock premium mood packs, Melanin Gold grades, and creator cover workflows. RevenueCat
+          billing replaces demo unlock before App Store ship.
         </Text>
       </GlassPanel>
       <GlassPanel style={styles.card}>
-        <Text style={styles.label}>Product docs</Text>
+        <Text style={styles.label}>Creator studio</Text>
         <Text style={styles.body}>
-          Master blueprint, UI spec, and E2E architecture live in docs/product, docs/design, and
-          docs/architecture.
+          Beat covers, rollout posts, YouTube thumbnails, and portraits — all with skin-safe mood
+          grades and platform export presets.
         </Text>
       </GlassPanel>
+      <Pressable style={styles.linkBtn} onPress={replayOnboarding}>
+        <Text style={styles.linkText}>Replay onboarding</Text>
+      </Pressable>
     </View>
   );
 }
@@ -46,11 +56,6 @@ const styles = StyleSheet.create({
     color: theme.color.text.muted,
     marginBottom: 4,
   },
-  mono: {
-    fontFamily: 'monospace',
-    color: theme.color.text.primary,
-    marginBottom: 8,
-  },
   body: {
     fontSize: 14,
     lineHeight: 22,
@@ -58,5 +63,13 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 4,
+  },
+  linkBtn: {
+    paddingVertical: 12,
+  },
+  linkText: {
+    color: theme.color.accent.gold,
+    fontWeight: '600',
+    fontSize: 15,
   },
 });

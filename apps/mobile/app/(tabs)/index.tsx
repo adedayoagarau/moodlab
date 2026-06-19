@@ -6,6 +6,7 @@ import { GlassPanel } from '@/components/GlassPanel';
 import { PlatformStatusCard } from '@/components/PlatformStatusCard';
 import { theme } from '@/constants/theme';
 import { fetchManifest } from '@/lib/api';
+import { hasCompletedOnboarding } from '@/lib/onboarding';
 import { DEMO_IMAGE_URI, usePlatformStatus } from '@/lib/use-platform-status';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +18,12 @@ export default function HomeScreen() {
   >([]);
 
   useEffect(() => {
+    hasCompletedOnboarding().then((done) => {
+      if (!done) {
+        router.replace('/onboarding');
+      }
+    });
+
     fetchManifest()
       .then((m) => setBuildCards(m.buildMyPost))
       .catch(() =>
@@ -27,7 +34,7 @@ export default function HomeScreen() {
           { id: 'thumbnail', title: 'YouTube Thumbnail', subtitle: '16:9 creator thumb' },
         ]),
       );
-  }, []);
+  }, [router]);
 
   function openEditor(imageUri: string, workflow?: string) {
     router.push({
