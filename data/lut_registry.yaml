@@ -299,3 +299,157 @@ luts:
     metadata:
       defaultStrength: 0.75
       skinProtectionDefault: high
+
+  - id: golden-studio
+    name: Golden Studio
+    packId: melanin-gold
+    categories: [Portrait, Luxury]
+    plan: pro
+    tags: [golden, studio, portrait, skin-safe, melanin]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.14, saturation: 0.05, lift: 0.05, skinProtection: 0.55 }
+    metadata:
+      defaultStrength: 0.74
+      skinProtectionDefault: high
+      recommendedEffects: { glow: 0.14, grain: 0.08 }
+
+  - id: alley-flash
+    name: Alley Flash
+    packId: creator-cover
+    categories: [Streetwear, Viral]
+    plan: pro
+    tags: [street, flash, urban, portrait]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.06, contrast: 0.14, saturation: 0.08 }
+    metadata:
+      defaultStrength: 0.82
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.12, grain: 0.1 }
+
+  - id: block-contrast
+    name: Block Contrast
+    packId: creator-cover
+    categories: [Streetwear]
+    plan: pro
+    tags: [street, contrast, urban]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.04, contrast: 0.18, saturation: 0.04 }
+    metadata:
+      defaultStrength: 0.84
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.1 }
+
+  - id: concrete-drift
+    name: Concrete Drift
+    packId: creator-cover
+    categories: [Streetwear, Cinematic]
+    plan: pro
+    tags: [street, urban, desaturated]
+    grade:
+      type: cool_moody
+      params: { cool: 0.08, saturation: -0.12, lift: -0.02 }
+    metadata:
+      defaultStrength: 0.78
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.12, vignette: 0.1 }
+
+  - id: skate-garage
+    name: Skate Garage
+    packId: creator-cover
+    categories: [Streetwear, Film]
+    plan: pro
+    tags: [street, skate, grit]
+    grade:
+      type: film_fade
+      params: { fade: 0.06, saturation: -0.1, contrast: 0.1, warmth: 0.02 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.16, vignette: 0.12 }
+
+  - id: hype-block
+    name: Hype Block
+    packId: creator-cover
+    categories: [Streetwear, Viral]
+    plan: pro
+    tags: [street, hype, color]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.1, contrast: 0.12, saturation: 0.14 }
+    metadata:
+      defaultStrength: 0.83
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.08, grain: 0.08 }
+
+  - id: urban-punch
+    name: Urban Punch
+    packId: creator-cover
+    categories: [Streetwear]
+    plan: pro
+    tags: [street, urban, punch]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.08, contrast: 0.16, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.81
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.14 }
+
+  - id: grit-alley
+    name: Grit Alley
+    packId: creator-cover
+    categories: [Streetwear, Dark]
+    plan: pro
+    tags: [street, grit, alley]
+    grade:
+      type: film_fade
+      params: { fade: 0.04, saturation: -0.14, contrast: 0.12, warmth: -0.02 }
+    metadata:
+      defaultStrength: 0.79
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.18, vignette: 0.14 }
+
+  - id: muted-street
+    name: Muted Street
+    packId: creator-cover
+    categories: [Streetwear]
+    plan: pro
+    tags: [street, muted, urban]
+    grade:
+      type: cool_moody
+      params: { cool: 0.06, saturation: -0.16, lift: 0.01 }
+    metadata:
+      defaultStrength: 0.76
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.1 }
+
+  - id: flash-raw
+    name: Flash Raw
+    packId: creator-cover
+    categories: [Streetwear, Viral]
+    plan: pro
+    tags: [street, flash, raw]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.05, contrast: 0.15, saturation: 0.05 }
+    metadata:
+      defaultStrength: 0.85
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.12, grain: 0.06 }
+
+  - id: street-hype
+    name: Street Hype
+    packId: creator-cover
+    categories: [Streetwear, Viral]
+    plan: pro
+    tags: [street, hype, viral]
+    grade:
+      type: neon_warm
+      params: { warmth: 0.12, contrast: 0.1, saturation: 0.12 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: medium
+      recommendedEffects: { sharpen: 0.1, grain: 0.08 }

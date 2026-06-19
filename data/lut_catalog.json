@@ -50,6 +50,7 @@
       "lutIds": [
         "afrobeat-warm-cover",
         "brown-editorial",
+        "golden-studio",
         "highlife-soft",
         "luxury-matte-black",
         "melanin-gold",
@@ -68,10 +69,20 @@
       "plan": "pro",
       "coverColor": "#FF7A33",
       "lutIds": [
+        "alley-flash",
         "amapiano-neon-warm",
         "analog-fade",
+        "block-contrast",
+        "concrete-drift",
         "film-memory-gold",
-        "street-flash"
+        "flash-raw",
+        "grit-alley",
+        "hype-block",
+        "muted-street",
+        "skate-garage",
+        "street-flash",
+        "street-hype",
+        "urban-punch"
       ]
     }
   ],
@@ -498,6 +509,256 @@
         "shadow",
         "skin",
         "depth"
+      ]
+    },
+    {
+      "id": "golden-studio",
+      "name": "Golden Studio",
+      "packId": "melanin-gold",
+      "categories": [
+        "Portrait",
+        "Luxury"
+      ],
+      "file": "luts/original/golden-studio.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.74,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.14,
+        "grain": 0.08
+      },
+      "tags": [
+        "golden",
+        "studio",
+        "portrait",
+        "skin-safe",
+        "melanin"
+      ]
+    },
+    {
+      "id": "alley-flash",
+      "name": "Alley Flash",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Viral"
+      ],
+      "file": "luts/original/alley-flash.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.82,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.12,
+        "grain": 0.1
+      },
+      "tags": [
+        "street",
+        "flash",
+        "urban",
+        "portrait"
+      ]
+    },
+    {
+      "id": "block-contrast",
+      "name": "Block Contrast",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear"
+      ],
+      "file": "luts/original/block-contrast.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.84,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.1
+      },
+      "tags": [
+        "street",
+        "contrast",
+        "urban"
+      ]
+    },
+    {
+      "id": "concrete-drift",
+      "name": "Concrete Drift",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Cinematic"
+      ],
+      "file": "luts/original/concrete-drift.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.78,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.12,
+        "vignette": 0.1
+      },
+      "tags": [
+        "street",
+        "urban",
+        "desaturated"
+      ]
+    },
+    {
+      "id": "skate-garage",
+      "name": "Skate Garage",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Film"
+      ],
+      "file": "luts/original/skate-garage.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.8,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.16,
+        "vignette": 0.12
+      },
+      "tags": [
+        "street",
+        "skate",
+        "grit"
+      ]
+    },
+    {
+      "id": "hype-block",
+      "name": "Hype Block",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Viral"
+      ],
+      "file": "luts/original/hype-block.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.83,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.08,
+        "grain": 0.08
+      },
+      "tags": [
+        "street",
+        "hype",
+        "color"
+      ]
+    },
+    {
+      "id": "urban-punch",
+      "name": "Urban Punch",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear"
+      ],
+      "file": "luts/original/urban-punch.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.81,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.14
+      },
+      "tags": [
+        "street",
+        "urban",
+        "punch"
+      ]
+    },
+    {
+      "id": "grit-alley",
+      "name": "Grit Alley",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Dark"
+      ],
+      "file": "luts/original/grit-alley.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.79,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.18,
+        "vignette": 0.14
+      },
+      "tags": [
+        "street",
+        "grit",
+        "alley"
+      ]
+    },
+    {
+      "id": "muted-street",
+      "name": "Muted Street",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear"
+      ],
+      "file": "luts/original/muted-street.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.76,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.1
+      },
+      "tags": [
+        "street",
+        "muted",
+        "urban"
+      ]
+    },
+    {
+      "id": "flash-raw",
+      "name": "Flash Raw",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Viral"
+      ],
+      "file": "luts/original/flash-raw.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.85,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.12,
+        "grain": 0.06
+      },
+      "tags": [
+        "street",
+        "flash",
+        "raw"
+      ]
+    },
+    {
+      "id": "street-hype",
+      "name": "Street Hype",
+      "packId": "creator-cover",
+      "categories": [
+        "Streetwear",
+        "Viral"
+      ],
+      "file": "luts/original/street-hype.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.8,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.1,
+        "grain": 0.08
+      },
+      "tags": [
+        "street",
+        "hype",
+        "viral"
       ]
     }
   ]

@@ -6,7 +6,8 @@ describe('catalog', () => {
     const packs = getPacks();
     expect(packs.length).toBeGreaterThan(0);
     const luts = getLuts();
-    expect(luts.length).toBe(20);
+    expect(luts.length).toBeGreaterThanOrEqual(31);
+    expect(luts.some((l) => l.id === 'golden-studio')).toBe(true);
   });
 
   it('reads cube file for a catalog LUT', () => {
