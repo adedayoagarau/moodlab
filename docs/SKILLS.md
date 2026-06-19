@@ -2,6 +2,18 @@
 
 Cursor agent skills are installed **globally** on this machine (`~/.agents/skills`, symlinked to `~/.cursor/skills`). They are **not** committed to this repository (see `.gitignore`).
 
+## Superpowers (workflow)
+
+```bash
+npx skills add obra/superpowers --skill using-superpowers -g -y --agent cursor
+```
+
+| Skill | Purpose |
+|-------|---------|
+| `using-superpowers` | Invoke relevant skills before acting; process vs implementation skill priority |
+
+Source: [obra/superpowers](https://github.com/obra/superpowers/blob/main/skills/using-superpowers/SKILL.md)
+
 ## Restore mobile-focused skills
 
 From repo root, install curated packages:
