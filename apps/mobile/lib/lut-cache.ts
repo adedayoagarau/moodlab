@@ -1,4 +1,9 @@
 import {
+  cacheDirectory,
+  writeAsStringAsync,
+  getInfoAsync,
+} from 'expo-file-system/legacy';
+import {
   cubeToStripTexture,
   LUT_STRIP_SHADER_SOURCE,
   parseCubeFile,
@@ -43,6 +48,18 @@ export async function getLutStripTexture(lutId: string): Promise<LutImageCache> 
   };
   stripCache.set(lutId, entry);
   return entry;
+}
+
+export async function fetchLutCubePath(lutId: string): Promise<string> {
+  const filename = `${lutId}.cube`;
+  const path = `${cacheDirectory ?? ''}${filename}`;
+  const info = await getInfoAsync(path);
+  if (info.exists) {
+    return path;
+  }
+  const text = await fetchLutCubeText(lutId);
+  await writeAsStringAsync(path, text);
+  return path;
 }
 
 export function getLutShaderSource(): string {

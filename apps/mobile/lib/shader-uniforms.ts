@@ -13,6 +13,7 @@ export type LutShaderUniformMap = {
   lutSize: number;
   imageWidth: number;
   imageHeight: number;
+  useSkinMask: number;
   faceX: number;
   faceY: number;
   faceW: number;
@@ -62,6 +63,7 @@ export function buildLutShaderUniforms(input: {
   geometry: FaceGeometry;
   adjustments?: AdjustmentStack;
   beauty?: BeautySettings;
+  hasSkinMask?: boolean;
 }): LutShaderUniformMap {
   const beauty = input.beauty ?? {};
   const skinProtection = beauty.skinProtection ?? 'medium';
@@ -80,6 +82,7 @@ export function buildLutShaderUniforms(input: {
     lutSize: input.lutSize,
     imageWidth: input.canvasWidth,
     imageHeight: input.canvasHeight,
+    useSkinMask: input.hasSkinMask ? 1 : 0,
     faceX: face.x,
     faceY: face.y,
     faceW: face.w,

@@ -6,9 +6,16 @@ import { theme } from '@/constants/theme';
 import {
   BEAUTY_PRESETS,
   type BeautySettings,
+  type FaceDetectionSource,
 } from '@moodlab/shared';
 
 type BeautyTab = 'auto' | 'skin' | 'face' | 'eyes' | 'lips';
+
+const DETECTION_LABELS: Record<FaceDetectionSource, string> = {
+  vision: 'Apple Vision landmarks',
+  mlkit: 'ML Kit face detection',
+  heuristic: 'Orientation estimate',
+};
 
 const TABS: { id: BeautyTab; label: string }[] = [
   { id: 'auto', label: 'Auto' },
@@ -23,6 +30,8 @@ const SKIN_LEVELS: BeautySettings['skinProtection'][] = ['off', 'low', 'medium',
 type Props = {
   beauty: BeautySettings;
   isPro: boolean;
+  faceDetectionSource?: FaceDetectionSource;
+  hasSkinMask?: boolean;
   onChange: (patch: Partial<BeautySettings>) => void;
   onApplyPreset: (presetId: string) => void;
   onLockedPreset: (presetId: string, name: string) => void;
@@ -31,6 +40,8 @@ type Props = {
 export function BeautyPanel({
   beauty,
   isPro,
+  faceDetectionSource = 'heuristic',
+  hasSkinMask = false,
   onChange,
   onApplyPreset,
   onLockedPreset,
@@ -45,6 +56,10 @@ export function BeautyPanel({
     <View style={styles.container}>
       <Text style={styles.heading}>Beauty Studio</Text>
       <Text style={styles.tagline}>Polished portraits. Protected melanin. Kept texture.</Text>
+      <Text style={styles.detectionBadge}>
+        Face: {DETECTION_LABELS[faceDetectionSource]}
+        {hasSkinMask ? ' · skin mask active' : ''}
+      </Text>
 
       <View style={styles.tabRow}>
         {TABS.map((t) => (
@@ -176,8 +191,10 @@ export function BeautyPanel({
               onChange={(v) => setBeautyKey('underEyeLift', v)}
             />
             <Text style={styles.hint}>
-              Face tools target the detected portrait region. ML Kit segmentation ships in native
-              RenderCore.
+              Face tools use {DETECTION_LABELS[faceDetectionSource].toLowerCase()}.
+              {hasSkinMask
+                ? ' Person segmentation drives skin-safe beauty in preview and native export.'
+                : ' Build with expo prebuild for ML Kit + RenderCore segmentation.'}
             </Text>
           </View>
         ) : null}
@@ -232,7 +249,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.color.text.secondary,
     marginTop: 2,
+    marginBottom: 6,
+  },
+  detectionBadge: {
+    fontSize: 10,
+    color: theme.color.text.muted,
     marginBottom: 10,
+    opacity: 0.85,
   },
   tabRow: {
     flexDirection: 'row',

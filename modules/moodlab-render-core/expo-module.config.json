@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modules": ["MoodlabRenderCoreModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.moodlabrendercore.MoodlabRenderCoreModule"]
+  }
+}

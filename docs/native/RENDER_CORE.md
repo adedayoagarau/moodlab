@@ -1,60 +1,67 @@
-# RenderCore — native LUT pipeline
+# RenderCore — native LUT + beauty pipeline
 
-MoodLab editing must feel **local and instant**. GPU LUT preview runs via **react-native-skia**; full-res export still needs native export path.
-
-Open-source references: `docs/native/OPEN_SOURCE_RESOURCES.md`.
+MoodLab editing must feel **local and instant**. GPU LUT preview runs via **react-native-skia**; full-res export uses native RenderCore when a dev build is installed.
 
 ## Architecture split
 
 | Layer | Responsibility |
 |-------|----------------|
 | **JS (Expo)** | UI, edit recipe, catalog, Skia LUT preview, export orchestration |
-| **Skia (current preview)** | RuntimeShader + strip-packed LUT texture from `@moodlab/lut-engine` |
-| **iOS RenderCore (next)** | Core Image / Metal — `CIColorCube` for full-res export |
-| **Android RenderCore (next)** | AGSL / GPU shaders for full-res export |
+| **Skia (preview)** | RuntimeShader + strip-packed LUT + optional skin mask texture |
+| **moodlab-render-core (iOS)** | Apple Vision landmarks, person segmentation, CIColorCube, bilateral-style beauty |
+| **moodlab-render-core (Android)** | ML Kit face landmarks, selfie segmentation, RenderScript blur |
+| **@react-native-ml-kit/face-detection** | JS fallback when native module unavailable |
 | **lut-engine** | Parse `.cube`, pack GPU texture, SkSL source |
 
-## Current V1 flow
+## Module location
 
-1. Mobile fetches `GET /api/v1/luts/:id/cube`
-2. `parseCubeFile` → `cubeToStripTexture` → Skia `Image.MakeImage`
-3. `LUT_STRIP_SHADER_SOURCE` applies trilinear LUT with strength + face-rect skin protection
-4. Component: `apps/mobile/components/editor/LutSkiaViewport.tsx`
-
-Fallback: if cube fetch fails, editor shows ungraded photo (`render-preview.ts` tint removed from main path).
-
-## iOS direction (export quality)
-
-- Parse `.cube` → `Float32Array` RGB cube (`LUT_3D_SIZE`, domain min/max)
-- Build `CIColorCube` filter with `cubeData` and `cubeDimension`
-- Chain: orientation fix → LUT → adjustments → beauty masks → text overlays → export
-- Face/skin: Vision person segmentation + reduced LUT strength on skin mask
-
-## Android direction
-
-- Load cube into GPU 3D texture or 2D strip layout (same as Skia strip packer)
-- `RenderEffect` + runtime shader where supported
-- ML Kit face landmarks for skin-safe LUT blending
-
-## LUT assets
-
-Original grades live in `luts/original/*.cube` (20 files). Catalog metadata in `data/lut_catalog.json`.
-
-Regenerate stylized placeholders:
-
-```bash
-python3 tools/generate_original_luts.py
+```
+modules/moodlab-render-core/
+  src/index.ts          # JS bridge (autolinked — do NOT add to app.json plugins)
+  ios/                  # Vision + Core Image beauty export
+  android/              # ML Kit + segmentation + blur
 ```
 
-## Export pipeline (to build)
+## Face detection cascade
 
-1. Start from full-resolution source (not preview bitmap)
-2. Apply full recipe stack on native thread
-3. Crop to `EXPORT_PRESETS` dimensions from `@moodlab/shared`
-4. Write JPEG/PNG to app cache → share sheet
+1. **Native RenderCore** — Vision (iOS) or ML Kit (Android) with landmarks → accurate eye/lip zones
+2. **JS ML Kit** — `@react-native-ml-kit/face-detection` in dev client
+3. **Heuristic** — orientation-based estimate (Expo Go / web)
 
-## Do not
+Skin segmentation mask PNG is attached to `FaceGeometry.skinMaskUri` when native segmentation succeeds. The Skia shader uses it via `useSkinMask` for true skin-aware beauty in preview.
 
-- Upload photos to API for normal LUT application
-- Block UI on network for editing
-- Rely on preview-resolution Skia canvas for final export quality
+## Export pipeline
+
+1. Try **native `exportWithBeautyPipeline`** — bilateral-style blur, even tone, shine control, skin-safe CIColorCube
+2. Fall back to **Skia offscreen** at export preset dimensions
+3. Fall back to **preview canvas snapshot**
+
+## Dev build required
+
+Native face detection, segmentation, and RenderCore export **do not run in Expo Go**. Build a dev client:
+
+```bash
+cd apps/mobile
+npx expo prebuild
+npx expo run:ios   # or run:android
+```
+
+**Important:** `moodlab-render-core` is autolinked via Expo modules. Do not list it under `app.json` `plugins` — that breaks config-time loading.
+
+## iOS implementation
+
+- `VNDetectFaceLandmarksRequest` → face / eyes / under-eye / lips zones
+- `VNGeneratePersonSegmentationRequest` → skin mask PNG
+- Beauty: `CIGaussianBlur` + `CIBlendWithMask`, `CINoiseReduction`, highlight compression
+- LUT: `CIColorCube` with skin-safe dissolve using segmentation mask
+
+## Android implementation
+
+- ML Kit Face Detection (`LANDMARK_MODE_ALL`) → geometry
+- ML Kit Selfie Segmentation → skin mask PNG
+- Beauty: `ScriptIntrinsicBlur` masked to skin
+- LUT: ColorMatrix approximation (full `.cube` GPU path is V2)
+
+## Open-source references
+
+See `docs/native/OPEN_SOURCE_RESOURCES.md`.

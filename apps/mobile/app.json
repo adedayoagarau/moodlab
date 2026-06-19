@@ -11,9 +11,11 @@
       "apiUrl": "http://localhost:8787"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.moodlab.app"
     },
     "android": {
+      "package": "com.moodlab.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

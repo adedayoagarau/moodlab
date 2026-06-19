@@ -6,11 +6,13 @@
 export const LUT_STRIP_SHADER_SOURCE = `
 uniform shader image;
 uniform shader lutImage;
+uniform shader skinMaskImage;
 uniform float strength;
 uniform float skinStrength;
 uniform float lutSize;
 uniform float imageWidth;
 uniform float imageHeight;
+uniform float useSkinMask;
 uniform float faceX;
 uniform float faceY;
 uniform float faceW;
@@ -95,6 +97,10 @@ vec4 main(vec2 pos) {
     : vec2(0.0);
 
   float faceWgt = regionWeight(uv, faceX, faceY, faceW, faceH);
+  if (useSkinMask > 0.5) {
+    float maskVal = skinMaskImage.eval(pos).r;
+    faceWgt = max(faceWgt, maskVal);
+  }
   float eyeWgt = regionWeight(uv, eyeX, eyeY, eyeW, eyeH);
   float underEyeWgt = regionWeight(uv, underEyeX, underEyeY, underEyeW, underEyeH);
   float lipWgt = regionWeight(uv, lipX, lipY, lipW, lipH);

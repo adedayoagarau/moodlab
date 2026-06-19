@@ -302,6 +302,8 @@ export default function EditorScreen() {
           <BeautyPanel
             beauty={recipe.beauty}
             isPro={isPro}
+            faceDetectionSource={faceGeometry.source}
+            hasSkinMask={Boolean(faceGeometry.skinMaskUri)}
             onChange={(patch) => updateRecipe({ beauty: { ...recipe.beauty, ...patch } })}
             onApplyPreset={applyBeautyPresetById}
             onLockedPreset={(id, name) => setPaywallBeauty({ id, name })}

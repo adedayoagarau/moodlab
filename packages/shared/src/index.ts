@@ -174,6 +174,11 @@ export {
   DEFAULT_FACE_GEOMETRY,
   DEFAULT_FACE_REGION,
   deriveFaceGeometry,
+  deriveFaceGeometryFromLandmarks,
+  mergeFaceGeometry,
+  type FaceDetectionSource,
   type FaceGeometry,
+  type FaceLandmarkPoint,
+  type FaceLandmarks,
   type FaceRegion,
 } from './face-geometry';

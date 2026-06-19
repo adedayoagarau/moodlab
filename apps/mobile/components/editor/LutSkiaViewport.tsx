@@ -11,6 +11,7 @@ import {
   useCanvasRef,
   useImage,
   type CanvasRef,
+  type SkImage,
 } from '@shopify/react-native-skia';
 import type { AdjustmentStack, BeautySettings } from '@moodlab/shared';
 
@@ -53,6 +54,7 @@ export function LutSkiaViewport({
   const internalCanvasRef = useCanvasRef();
   const activeCanvasRef = canvasRef ?? internalCanvasRef;
   const photo = useImage(imageUri);
+  const skinMask = useImage(faceGeometry.skinMaskUri ?? null);
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [lutStrip, setLutStrip] = useState<{
     size: number;
@@ -115,6 +117,7 @@ export function LutSkiaViewport({
       geometry: faceGeometry,
       adjustments,
       beauty: { ...beauty, skinProtection, faceLutStrength },
+      hasSkinMask: Boolean(faceGeometry.skinMaskUri && skinMask),
     });
   }, [
     adjustments,
@@ -125,6 +128,7 @@ export function LutSkiaViewport({
     layout.width,
     lutStrength,
     lutStrip,
+    skinMask,
     skinProtection,
   ]);
 
@@ -146,6 +150,8 @@ export function LutSkiaViewport({
     lutStrip &&
     !lutError;
 
+  const maskShaderImage: SkImage | null = skinMask ?? photo;
+
   return (
     <View style={[styles.container, style]} onLayout={onLayout}>
       {canRenderLut ? (
@@ -166,6 +172,11 @@ export function LutSkiaViewport({
                   width: lutStrip.width,
                   height: lutStrip.height,
                 }}
+              />
+              <ImageShader
+                image={maskShaderImage}
+                fit="contain"
+                rect={{ x: 0, y: 0, width: layout.width, height: layout.height }}
               />
             </Shader>
           </Fill>

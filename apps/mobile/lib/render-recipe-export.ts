@@ -109,7 +109,22 @@ export async function renderRecipeToPngBytes(
       geometry,
       adjustments: recipe.adjustments,
       beauty: recipe.beauty,
+      hasSkinMask: Boolean(geometry.skinMaskUri),
     });
+
+    let maskImage = photo;
+    if (geometry.skinMaskUri) {
+      try {
+        const maskBytes = await loadImageBytes(geometry.skinMaskUri);
+        const maskData = Skia.Data.fromBytes(maskBytes);
+        const decodedMask = Skia.Image.MakeImageFromEncoded(maskData);
+        if (decodedMask) {
+          maskImage = decodedMask;
+        }
+      } catch {
+        // Use photo as neutral mask fallback
+      }
+    }
 
     const imageMatrix = fitMatrix(srcW, srcH, drawRect);
     const imageShader = photo.makeShaderOptions(
@@ -129,8 +144,25 @@ export async function renderRecipeToPngBytes(
       lutMatrix,
     );
 
+    const maskMatrix = fitMatrix(
+      maskImage.width(),
+      maskImage.height(),
+      drawRect,
+    );
+    const maskShader = maskImage.makeShaderOptions(
+      TileMode.Clamp,
+      TileMode.Clamp,
+      FilterMode.Linear,
+      MipmapMode.None,
+      maskMatrix,
+    );
+
     const uniformValues = processUniforms(effect, uniforms);
-    const paintShader = effect.makeShaderWithChildren(uniformValues, [imageShader, lutShader]);
+    const paintShader = effect.makeShaderWithChildren(uniformValues, [
+      imageShader,
+      lutShader,
+      maskShader,
+    ]);
 
     const paint = Skia.Paint();
     paint.setShader(paintShader);

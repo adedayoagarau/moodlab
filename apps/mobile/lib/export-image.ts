@@ -9,6 +9,7 @@ import {
 import * as Sharing from 'expo-sharing';
 
 import type { FaceGeometry } from '@/lib/face-region';
+import { exportWithNativeRenderCore } from '@/lib/render-native-export';
 import { renderRecipeToPngBytes } from '@/lib/render-recipe-export';
 import { EXPORT_PRESETS, type EditRecipe, type ExportPresetId } from '@moodlab/shared';
 
@@ -21,13 +22,9 @@ function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-async function writePngAndShare(outPath: string, pngBytes: Uint8Array, presetLabel: string) {
-  await writeAsStringAsync(outPath, bytesToBase64(pngBytes), {
-    encoding: EncodingType.Base64,
-  });
-
+async function shareFile(outPath: string, mimeType: string, presetLabel: string) {
   if (Platform.OS === 'web') {
-    Alert.alert('Export ready', `${presetLabel} saved (${pngBytes.length} bytes).`);
+    Alert.alert('Export ready', `${presetLabel} saved.`);
     return;
   }
 
@@ -38,9 +35,16 @@ async function writePngAndShare(outPath: string, pngBytes: Uint8Array, presetLab
   }
 
   await Sharing.shareAsync(outPath, {
-    mimeType: 'image/png',
+    mimeType,
     dialogTitle: `Share ${presetLabel}`,
   });
+}
+
+async function writePngAndShare(outPath: string, pngBytes: Uint8Array, presetLabel: string) {
+  await writeAsStringAsync(outPath, bytesToBase64(pngBytes), {
+    encoding: EncodingType.Base64,
+  });
+  await shareFile(outPath, 'image/png', presetLabel);
 }
 
 export async function shareRecipeExport(
@@ -53,6 +57,20 @@ export async function shareRecipeExport(
   const preset = EXPORT_PRESETS[presetId];
   const filename = `moodlab-${presetId}-${Date.now()}.png`;
   const outPath = `${cacheDirectory ?? ''}${filename}`;
+
+  try {
+    const nativeUri = await exportWithNativeRenderCore(imageUri, recipe, presetId);
+    if (nativeUri) {
+      await shareFile(
+        nativeUri,
+        'image/jpeg',
+        `${preset.label} native (${preset.width}×${preset.height})`,
+      );
+      return;
+    }
+  } catch {
+    // Fall through to Skia export
+  }
 
   try {
     const pngBytes = await renderRecipeToPngBytes(imageUri, recipe, presetId, geometry);
