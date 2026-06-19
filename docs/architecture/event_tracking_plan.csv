@@ -1,0 +1,9 @@
+event,properties
+app_opened,"source;app_version;platform"
+photo_imported,"source;megapixel_bucket;orientation"
+lut_previewed,"lut_id;pack_id;category;strength"
+preset_applied,"preset_id;mode;category"
+export_completed,"format;ratio;platform_preset;duration_bucket;success"
+paywall_viewed,"placement;pack_id"
+purchase_completed,"product_id;price_bucket"
+ai_job_completed,"job_type;duration_bucket"

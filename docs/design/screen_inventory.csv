@@ -1,0 +1,25 @@
+Area,Screen,MVP,Notes
+Onboarding,Splash,Yes,"Brand, warm cache"
+Onboarding,Value proposition carousel,Yes,3 core value slides
+Onboarding,Creator type picker,Yes,Personalizes recommendations
+Onboarding,Photo permission primer,Yes,Local-first privacy message
+Home,Home,Yes,"Recent, Build My Post, weekly drops"
+Home,Build My Post,Yes,Signature workflow
+Import,Import picker,Yes,Camera/Gallery/Files
+Import,Batch import,V2,Pro workflow
+Editor,Editor canvas,Yes,Full-screen photo-first
+Editor,Moods/LUT panel,Yes,Core LUT experience
+Editor,Adjust panel,Yes,Beginner + advanced controls
+Editor,Text panel,Yes,Social typography
+Editor,Templates panel,Yes,Finished post layouts
+Editor,Crop panel,Yes,Export ratios/safe zones
+Editor,AI panel,V2,Match reference/auto-pick
+Export,Export screen,Yes,Save/share/captions
+Packs,Packs home,Yes,Free/Pro/Creator packs
+Packs,Pack detail,Yes,Preview/unlock/use
+Profile,Profile home,Yes,"Account, projects, settings"
+Profile,Saved presets,Yes,Favorite looks
+Monetization,Paywall,Yes,Pro conversion
+System,Offline state,Yes,Downloaded packs work
+System,Export failed,Yes,Retry/lower res/support
+System,No permission,Yes,Open settings/choose photos

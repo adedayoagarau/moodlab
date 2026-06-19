@@ -1,0 +1,71 @@
+{
+  "P0": {
+    "meaning": "MVP-critical. Do not launch without it.",
+    "features": [
+      "Photo import",
+      "Full-screen editor canvas",
+      "LUT application",
+      "LUT strength slider",
+      "LUT thumbnail carousel",
+      "Mood packs",
+      "Basic adjustments",
+      "Before/after preview",
+      "Social export presets",
+      "Share sheet",
+      "Basic text templates",
+      "Skin-safe LUT protection",
+      "Skin smoothing",
+      "Texture restore",
+      "Even tone",
+      "Face light",
+      "Melanin Guard",
+      "Beauty presets",
+      "Paywall",
+      "Entitlements",
+      "Analytics events"
+    ]
+  },
+  "P1": {
+    "meaning": "Important. Build in V1 if possible, otherwise early V2.",
+    "features": [
+      "Grain/glow/vignette",
+      "Saved projects",
+      "Music promo text templates",
+      "Reduce shine",
+      "Under-eye lift",
+      "Cover Art Maker",
+      "Advanced typography",
+      "Brand kit",
+      "LUT import",
+      "Batch editing",
+      "Blemish remover",
+      "Eye clarity",
+      "Creator identity",
+      "Match This Look",
+      "AI Beauty Assist",
+      "AI Bad Lighting Fix"
+    ]
+  },
+  "P2": {
+    "meaning": "Strong expansion feature. V2/V3.",
+    "features": [
+      "LUT export",
+      "Lip tint",
+      "Hair detail",
+      "Makeup presets",
+      "AI Campaign Builder",
+      "Creator marketplace",
+      "Creator profiles",
+      "Remixable edit recipes"
+    ]
+  },
+  "P3": {
+    "meaning": "Later platform feature.",
+    "features": [
+      "Community challenges",
+      "Campaign planner",
+      "Team collaboration",
+      "Web editor"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+Feature,Pillar,Description,Screen/Module,Phase,Plan,Technical Difficulty,Backend Needed,AI Needed,Priority
+Photo import,Photo Editor,Import image from camera/gallery and create editable project,Import,V1,Free,Medium,No,No,P0
+Full-screen editor canvas,Photo Editor,Image-first editing surface with top controls and bottom sheets,Editor,V1,Free,Medium,No,No,P0
+LUT application,LUT Studio,Apply 3D LUT to photo preview and export,Editor > Mood,V1,Free/Pro,High,No,No,P0
+LUT strength slider,LUT Studio,Blend LUT result with original image,Editor > Mood,V1,Free,Medium,No,No,P0
+LUT thumbnail carousel,LUT Studio,Precomputed LUT previews for fast selection,Editor > Mood,V1,Free/Pro,Medium,No,No,P0
+Mood packs,LUT Studio,"Organize LUTs by Sunny, Dark, Cover, Film, R&B, Portrait",Home/Packs/Editor,V1,Free/Pro,Medium,Yes,No,P0
+Basic adjustments,Photo Editor,"Exposure, contrast, warmth, saturation, shadows, highlights",Editor > Adjust,V1,Free,Medium,No,No,P0
+Grain/glow/vignette,Effects,Creator-focused finishing controls,Editor > Effects,V1,Free/Pro,Medium,No,No,P1
+Before/after preview,Photo Editor,Compare edited vs original,Editor,V1,Free,Medium,No,No,P0
+Social export presets,Export Studio,"Export 4:5, 9:16, 1:1, 16:9",Export,V1,Free,Medium,No,No,P0
+Share sheet,Export Studio,Native iOS/Android share after export,Export,V1,Free,Medium,No,No,P0
+Saved projects,Projects,Save non-destructive edit recipe,Projects,V1,Free/Pro,Medium,Yes,No,P1
+Basic text templates,Text Studio,Add title/caption text layers,Editor > Text,V1,Free,Medium,No,No,P0
+Music promo text templates,Text Studio,"Posting my beat, out now, full beat on YouTube templates",Editor > Text,V1,Free/Pro,Medium,No,No,P1
+Skin-safe LUT protection,Beauty Studio,Apply LUT less aggressively to detected skin/face areas,Editor > Beauty,V1,Free/Pro,High,No,Optional later,P0
+Skin smoothing,Beauty Studio,Natural smoothing with texture preservation,Beauty > Skin,V1,Free,High,No,No,P0
+Texture restore,Beauty Studio,Bring pores/detail back after smoothing,Beauty > Skin,V1,Free,Medium,No,No,P0
+Even tone,Beauty Studio,Balance uneven skin color,Beauty > Skin,V1,Free/Pro,High,No,No,P0
+Reduce shine,Beauty Studio,Reduce forehead/nose/cheek oily highlights,Beauty > Skin,V1,Free/Pro,Medium,No,No,P1
+Face light,Beauty Studio,Brighten face without overexposing background,Beauty > Face,V1,Free,High,No,No,P0
+Under-eye lift,Beauty Studio,Subtle shadow reduction under eyes,Beauty > Face,V1,Pro,Medium,No,No,P1
+Melanin Guard,Beauty Studio,Prevent gray/ashy/orange color damage on darker skin tones,Beauty > Skin,V1,Free/Pro,High,No,Optional later,P0
+Beauty presets,Beauty Studio,"Clean Skin, Melanin Gold, Soft Glow, Studio Face",Beauty > Auto,V1,Free/Pro,Medium,No,No,P0
+Paywall,Monetization,Unlock Pro packs and features,Paywall,V1,Pro,Medium,Yes,No,P0
+Entitlements,Monetization,Track Pro access and purchases,Backend,V1,Pro,Medium,Yes,No,P0
+Analytics events,Analytics,"Track activation, edit, export, purchase funnel",All,V1,Free,Medium,Yes,No,P0
+Cover Art Maker,Cover Art Maker,Create album/single/beat covers with templates,Build My Post,V2,Free/Pro,High,Optional,No,P1
+Advanced typography,Text Studio,"Serif, streetwear, chrome, glow, editorial layouts",Text,V2,Pro,Medium,Yes,No,P1
+Brand kit,Projects,"Save logo, handle, colors, fonts, watermark",Profile/Projects,V2,Pro,Medium,Yes,No,P1
+LUT import,LUT Studio,Import user .cube files,LUT Studio,V2,Pro,High,Optional,No,P1
+LUT export,LUT Studio,Export custom preset as .cube,LUT Studio,V2,Pro,High,Optional,No,P2
+Batch editing,Photo Editor,Apply same preset to multiple photos,Batch,V2,Pro,High,Optional,No,P1
+Blemish remover,Beauty Studio,Tap to remove small blemishes/spots,Beauty > Skin,V2,Pro,High,No,Optional,P1
+Lip tint,Beauty Studio,Natural and glam lip color options,Beauty > Lips,V2,Pro,Medium,No,Optional,P2
+Eye clarity,Beauty Studio,Subtle eye brightness and detail,Beauty > Eyes,V2,Free/Pro,Medium,No,No,P1
+Hair detail,Beauty Studio,Enhance hair shine/detail and reduce frizz,Beauty > Hair,V2,Pro,High,No,Optional,P2
+Makeup presets,Beauty Studio,"Soft Glam, Editorial, Brown Lip, Clean Girl",Beauty > Makeup,V2,Pro,High,No,Optional,P2
+Creator identity,Projects,"Remember name, handle, style, CTA",Profile/Build My Post,V2,Pro,Medium,Yes,No,P1
+Match This Look,AI Assistant,Generate edit recipe/LUT from reference image,AI,V3,Pro,Very High,Yes,Yes,P1
+AI Beauty Assist,AI Assistant,Analyze portrait and apply natural cleanup,Beauty > Auto,V3,Pro,Very High,Yes,Yes,P1
+AI Bad Lighting Fix,AI Assistant,Fix yellow/green/backlit/flash lighting issues,AI,V3,Pro,Very High,Yes,Yes,P1
+AI Campaign Builder,AI Assistant,"Generate cover, post, story, thumbnail, captions",Build My Post,V3,Pro,Very High,Yes,Yes,P2
+Creator marketplace,Marketplace,Creators upload/sell LUT and template packs,Packs,V3,Marketplace,Very High,Yes,No,P2
+Creator profiles,Marketplace,Public pages for creator packs and edits,Packs/Profile,V3,Marketplace,High,Yes,No,P2
+Remixable edit recipes,Community,Share and apply edit settings to another photo,Community/Packs,V3,Free/Pro,High,Yes,No,P2
+Community challenges,Community,Weekly edit challenges and featured creations,Community,V3,Free,High,Yes,No,P3
+Campaign planner,Creator Tools,Plan release assets and checklist,Projects,V4,Pro,High,Yes,Optional,P3
+Team collaboration,Creator Tools,Shared project access and comments,Projects,V4,Team,Very High,Yes,No,P3
+Web editor,Platform,Browser version of editor,Web,V4,Pro/Team,Very High,Yes,No,P3

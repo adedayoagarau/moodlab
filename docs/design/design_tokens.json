@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "product": "MoodLab / VibeGrade",
+    "version": "1.0",
+    "date": "2026-06-18",
+    "platforms": [
+      "iOS 26+",
+      "Android 16+"
+    ]
+  },
+  "color": {
+    "surface": {
+      "base": "#070708",
+      "default": "#0D0D10",
+      "elevated": "#15151A",
+      "raised": "#1E1E25"
+    },
+    "text": {
+      "primary": "#F7F4EE",
+      "secondary": "#B9B3AA",
+      "muted": "#76716B",
+      "inverse": "#070708"
+    },
+    "accent": {
+      "gold": "#F5B85B",
+      "orange": "#FF7A33",
+      "blue": "#6CA7FF",
+      "green": "#66D19E",
+      "red": "#FF5C66"
+    },
+    "stroke": {
+      "subtle": "rgba(255,255,255,0.10)",
+      "strong": "rgba(255,255,255,0.22)"
+    },
+    "iosGlass": {
+      "surface": "rgba(22,22,26,0.54)",
+      "surfaceStrong": "rgba(10,10,12,0.72)",
+      "stroke": "rgba(255,255,255,0.16)",
+      "highlight": "rgba(255,255,255,0.24)",
+      "shadow": "rgba(0,0,0,0.38)"
+    },
+    "androidMaterial": {
+      "surface": "#101014",
+      "surfaceContainer": "#1A1A20",
+      "surfaceContainerHigh": "#24242B",
+      "outline": "#3A3740",
+      "primary": "#F5B85B",
+      "secondary": "#FF9E64",
+      "tertiary": "#7AA9FF"
+    }
+  },
+  "radius": {
+    "xs": 6,
+    "sm": 10,
+    "md": 16,
+    "lg": 22,
+    "xl": 28,
+    "full": 999
+  },
+  "space": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32,
+    "10": 40,
+    "12": 48,
+    "16": 64
+  },
+  "motion": {
+    "instant": 80,
+    "fast": 160,
+    "standard": 240,
+    "slow": 360,
+    "export": 600
+  },
+  "touchTargets": {
+    "ios": "44x44 pt",
+    "android": "48x48 dp"
+  }
+}

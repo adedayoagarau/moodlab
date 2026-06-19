@@ -1,62 +1,67 @@
 import { randomUUID } from 'node:crypto';
-import type { CreateMoodEntryInput, MoodEntry, UpdateMoodEntryInput } from '@moodlab/shared';
+import type { EditProject, EditRecipe } from '@moodlab/shared';
+import { DEFAULT_EDIT_RECIPE } from '@moodlab/shared';
 
-const entries = new Map<string, MoodEntry>();
+const projects = new Map<string, EditProject>();
 
 function seed() {
   const now = new Date().toISOString();
-  const sample: MoodEntry = {
+  const recipe: EditRecipe = {
+    ...DEFAULT_EDIT_RECIPE,
+    lutId: 'sunny-cover-glow',
+    lutStrength: 0.78,
+    adjustments: { grain: 0.12, glow: 0.18 },
+  };
+  const sample: EditProject = {
     id: randomUUID(),
-    text: 'The line landed softer than I expected — relief, not regret.',
-    moodTag: 'tender',
-    toneNotes: 'Warm register; short sentences; emotional turn at the end.',
+    name: 'Sample portrait',
+    sourceUri: 'asset://sample',
+    recipe,
     createdAt: now,
     updatedAt: now,
   };
-  entries.set(sample.id, sample);
+  projects.set(sample.id, sample);
 }
 
 seed();
 
-export const moodStore = {
-  list(): MoodEntry[] {
-    return [...entries.values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+export const projectStore = {
+  list(): EditProject[] {
+    return [...projects.values()].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   },
 
-  get(id: string): MoodEntry | undefined {
-    return entries.get(id);
+  get(id: string): EditProject | undefined {
+    return projects.get(id);
   },
 
-  create(input: CreateMoodEntryInput): MoodEntry {
+  create(input: { name: string; sourceUri: string; recipe?: EditRecipe }): EditProject {
     const now = new Date().toISOString();
-    const entry: MoodEntry = {
+    const project: EditProject = {
       id: randomUUID(),
-      text: input.text,
-      moodTag: input.moodTag,
-      toneNotes: input.toneNotes,
+      name: input.name,
+      sourceUri: input.sourceUri,
+      recipe: input.recipe ?? { ...DEFAULT_EDIT_RECIPE },
       createdAt: now,
       updatedAt: now,
     };
-    entries.set(entry.id, entry);
-    return entry;
+    projects.set(project.id, project);
+    return project;
   },
 
-  update(id: string, input: UpdateMoodEntryInput): MoodEntry | undefined {
-    const existing = entries.get(id);
+  update(id: string, patch: Partial<Pick<EditProject, 'name' | 'recipe' | 'thumbnailUri'>>): EditProject | undefined {
+    const existing = projects.get(id);
     if (!existing) return undefined;
-
-    const updated: MoodEntry = {
+    const updated: EditProject = {
       ...existing,
-      text: input.text ?? existing.text,
-      moodTag: input.moodTag ?? existing.moodTag,
-      toneNotes: input.toneNotes ?? existing.toneNotes,
+      ...patch,
+      recipe: patch.recipe ?? existing.recipe,
       updatedAt: new Date().toISOString(),
     };
-    entries.set(id, updated);
+    projects.set(id, updated);
     return updated;
   },
 
   delete(id: string): boolean {
-    return entries.delete(id);
+    return projects.delete(id);
   },
 };

@@ -1,0 +1,10 @@
+flowchart LR
+  A[Original Image] --> B[Orientation + Color Profile]
+  B --> C[Preview Working Image]
+  C --> D[3D LUT]
+  D --> E[Strength Blend]
+  E --> F[Adjustment Stack]
+  F --> G[Text + Template Composite]
+  G --> H[Preview]
+  A --> I[Full Resolution Export Renderer]
+  I --> J[Final JPG/PNG/HEIC]

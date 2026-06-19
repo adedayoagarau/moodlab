@@ -2,7 +2,7 @@
   "name": "moodlab",
   "version": "0.1.0",
   "private": true,
-  "description": "MoodLab — mobile app and API for exploring mood, tone, and emotional resonance in language",
+  "description": "MoodLab — creator-first LUT photo editor and platform API",
   "scripts": {
     "dev": "pnpm run --parallel dev:api dev:mobile",
     "dev:mobile": "pnpm --filter @moodlab/mobile start",

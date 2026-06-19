@@ -1,17 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import { validateCreateMoodEntry } from './validation';
+import { DEFAULT_EDIT_RECIPE, mergeEditRecipe } from './index';
+import { skinProtectionMultiplier, validateBeautyIntensity } from './editor-utils';
 
-describe('validateCreateMoodEntry', () => {
-  it('accepts valid input', () => {
-    const result = validateCreateMoodEntry({ text: 'A quiet morning.', moodTag: 'calm' });
-    expect(result).toEqual({ text: 'A quiet morning.', moodTag: 'calm' });
+describe('edit recipe helpers', () => {
+  it('merges nested adjustment stacks', () => {
+    const merged = mergeEditRecipe(DEFAULT_EDIT_RECIPE, {
+      adjustments: { grain: 0.2 },
+      lutStrength: 0.9,
+    });
+    expect(merged.lutStrength).toBe(0.9);
+    expect(merged.adjustments.grain).toBe(0.2);
+    expect(merged.beauty.skinProtection).toBe('medium');
   });
 
-  it('rejects empty text', () => {
-    expect(validateCreateMoodEntry({ text: '' })).toBe('text is required and must be a non-empty string');
+  it('caps beauty intensity', () => {
+    expect(validateBeautyIntensity(1)).toBeLessThanOrEqual(0.75);
   });
 
-  it('rejects invalid mood tag', () => {
-    expect(validateCreateMoodEntry({ text: 'hello', moodTag: 'angry' })).toContain('moodTag');
+  it('reduces LUT on skin with higher protection', () => {
+    expect(skinProtectionMultiplier('high')).toBeLessThan(skinProtectionMultiplier('low'));
   });
 });

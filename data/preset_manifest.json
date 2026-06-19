@@ -1,0 +1,21 @@
+{
+  "beautyPresets": [
+    { "id": "clean-skin", "name": "Clean Skin", "plan": "free" },
+    { "id": "melanin-gold", "name": "Melanin Gold", "plan": "pro" },
+    { "id": "soft-glow", "name": "Soft Glow", "plan": "free" },
+    { "id": "studio-face", "name": "Studio Face", "plan": "pro" },
+    { "id": "no-filter-skin", "name": "No Filter Skin", "plan": "free" }
+  ],
+  "textTemplates": [
+    { "id": "posting-beat", "label": "Posting My Beat", "text": "Posting my beat 🔥" },
+    { "id": "full-beat-yt", "label": "Full Beat on YouTube", "text": "Full beat on YouTube" },
+    { "id": "out-now", "label": "Out Now", "text": "OUT NOW" },
+    { "id": "link-in-bio", "label": "Link in Bio", "text": "Link in bio" }
+  ],
+  "buildMyPost": [
+    { "id": "beat-cover", "title": "Beat Cover", "subtitle": "Type beat / producer post" },
+    { "id": "artist-release", "title": "Artist Release", "subtitle": "Single rollout visual" },
+    { "id": "portrait", "title": "Portrait", "subtitle": "Profile or promo shot" },
+    { "id": "thumbnail", "title": "YouTube Thumbnail", "subtitle": "16:9 creator thumb" }
+  ]
+}

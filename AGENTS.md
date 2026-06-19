@@ -1,13 +1,20 @@
 # MoodLab — agent context
 
-MoodLab is a **pnpm monorepo** for full-stack mobile work: Expo/React Native client + TypeScript API.
+MoodLab is a **pnpm monorepo** for a creator-first LUT photo editor: Expo/React Native client + TypeScript platform API.
 
 ## Repository layout
 
 ```
-apps/mobile/     Expo Router app (@moodlab/mobile)
-apps/api/        Hono REST API (@moodlab/api)
-packages/shared/ Shared types and validation (@moodlab/shared)
+apps/mobile/           Expo Router app (@moodlab/mobile)
+apps/api/              Hono REST API (@moodlab/api)
+packages/shared/       Edit recipe, LUT types, export presets (@moodlab/shared)
+packages/lut-engine/   .cube parser (@moodlab/lut-engine)
+data/                  lut_catalog.json, preset_manifest.json
+luts/original/         Original .cube LUT assets
+docs/product/          Master blueprint, feature matrix, pillar specs
+docs/design/           UI spec, design tokens
+docs/architecture/     E2E infrastructure
+backend/schema.sql     Target Postgres schema
 ```
 
 ## Commands
@@ -19,36 +26,37 @@ pnpm dev:api          # API only (http://localhost:8787)
 pnpm dev:mobile       # Expo only
 pnpm typecheck
 pnpm test
+python3 tools/generate_original_luts.py   # regenerate placeholder .cube files
 ```
+
+## Product principles
+
+1. **Local-first editing** — LUT preview/export on-device; backend is not in the hot path for grades
+2. **Skin-safe LUTs** — face/skin regions get reduced LUT strength by default
+3. **Editor first, platform second** — prove edit loop before marketplace/AI
+4. **Shared contracts** — `EditRecipe`, `LutDefinition`, `BeautySettings` live in `@moodlab/shared`
 
 ## Mobile stack
 
 - Expo SDK 56, Expo Router, TypeScript
-- iOS / Android / web via Expo
-- API client in `apps/mobile/lib/api.ts`
+- Editor: `apps/mobile/app/editor.tsx` — Mood / Adjust / Beauty / Text / Export
+- JS preview tint: `apps/mobile/lib/render-preview.ts` (until native RenderCore)
+- API client: `apps/mobile/lib/api.ts`
 - Configure `EXPO_PUBLIC_API_URL` (default `http://localhost:8787`)
 
 ## API stack
 
 - Hono on Node (`@hono/node-server`)
-- In-memory mood journal store (swap for DB when ready)
-- Routes under `/api/v1/moods`, health at `/health`
-
-## Shared contracts
-
-Import from `@moodlab/shared`: `MoodEntry`, `MoodTag`, `MOOD_TAGS`, `validateCreateMoodEntry`.
-
-## Cursor skills
-
-Agent skills are installed **globally** (`~/.agents/skills`). See `docs/SKILLS.md` for mobile/flutter skill packages. Do not commit `.agents/` to this repo.
+- Catalog from `data/lut_catalog.json` + `data/preset_manifest.json`
+- In-memory project store (`apps/api/src/store.ts`) — swap for Postgres per `backend/schema.sql`
 
 ## Conventions
 
 - TypeScript strict mode everywhere
-- Shared types live in `packages/shared` — never duplicate API shapes in mobile
-- Mobile UI: accessible touch targets, platform-aware patterns (see `.cursor/rules/`)
-- API: validate with shared validators; return `{ data }` or `{ error }`
+- Never duplicate API shapes in mobile — use `@moodlab/shared`
+- API responses: `{ data }` or `{ error }`
+- Native LUT pipeline notes: `docs/native/RENDER_CORE.md`
 
-## Product direction
+## Cursor skills
 
-MoodLab explores **mood, tone, and emotional resonance** in language — journal entries, tone prompts, and future scoring agents.
+Agent skills are installed globally (`~/.agents/skills`). See `docs/SKILLS.md`. Do not commit `.agents/` to this repo.

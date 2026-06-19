@@ -1,0 +1,56 @@
+# MoodLab App Map
+
+```mermaid
+flowchart TD
+    A[Onboarding] --> B[Home]
+
+    B --> C[Edit Photo]
+    B --> D[Build My Post]
+    B --> E[Packs]
+    B --> F[Projects]
+    B --> G[Profile / Settings]
+
+    C --> H[Import]
+    H --> I[Editor]
+
+    D --> D1[Beat Cover]
+    D --> D2[Artist Release]
+    D --> D3[Portrait]
+    D --> D4[Thumbnail]
+    D --> D5[Campaign later]
+    D1 --> H
+    D2 --> H
+    D3 --> H
+    D4 --> H
+
+    I --> I1[Mood / LUT]
+    I --> I2[Adjust]
+    I --> I3[Beauty]
+    I --> I4[Text]
+    I --> I5[Crop]
+    I --> I6[Effects]
+    I --> J[Export]
+
+    I3 --> I31[Auto]
+    I3 --> I32[Skin]
+    I3 --> I33[Face]
+    I3 --> I34[Eyes]
+    I3 --> I35[Lips]
+    I3 --> I36[Hair V2]
+    I3 --> I37[Makeup V2]
+
+    E --> E1[Free Packs]
+    E --> E2[Pro Packs]
+    E --> E3[Creator Marketplace V3]
+
+    F --> F1[Saved Projects]
+    F --> F2[Drafts]
+    F --> F3[Custom Presets]
+    F --> F4[Brand Kits V2]
+
+    J --> J1[Instagram 4:5]
+    J --> J2[Story / TikTok 9:16]
+    J --> J3[Cover Art 1:1]
+    J --> J4[YouTube 16:9]
+    J --> J5[Save + Share]
+```

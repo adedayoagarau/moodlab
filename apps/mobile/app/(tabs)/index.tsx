@@ -1,215 +1,141 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  View as RNView,
-} from 'react-native';
+import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import { createMoodEntry, fetchMoodEntries, moodTagLabels } from '@/lib/api';
-import type { MoodEntry, MoodTag } from '@moodlab/shared';
-import { MOOD_TAGS } from '@moodlab/shared';
+import { GlassPanel } from '@/components/GlassPanel';
+import { theme } from '@/constants/theme';
+import { fetchManifest } from '@/lib/api';
+import { useEffect, useState } from 'react';
 
-export default function JournalScreen() {
-  const [entries, setEntries] = useState<MoodEntry[]>([]);
-  const [text, setText] = useState('');
-  const [selectedTag, setSelectedTag] = useState<MoodTag | undefined>('calm');
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const loadEntries = useCallback(async () => {
-    setError(null);
-    try {
-      const data = await fetchMoodEntries();
-      setEntries(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not load journal');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+export default function HomeScreen() {
+  const router = useRouter();
+  const [buildCards, setBuildCards] = useState<
+    { id: string; title: string; subtitle: string }[]
+  >([]);
 
   useEffect(() => {
-    loadEntries();
-  }, [loadEntries]);
+    fetchManifest()
+      .then((m) => setBuildCards(m.buildMyPost))
+      .catch(() => setBuildCards([]));
+  }, []);
 
-  async function handleSubmit() {
-    if (!text.trim()) return;
-    setSubmitting(true);
-    setError(null);
-    try {
-      await createMoodEntry({ text: text.trim(), moodTag: selectedTag });
-      setText('');
-      await loadEntries();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save entry');
-    } finally {
-      setSubmitting(false);
+  async function openEditor(imageUri: string) {
+    router.push({
+      pathname: '/editor',
+      params: { uri: encodeURIComponent(imageUri) },
+    });
+  }
+
+  async function pickPhoto() {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission needed', 'Allow photo access to edit images.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets[0]?.uri) {
+      await openEditor(result.assets[0].uri);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Journal</Text>
-      <Text style={styles.subheading}>Capture a line. Notice how it lands.</Text>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <Text style={styles.title}>MoodLab</Text>
+      <Text style={styles.subtitle}>Photo first. Mood second. Export ready.</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Write a line, a fragment, a feeling..."
-        placeholderTextColor="#888"
-        multiline
-        value={text}
-        onChangeText={setText}
-        textAlignVertical="top"
-      />
-
-      <RNView style={styles.tagRow}>
-        {MOOD_TAGS.map((tag) => (
-          <Pressable
-            key={tag}
-            onPress={() => setSelectedTag(tag)}
-            style={[styles.tagChip, selectedTag === tag && styles.tagChipActive]}
-          >
-            <Text style={[styles.tagText, selectedTag === tag && styles.tagTextActive]}>
-              {moodTagLabels[tag]}
-            </Text>
-          </Pressable>
-        ))}
-      </RNView>
-
-      <Pressable
-        style={[styles.button, submitting && styles.buttonDisabled]}
-        onPress={handleSubmit}
-        disabled={submitting || !text.trim()}
-      >
-        <Text style={styles.buttonText}>{submitting ? 'Saving…' : 'Save entry'}</Text>
+      <Pressable style={styles.primaryCta} onPress={pickPhoto}>
+        <Text style={styles.primaryCtaText}>Edit Photo</Text>
+        <Text style={styles.primaryCtaHint}>Import from gallery — local-first editing</Text>
       </Pressable>
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <Text style={styles.sectionLabel}>Build My Post</Text>
+      {buildCards.map((card) => (
+        <Pressable key={card.id} onPress={pickPhoto}>
+          <GlassPanel style={styles.card}>
+            <Text style={styles.cardTitle}>{card.title}</Text>
+            <Text style={styles.cardSubtitle}>{card.subtitle}</Text>
+          </GlassPanel>
+        </Pressable>
+      ))}
 
-      {loading ? (
-        <ActivityIndicator style={styles.loader} />
-      ) : (
-        <FlatList
-          data={entries}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.list}
-          ListEmptyComponent={<Text style={styles.empty}>No entries yet. Start with one honest line.</Text>}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              {item.moodTag ? (
-                <Text style={styles.cardTag}>{moodTagLabels[item.moodTag]}</Text>
-              ) : null}
-              <Text style={styles.cardText}>{item.text}</Text>
-              {item.toneNotes ? <Text style={styles.cardNotes}>{item.toneNotes}</Text> : null}
-            </View>
-          )}
-        />
-      )}
-    </View>
+      <GlassPanel style={styles.note}>
+        <Text style={styles.noteText}>
+          V1 scaffold: LUT preview uses catalog metadata. Native RenderCore (Core Image / GPU shaders)
+          applies real .cube grades on-device — see docs/architecture/.
+        </Text>
+      </GlassPanel>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    backgroundColor: theme.color.surface.base,
   },
-  heading: {
-    fontSize: 28,
-    fontWeight: '600',
+  content: {
+    padding: theme.space[4],
+    paddingBottom: 40,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: theme.color.text.primary,
     marginBottom: 4,
   },
-  subheading: {
+  subtitle: {
     fontSize: 15,
-    opacity: 0.7,
-    marginBottom: 16,
+    color: theme.color.text.secondary,
+    marginBottom: theme.space[6],
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 12,
-    padding: 12,
-    minHeight: 96,
-    fontSize: 16,
-    marginBottom: 12,
+  primaryCta: {
+    backgroundColor: theme.color.accent.gold,
+    borderRadius: theme.radius.lg,
+    padding: theme.space[5],
+    marginBottom: theme.space[6],
   },
-  tagRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginBottom: 12,
+  primaryCtaText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: theme.color.surface.base,
   },
-  tagChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#bbb',
-  },
-  tagChipActive: {
-    backgroundColor: '#5c4d7a',
-    borderColor: '#5c4d7a',
-  },
-  tagText: {
+  primaryCtaHint: {
+    marginTop: 4,
     fontSize: 13,
+    color: theme.color.surface.base,
+    opacity: 0.85,
   },
-  tagTextActive: {
-    color: '#fff',
-  },
-  button: {
-    backgroundColor: '#2f2542',
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  buttonText: {
-    color: '#fff',
+  sectionLabel: {
+    fontSize: 13,
     fontWeight: '600',
-  },
-  error: {
-    color: '#c0392b',
-    marginBottom: 8,
-  },
-  loader: {
-    marginTop: 24,
-  },
-  list: {
-    gap: 12,
-    paddingBottom: 24,
-  },
-  empty: {
-    opacity: 0.6,
-    marginTop: 16,
+    color: theme.color.text.muted,
+    marginBottom: theme.space[3],
+    letterSpacing: 0.5,
   },
   card: {
-    padding: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    marginBottom: 8,
+    marginBottom: theme.space[3],
   },
-  cardTag: {
-    fontSize: 12,
+  cardTitle: {
+    fontSize: 17,
     fontWeight: '600',
-    opacity: 0.7,
-    marginBottom: 6,
+    color: theme.color.text.primary,
   },
-  cardText: {
-    fontSize: 16,
-    lineHeight: 22,
+  cardSubtitle: {
+    fontSize: 14,
+    color: theme.color.text.secondary,
+    marginTop: 4,
   },
-  cardNotes: {
-    marginTop: 8,
+  note: {
+    marginTop: theme.space[4],
+  },
+  noteText: {
     fontSize: 13,
-    opacity: 0.65,
+    lineHeight: 20,
+    color: theme.color.text.secondary,
   },
 });

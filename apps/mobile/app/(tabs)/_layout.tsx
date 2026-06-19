@@ -1,64 +1,76 @@
 import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { theme } from '@/constants/theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        headerShown: useClientOnlyValue(false, true),
+        tabBarActiveTintColor: theme.color.accent.gold,
+        tabBarInactiveTintColor: theme.color.text.muted,
+        tabBarStyle: {
+          backgroundColor: theme.color.surface.elevated,
+          borderTopColor: theme.color.stroke.subtle,
+        },
+        headerStyle: {
+          backgroundColor: theme.color.surface.base,
+        },
+        headerTintColor: theme.color.text.primary,
+        headerShadowVisible: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Journal',
+          title: 'Home',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <SymbolView
-              name={{
-                ios: 'book.pages',
-                android: 'description',
-                web: 'description',
-              }}
+              name={{ ios: 'house', android: 'home', web: 'home' }}
               tintColor={color}
-              size={28}
+              size={24}
             />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="packs"
         options={{
-          title: 'Explore',
+          title: 'Packs',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <SymbolView
-              name={{
-                ios: 'sparkles',
-                android: 'star',
-                web: 'star',
-              }}
+              name={{ ios: 'square.grid.2x2', android: 'grid_view', web: 'grid_view' }}
               tintColor={color}
-              size={28}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="projects"
+        options={{
+          title: 'Projects',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <SymbolView
+              name={{ ios: 'folder', android: 'folder', web: 'folder' }}
+              tintColor={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <SymbolView
+              name={{ ios: 'person.circle', android: 'person', web: 'person' }}
+              tintColor={color}
+              size={24}
             />
           ),
         }}

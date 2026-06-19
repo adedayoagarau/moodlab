@@ -1,43 +1,52 @@
 ---
 name: moodlab-fullstack
-description: MoodLab monorepo conventions for Expo mobile app, Hono API, and shared TypeScript packages. Apply when editing apps/mobile, apps/api, or packages/shared.
+description: MoodLab monorepo conventions for Expo mobile app, Hono API, shared packages, and LUT editor product.
 globs:
   - "apps/mobile/**"
   - "apps/api/**"
-  - "packages/shared/**"
+  - "packages/**"
+  - "data/**"
 alwaysApply: false
 ---
 
 # MoodLab full-stack mobile
 
+## Product
+
+MoodLab is a **creator-first LUT photo editor** — not a text journal. Core loop: import → mood/LUT → beauty → text → export.
+
+Product docs: `docs/product/`. Architecture: `docs/architecture/`. UI: `docs/design/`.
+
 ## Monorepo
 
-- **pnpm workspaces** — install from repo root; never add duplicate deps without checking workspace packages
-- **Shared types** — `MoodEntry`, validation, and API contracts live in `@moodlab/shared`
-- **Mobile** — `@moodlab/mobile` (Expo Router, TypeScript)
-- **API** — `@moodlab/api` (Hono, in-memory store until persistence is added)
+- **pnpm workspaces** — install from repo root
+- **Shared types** — `EditRecipe`, `LutDefinition`, `BeautySettings` in `@moodlab/shared`
+- **LUT parser** — `@moodlab/lut-engine` for `.cube` files
+- **Mobile** — `@moodlab/mobile` (Expo Router)
+- **API** — `@moodlab/api` (catalog + projects; Postgres later)
 
 ## Mobile (Expo)
 
-- Use Expo Router file-based routing under `apps/mobile/app/`
-- API calls go through `apps/mobile/lib/api.ts`; base URL from `EXPO_PUBLIC_API_URL`
-- Prefer `FlatList` for lists; handle loading and error states
-- Support light/dark via existing themed components
+- Routes under `apps/mobile/app/` — editor is `editor.tsx` (stack, not tab)
+- API via `apps/mobile/lib/api.ts`
+- JS LUT preview: `apps/mobile/lib/render-preview.ts` — native RenderCore replaces this
+- Dark theme tokens: `apps/mobile/constants/theme.ts`
 - Run `pnpm --filter @moodlab/mobile typecheck` after TS changes
 
 ## API (Hono)
 
-- REST under `/api/v1/`; JSON responses as `{ data }` or `{ error }`
-- Validate inputs with `@moodlab/shared` validators
-- Keep handlers thin; persistence in `store.ts` (replace with DB module later)
-- CORS enabled for Expo web and dev clients
+- REST under `/api/v1/` — packs, luts, manifest, projects
+- Catalog loaders in `apps/api/src/catalog.ts`
+- JSON: `{ data }` or `{ error }`
+- Do not add image processing endpoints for normal LUT edits
+
+## LUT assets
+
+- Metadata: `data/lut_catalog.json`
+- Files: `luts/original/*.cube`
+- Regenerate: `python3 tools/generate_original_luts.py`
 
 ## Testing
 
-- `packages/shared` and `apps/api` use Vitest
-- Add mobile tests with Jest/RTL or Maestro when features stabilize
-
-## Skills & rules
-
-- Mobile platform rules: `.cursor/rules/mobile-development.mdc`
-- Flutter/Android/iOS agent skills: installed globally — see `docs/SKILLS.md`
+- Vitest in `packages/shared`, `packages/lut-engine`, `apps/api`
+- Mobile: Jest/RTL or Maestro when features stabilize
