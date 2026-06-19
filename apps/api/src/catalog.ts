@@ -34,6 +34,21 @@ export function getLut(id: string): LutDefinition | undefined {
   return getLuts().find((l) => l.id === id);
 }
 
+export function getLutCubePath(lut: LutDefinition): string {
+  return join(root, lut.file);
+}
+
+export function readLutCubeContent(id: string): string | undefined {
+  const lut = getLut(id);
+  if (!lut) return undefined;
+  const path = getLutCubePath(lut);
+  try {
+    return readFileSync(path, 'utf-8');
+  } catch {
+    return undefined;
+  }
+}
+
 export function getLutsForPack(packId: string): LutDefinition[] {
   return getLuts().filter((l) => l.packId === packId);
 }

@@ -11,6 +11,7 @@ import {
   getPack,
   getPacks,
   getPresetManifest,
+  readLutCubeContent,
 } from './catalog.js';
 import { projectStore } from './store.js';
 
@@ -46,6 +47,15 @@ app.get('/api/v1/luts/:id', (c) => {
   const lut = getLut(c.req.param('id'));
   if (!lut) return c.json({ error: 'LUT not found' }, 404);
   return c.json({ data: lut });
+});
+
+app.get('/api/v1/luts/:id/cube', (c) => {
+  const content = readLutCubeContent(c.req.param('id'));
+  if (!content) return c.json({ error: 'LUT cube not found' }, 404);
+  return c.text(content, 200, {
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'public, max-age=86400',
+  });
 });
 
 app.get('/api/v1/manifest', (c) => c.json({ data: getPresetManifest() }));

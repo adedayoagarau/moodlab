@@ -1,17 +1,29 @@
 # RenderCore — native LUT pipeline
 
-MoodLab editing must feel **local and instant**. The JS layer (`apps/mobile/lib/render-preview.ts`) provides a tint-based preview until native RenderCore ships.
+MoodLab editing must feel **local and instant**. GPU LUT preview runs via **react-native-skia**; full-res export still needs native export path.
+
+Open-source references: `docs/native/OPEN_SOURCE_RESOURCES.md`.
 
 ## Architecture split
 
 | Layer | Responsibility |
 |-------|----------------|
-| **JS (Expo)** | UI, edit recipe, catalog, preview tint, export orchestration |
-| **iOS RenderCore** | Core Image / Metal — `CIColorCube` with parsed `.cube` data |
-| **Android RenderCore** | GPU shader path — AGSL / Skia / OpenGL LUT sampling |
-| **lut-engine** | Parse `.cube` files (`packages/lut-engine`) — shared parser for workers and native bridges |
+| **JS (Expo)** | UI, edit recipe, catalog, Skia LUT preview, export orchestration |
+| **Skia (current preview)** | RuntimeShader + strip-packed LUT texture from `@moodlab/lut-engine` |
+| **iOS RenderCore (next)** | Core Image / Metal — `CIColorCube` for full-res export |
+| **Android RenderCore (next)** | AGSL / GPU shaders for full-res export |
+| **lut-engine** | Parse `.cube`, pack GPU texture, SkSL source |
 
-## iOS direction
+## Current V1 flow
+
+1. Mobile fetches `GET /api/v1/luts/:id/cube`
+2. `parseCubeFile` → `cubeToStripTexture` → Skia `Image.MakeImage`
+3. `LUT_STRIP_SHADER_SOURCE` applies trilinear LUT with strength + face-rect skin protection
+4. Component: `apps/mobile/components/editor/LutSkiaViewport.tsx`
+
+Fallback: if cube fetch fails, editor shows ungraded photo (`render-preview.ts` tint removed from main path).
+
+## iOS direction (export quality)
 
 - Parse `.cube` → `Float32Array` RGB cube (`LUT_3D_SIZE`, domain min/max)
 - Build `CIColorCube` filter with `cubeData` and `cubeDimension`
@@ -20,13 +32,13 @@ MoodLab editing must feel **local and instant**. The JS layer (`apps/mobile/lib/
 
 ## Android direction
 
-- Load cube into GPU 3D texture or 2D strip layout
+- Load cube into GPU 3D texture or 2D strip layout (same as Skia strip packer)
 - `RenderEffect` + runtime shader where supported
 - ML Kit face landmarks for skin-safe LUT blending
 
 ## LUT assets
 
-Original placeholder grades live in `luts/original/*.cube` (20 files). Catalog metadata in `data/lut_catalog.json`.
+Original grades live in `luts/original/*.cube` (20 files). Catalog metadata in `data/lut_catalog.json`.
 
 Regenerate stylized placeholders:
 
@@ -34,7 +46,7 @@ Regenerate stylized placeholders:
 python3 tools/generate_original_luts.py
 ```
 
-## Export pipeline
+## Export pipeline (to build)
 
 1. Start from full-resolution source (not preview bitmap)
 2. Apply full recipe stack on native thread
@@ -45,4 +57,4 @@ python3 tools/generate_original_luts.py
 
 - Upload photos to API for normal LUT application
 - Block UI on network for editing
-- Apply LUT only in JS for final export quality
+- Rely on preview-resolution Skia canvas for final export quality

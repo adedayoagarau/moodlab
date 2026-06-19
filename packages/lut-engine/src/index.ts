@@ -1,4 +1,6 @@
 export { parseCubeFile, type ParsedCubeLut } from './cube-parser';
+export { cubeToStripTexture, type LutStripTexture } from './cube-to-strip';
+export { LUT_STRIP_SHADER_SOURCE } from './lut-shader';
 
 /** Blend factor for LUT strength (0 = original, 1 = full LUT). */
 export function blendLutStrength(strength: number): number {

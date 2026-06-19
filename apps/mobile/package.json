@@ -14,7 +14,10 @@
     "lint": "echo \"No linter configured yet\""
   },
   "dependencies": {
+    "@moodlab/lut-engine": "workspace:*",
     "@moodlab/shared": "workspace:*",
+    "@shopify/react-native-skia": "2.6.2",
+    "@shopify/react-native-skia": "2.6.2",
     "expo": "~56.0.12",
     "expo-constants": "~56.0.18",
     "expo-font": "~56.0.7",

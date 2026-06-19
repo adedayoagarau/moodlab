@@ -2,7 +2,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -14,15 +13,11 @@ import { AdjustPanel } from '@/components/editor/AdjustPanel';
 import { BeautyPanel } from '@/components/editor/BeautyPanel';
 import { EditorToolbar, type EditorTool } from '@/components/editor/EditorToolbar';
 import { ExportPanel, showExportAlert } from '@/components/editor/ExportPanel';
+import { LutSkiaViewport } from '@/components/editor/LutSkiaViewport';
 import { MoodPanel } from '@/components/editor/MoodPanel';
 import { TextPanel } from '@/components/editor/TextPanel';
 import { theme } from '@/constants/theme';
 import { fetchLuts, fetchManifest, saveProject } from '@/lib/api';
-import {
-  adjustmentPreviewStyle,
-  computePreviewOpacity,
-  getLutPreviewTint,
-} from '@/lib/render-preview';
 import {
   DEFAULT_EDIT_RECIPE,
   EXPORT_PRESETS,
@@ -75,14 +70,6 @@ export default function EditorScreen() {
     () => luts.find((l) => l.id === recipe.lutId),
     [luts, recipe.lutId],
   );
-
-  const previewTint = getLutPreviewTint(selectedLut);
-  const opacity = computePreviewOpacity(
-    recipe.lutStrength,
-    recipe.beauty.skinProtection,
-    recipe.beauty.faceLutStrength,
-  );
-  const adjStyle = adjustmentPreviewStyle(recipe.adjustments);
 
   const updateRecipe = useCallback((patch: Partial<typeof recipe>) => {
     setRecipe((r) => mergeEditRecipe(r, patch));
@@ -162,45 +149,20 @@ export default function EditorScreen() {
       </View>
 
       <View style={styles.canvas}>
-        <Image
-          source={{ uri: imageUri }}
-          style={[
-            styles.image,
-            {
-              opacity: showOriginal ? 1 : adjStyle.brightness,
-            },
-          ]}
-          resizeMode="contain"
-        />
-        {!showOriginal && previewTint ? (
-          <>
-            <View
-              style={[
-                styles.tintOverlay,
-                {
-                  backgroundColor: previewTint.overlay,
-                  opacity: previewTint.opacity * opacity.full,
-                },
-              ]}
-            />
-            <View style={styles.faceBand}>
-              <View
-                style={[
-                  styles.faceTint,
-                  {
-                    backgroundColor: previewTint.overlay,
-                    opacity: previewTint.opacity * opacity.face,
-                  },
-                ]}
-              />
+        <LutSkiaViewport
+          imageUri={imageUri}
+          lutId={recipe.lutId}
+          lutStrength={recipe.lutStrength}
+          skinProtection={recipe.beauty.skinProtection}
+          faceLutStrength={recipe.beauty.faceLutStrength}
+          showOriginal={showOriginal}
+          style={styles.viewport}>
+          {recipe.textLayers.map((layer) => (
+            <View key={layer.id} style={styles.textOverlay} pointerEvents="none">
+              <Text style={styles.overlayText}>{layer.text}</Text>
             </View>
-          </>
-        ) : null}
-        {recipe.textLayers.map((layer) => (
-          <View key={layer.id} style={styles.textOverlay} pointerEvents="none">
-            <Text style={styles.overlayText}>{layer.text}</Text>
-          </View>
-        ))}
+          ))}
+        </LutSkiaViewport>
       </View>
 
       <View style={styles.panel}>
@@ -278,27 +240,10 @@ const styles = StyleSheet.create({
   canvas: {
     flex: 1,
     backgroundColor: theme.color.surface.default,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  image: {
+  viewport: {
     width: '100%',
     height: '100%',
-  },
-  tintOverlay: {
-    ...StyleSheet.absoluteFill,
-  },
-  faceBand: {
-    position: 'absolute',
-    top: '22%',
-    left: '20%',
-    width: '60%',
-    height: '38%',
-    borderRadius: 999,
-    overflow: 'hidden',
-  },
-  faceTint: {
-    flex: 1,
   },
   textOverlay: {
     position: 'absolute',
