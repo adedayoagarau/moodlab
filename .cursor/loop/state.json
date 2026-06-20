@@ -8,18 +8,16 @@
     "filterPresets": 1000
   },
   "progress": {
-    "moodLutsShipped": 51,
-    "moodLutsRemaining": 49,
+    "moodLutsShipped": 61,
+    "moodLutsRemaining": 39,
     "filterPresetsShipped": 0,
     "filterPresetsRemaining": 1000
   },
   "currentBatch": {
-    "turn": 0,
+    "turn": 1,
     "maxTurns": 15,
     "batchSize": 10,
     "nextGroups": [
-      "melanin-portrait-studio",
-      "music-cover-art",
       "film-nostalgia",
       "luxury-editorial",
       "viral-social",
@@ -27,8 +25,8 @@
       "bw-editorial"
     ]
   },
-  "lastAction": null,
+  "lastAction": "Loop turn 1: shipped honey-studio, cocoa-soft, amber-glow-portrait, hip-hop-punch, alt-indie-soft, drill-dark-cover, gospel-gold-cover, rollout-neon, thumbnail-punch, cover-art-warm",
   "lastCommit": null,
   "blockers": [],
-  "notes": "Loop activated. Paste Phase A prompt from .cursor/loop/catalog-expansion.md into Composer with /loop."
+  "notes": "Turn 2: batch 10 from film-nostalgia + luxury-editorial groups."
 }

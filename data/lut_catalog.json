@@ -69,9 +69,12 @@
       "coverColor": "#C4923A",
       "lutIds": [
         "afrobeat-warm-cover",
+        "amber-glow-portrait",
         "brown-editorial",
+        "cocoa-soft",
         "golden-studio",
         "highlife-soft",
+        "honey-studio",
         "luxury-matte-black",
         "melanin-gold",
         "shadow-skin"
@@ -90,18 +93,25 @@
       "coverColor": "#FF7A33",
       "lutIds": [
         "alley-flash",
+        "alt-indie-soft",
         "amapiano-neon-warm",
         "analog-fade",
         "block-contrast",
         "concrete-drift",
+        "cover-art-warm",
+        "drill-dark-cover",
         "film-memory-gold",
         "flash-raw",
+        "gospel-gold-cover",
         "grit-alley",
+        "hip-hop-punch",
         "hype-block",
         "muted-street",
+        "rollout-neon",
         "skate-garage",
         "street-flash",
         "street-hype",
+        "thumbnail-punch",
         "urban-punch"
       ]
     }
@@ -1232,6 +1242,235 @@
         "patio",
         "warm",
         "outdoor"
+      ]
+    },
+    {
+      "id": "honey-studio",
+      "name": "Honey Studio",
+      "packId": "melanin-gold",
+      "categories": [
+        "Portrait",
+        "Luxury"
+      ],
+      "file": "luts/original/honey-studio.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.73,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.12
+      },
+      "tags": [
+        "melanin",
+        "studio",
+        "portrait",
+        "skin-safe"
+      ]
+    },
+    {
+      "id": "cocoa-soft",
+      "name": "Cocoa Soft",
+      "packId": "melanin-gold",
+      "categories": [
+        "Portrait"
+      ],
+      "file": "luts/original/cocoa-soft.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.72,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "tags": [
+        "melanin",
+        "soft",
+        "portrait",
+        "skin-safe"
+      ]
+    },
+    {
+      "id": "amber-glow-portrait",
+      "name": "Amber Glow Portrait",
+      "packId": "melanin-gold",
+      "categories": [
+        "Portrait",
+        "Luxury"
+      ],
+      "file": "luts/original/amber-glow-portrait.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.74,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.14
+      },
+      "tags": [
+        "melanin",
+        "amber",
+        "portrait",
+        "skin-safe"
+      ]
+    },
+    {
+      "id": "hip-hop-punch",
+      "name": "Hip Hop Punch",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover",
+        "Streetwear"
+      ],
+      "file": "luts/original/hip-hop-punch.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.82,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.12,
+        "grain": 0.08
+      },
+      "tags": [
+        "hip-hop",
+        "cover",
+        "punch",
+        "portrait"
+      ]
+    },
+    {
+      "id": "alt-indie-soft",
+      "name": "Alt Indie Soft",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover"
+      ],
+      "file": "luts/original/alt-indie-soft.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.7,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.14
+      },
+      "tags": [
+        "indie",
+        "soft",
+        "cover",
+        "portrait"
+      ]
+    },
+    {
+      "id": "drill-dark-cover",
+      "name": "Drill Dark Cover",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover",
+        "Dark"
+      ],
+      "file": "luts/original/drill-dark-cover.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.79,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "vignette": 0.16,
+        "grain": 0.1
+      },
+      "tags": [
+        "drill",
+        "dark",
+        "cover",
+        "portrait"
+      ]
+    },
+    {
+      "id": "gospel-gold-cover",
+      "name": "Gospel Gold Cover",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover",
+        "Portrait"
+      ],
+      "file": "luts/original/gospel-gold-cover.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.75,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.16,
+        "grain": 0.1
+      },
+      "tags": [
+        "gospel",
+        "gold",
+        "cover",
+        "skin-safe",
+        "portrait"
+      ]
+    },
+    {
+      "id": "rollout-neon",
+      "name": "Rollout Neon",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover",
+        "Viral"
+      ],
+      "file": "luts/original/rollout-neon.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.81,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.1,
+        "glow": 0.1
+      },
+      "tags": [
+        "rollout",
+        "neon",
+        "cover",
+        "portrait"
+      ]
+    },
+    {
+      "id": "thumbnail-punch",
+      "name": "Thumbnail Punch",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover",
+        "Viral"
+      ],
+      "file": "luts/original/thumbnail-punch.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.84,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "sharpen": 0.14
+      },
+      "tags": [
+        "thumbnail",
+        "punch",
+        "cover",
+        "portrait"
+      ]
+    },
+    {
+      "id": "cover-art-warm",
+      "name": "Cover Art Warm",
+      "packId": "creator-cover",
+      "categories": [
+        "Music Cover"
+      ],
+      "file": "luts/original/cover-art-warm.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.77,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.14,
+        "vignette": 0.08
+      },
+      "tags": [
+        "cover",
+        "warm",
+        "portrait"
       ]
     }
   ]

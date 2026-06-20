@@ -3,8 +3,8 @@
 # Execute via lut-developer subagent + /loop (see .cursor/loop/catalog-expansion.md)
 
 target: 100
-shipped: 51
-remaining: 49
+shipped: 61
+remaining: 39
 
 groups:
   - id: melanin-portrait-studio
@@ -20,9 +20,9 @@ groups:
       - { id: highlife-soft, name: "Highlife Soft", status: shipped }
       - { id: shadow-skin, name: "Shadow Skin", status: shipped }
       - { id: luxury-matte-black, name: "Luxury Matte Black", status: shipped }
-      - { id: honey-studio, name: "Honey Studio", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.11, saturation: 0.04, lift: 0.04 } }
-      - { id: cocoa-soft, name: "Cocoa Soft", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.08, saturation: 0.02, lift: 0.05 } }
-      - { id: amber-glow-portrait, name: "Amber Glow Portrait", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.13, saturation: 0.05, lift: 0.03 } }
+      - { id: honey-studio, name: "Honey Studio", status: shipped, recipe: skin_safe_portrait, params: { warmth: 0.11, saturation: 0.04, lift: 0.04 } }
+      - { id: cocoa-soft, name: "Cocoa Soft", status: shipped, recipe: skin_safe_portrait, params: { warmth: 0.08, saturation: 0.02, lift: 0.05 } }
+      - { id: amber-glow-portrait, name: "Amber Glow Portrait", status: shipped, recipe: skin_safe_portrait, params: { warmth: 0.13, saturation: 0.05, lift: 0.03 } }
 
   - id: sunny-creator
     name: Sunny Creator
@@ -84,13 +84,13 @@ groups:
       - { id: amapiano-neon-warm, name: "Amapiano Neon Warm", status: shipped }
       - { id: film-memory-gold, name: "Film Memory Gold", status: shipped }
       - { id: rnb-purple-night, name: "R&B Purple Night", status: shipped }
-      - { id: hip-hop-punch, name: "Hip Hop Punch", status: planned, recipe: neon_warm, params: { warmth: 0.06, contrast: 0.18, saturation: 0.08 } }
-      - { id: alt-indie-soft, name: "Alt Indie Soft", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.06, warmth: 0.04 } }
-      - { id: drill-dark-cover, name: "Drill Dark Cover", status: planned, recipe: cool_moody, params: { cool: 0.1, saturation: -0.08, lift: -0.03 } }
-      - { id: gospel-gold-cover, name: "Gospel Gold Cover", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.15, saturation: 0.06, lift: 0.04 } }
-      - { id: rollout-neon, name: "Rollout Neon", status: planned, recipe: neon_warm, params: { warmth: 0.1, contrast: 0.14, saturation: 0.12 } }
-      - { id: thumbnail-punch, name: "Thumbnail Punch", status: planned, recipe: neon_warm, params: { warmth: 0.05, contrast: 0.2, saturation: 0.06 } }
-      - { id: cover-art-warm, name: "Cover Art Warm", status: planned, recipe: warm_glow, params: { warmth: 0.12, lift: 0.04, saturation: 0.08 } }
+      - { id: hip-hop-punch, name: "Hip Hop Punch", status: shipped, recipe: neon_warm, params: { warmth: 0.06, contrast: 0.18, saturation: 0.08 } }
+      - { id: alt-indie-soft, name: "Alt Indie Soft", status: shipped, recipe: film_fade, params: { fade: 0.06, saturation: -0.06, warmth: 0.04 } }
+      - { id: drill-dark-cover, name: "Drill Dark Cover", status: shipped, recipe: cool_moody, params: { cool: 0.1, saturation: -0.08, lift: -0.03 } }
+      - { id: gospel-gold-cover, name: "Gospel Gold Cover", status: shipped, recipe: skin_safe_portrait, params: { warmth: 0.15, saturation: 0.06, lift: 0.04 } }
+      - { id: rollout-neon, name: "Rollout Neon", status: shipped, recipe: neon_warm, params: { warmth: 0.1, contrast: 0.14, saturation: 0.12 } }
+      - { id: thumbnail-punch, name: "Thumbnail Punch", status: shipped, recipe: neon_warm, params: { warmth: 0.05, contrast: 0.2, saturation: 0.06 } }
+      - { id: cover-art-warm, name: "Cover Art Warm", status: shipped, recipe: warm_glow, params: { warmth: 0.12, lift: 0.04, saturation: 0.08 } }
 
   - id: film-nostalgia
     name: Film Nostalgia
