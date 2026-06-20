@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { GlassPanel } from '@/components/GlassPanel';
 import { theme } from '@/constants/theme';
@@ -9,6 +10,7 @@ import type { LutPack } from '@moodlab/shared';
 
 export default function PacksScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [packs, setPacks] = useState<LutPack[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,18 +33,28 @@ export default function PacksScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top + theme.space[4],
+          paddingBottom: insets.bottom + 88,
+        },
+      ]}>
       <Text style={styles.title}>Mood Packs</Text>
       <Text style={styles.subtitle}>Curated LUT collections — tap to preview in editor</Text>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <FlatList
         data={packs}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
           <Pressable onPress={() => openPack(item)}>
             <GlassPanel style={styles.card}>
-              <View style={[styles.swatch, { backgroundColor: item.coverColor ?? theme.color.accent.blue }]} />
+              <View
+                style={[styles.swatch, { backgroundColor: item.coverColor ?? theme.color.accent.blue }]}
+              />
               <View style={styles.cardBody}>
                 <Text style={styles.cardTitle}>{item.name}</Text>
                 <Text style={styles.cardDesc}>{item.description}</Text>
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.color.surface.base,
-    padding: theme.space[4],
+    paddingHorizontal: theme.space[4],
   },
   title: {
     fontSize: 28,
@@ -72,6 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.color.text.secondary,
     marginBottom: theme.space[4],
+    lineHeight: 20,
   },
   error: {
     color: theme.color.accent.red,
@@ -79,20 +92,22 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: 12,
-    paddingBottom: 24,
+    paddingBottom: theme.space[4],
   },
   card: {
     flexDirection: 'row',
     gap: 12,
-    marginBottom: 8,
+    marginBottom: 4,
   },
   swatch: {
     width: 56,
     height: 56,
     borderRadius: theme.radius.md,
+    flexShrink: 0,
   },
   cardBody: {
     flex: 1,
+    minWidth: 0,
   },
   cardTitle: {
     fontSize: 17,
@@ -103,6 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: theme.color.text.secondary,
     marginTop: 4,
+    lineHeight: 18,
   },
   badge: {
     marginTop: 8,

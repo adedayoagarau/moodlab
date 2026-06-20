@@ -1,9 +1,10 @@
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, StyleSheet, Text } from 'react-native';
 
 import { GlassPanel } from '@/components/GlassPanel';
 import { PlatformStatusCard } from '@/components/PlatformStatusCard';
+import { ScreenShell } from '@/components/ScreenShell';
 import { theme } from '@/constants/theme';
 import { fetchManifest } from '@/lib/api';
 import { hasCompletedOnboarding } from '@/lib/onboarding';
@@ -68,7 +69,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScreenShell>
       <Text style={styles.title}>MoodLab</Text>
       <Text style={styles.subtitle}>
         Cover-art studio for creators — mood grades that protect melanin.
@@ -107,19 +108,11 @@ export default function HomeScreen() {
           export. Pro moods unlock premium packs for beat covers and rollouts.
         </Text>
       </GlassPanel>
-    </ScrollView>
+    </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.color.surface.base,
-  },
-  content: {
-    padding: theme.space[4],
-    paddingBottom: 40,
-  },
   title: {
     fontSize: 32,
     fontWeight: '700',
@@ -136,6 +129,8 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.lg,
     padding: theme.space[5],
     marginBottom: theme.space[3],
+    minHeight: 72,
+    justifyContent: 'center',
   },
   primaryCtaText: {
     fontSize: 20,
@@ -155,6 +150,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.color.stroke.strong,
     backgroundColor: theme.color.surface.elevated,
+    minHeight: 64,
+    justifyContent: 'center',
   },
   secondaryCtaText: {
     fontSize: 17,

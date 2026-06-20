@@ -15,18 +15,21 @@ const TOOLS: { id: EditorTool; label: string }[] = [
 type Props = {
   active: EditorTool;
   onSelect: (tool: EditorTool) => void;
+  bottomInset?: number;
 };
 
-export function EditorToolbar({ active, onSelect }: Props) {
+export function EditorToolbar({ active, onSelect, bottomInset = 0 }: Props) {
   return (
-    <View style={styles.bar}>
+    <View style={[styles.bar, { paddingBottom: Math.max(bottomInset, 8) }]}>
       {TOOLS.map((tool) => {
         const isActive = tool.id === active;
         return (
           <Pressable
             key={tool.id}
             style={[styles.tab, isActive && styles.tabActive]}
-            onPress={() => onSelect(tool.id)}>
+            onPress={() => onSelect(tool.id)}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: isActive }}>
             <Text style={[styles.tabText, isActive && styles.tabTextActive]}>{tool.label}</Text>
           </Pressable>
         );
@@ -41,13 +44,15 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.surface.elevated,
     borderTopWidth: 1,
     borderTopColor: theme.color.stroke.subtle,
-    paddingVertical: 8,
+    paddingTop: 8,
     paddingHorizontal: 4,
   },
   tab: {
     flex: 1,
+    minHeight: 44,
     alignItems: 'center',
-    paddingVertical: 8,
+    justifyContent: 'center',
+    paddingVertical: 6,
     borderRadius: theme.radius.sm,
   },
   tabActive: {

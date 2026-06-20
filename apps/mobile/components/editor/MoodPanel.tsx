@@ -1,5 +1,6 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
+import { EditorPanelShell } from '@/components/editor/EditorPanelShell';
 import { LutThumbnail } from '@/components/editor/LutThumbnail';
 import { StrengthSlider } from '@/components/editor/StrengthSlider';
 import { theme } from '@/constants/theme';
@@ -24,55 +25,59 @@ export function MoodPanel({
   onStrengthChange,
   onLockedLutPress,
 }: Props) {
+  const { width } = useWindowDimensions();
+  const cardWidth = Math.min(96, Math.max(80, width * 0.22));
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Mood / LUT</Text>
+    <EditorPanelShell title="Mood / LUT" scrollable={false}>
       <FlatList
         horizontal
         data={luts}
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.carousel}
+        style={styles.list}
         renderItem={({ item }) => {
           const selected = item.id === selectedId;
           const locked = item.plan === 'pro' && !isPro;
           return (
             <Pressable
-              style={[styles.lutCard, selected && styles.lutCardSelected, locked && styles.lutCardLocked]}
+              style={[
+                styles.lutCard,
+                { width: cardWidth },
+                selected && styles.lutCardSelected,
+                locked && styles.lutCardLocked,
+              ]}
               onPress={() => (locked ? onLockedLutPress(item) : onSelectLut(item))}>
-              <LutThumbnail lut={item} />
-              {locked ? <View style={styles.lockOverlay}><Text style={styles.lockText}>🔒</Text></View> : null}
-              <Text style={styles.lutName} numberOfLines={1}>{item.name}</Text>
+              <LutThumbnail lut={item} size={cardWidth - 16} />
+              {locked ? (
+                <View style={[styles.lockOverlay, { width: cardWidth - 16, height: cardWidth - 16 }]}>
+                  <Text style={styles.lockText}>🔒</Text>
+                </View>
+              ) : null}
+              <Text style={styles.lutName} numberOfLines={2}>
+                {item.name}
+              </Text>
               {item.plan === 'pro' ? <Text style={styles.proBadge}>PRO</Text> : null}
             </Pressable>
           );
         }}
       />
-      <StrengthSlider label="Strength" value={strength} onChange={onStrengthChange} />
-    </View>
+      <StrengthSlider label="Mood strength" value={strength} onChange={onStrengthChange} />
+    </EditorPanelShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: theme.space[4],
-    backgroundColor: theme.color.surface.default,
-    borderTopWidth: 1,
-    borderTopColor: theme.color.stroke.subtle,
-  },
-  heading: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: theme.color.text.muted,
-    marginBottom: theme.space[3],
-    letterSpacing: 0.5,
+  list: {
+    flexGrow: 0,
+    marginBottom: theme.space[2],
   },
   carousel: {
     gap: 10,
-    paddingBottom: theme.space[3],
+    paddingVertical: 4,
   },
   lutCard: {
-    width: 88,
     alignItems: 'center',
     padding: 8,
     borderRadius: theme.radius.md,
@@ -85,23 +90,25 @@ const styles = StyleSheet.create({
     borderColor: theme.color.accent.gold,
   },
   lutCardLocked: {
-    opacity: 0.85,
+    opacity: 0.88,
   },
   lockOverlay: {
     position: 'absolute',
-    top: 16,
-    width: 56,
-    height: 56,
+    top: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: theme.radius.sm,
+    backgroundColor: 'rgba(0,0,0,0.35)',
   },
   lockText: {
-    fontSize: 18,
+    fontSize: 20,
   },
   lutName: {
     fontSize: 11,
     color: theme.color.text.primary,
     textAlign: 'center',
+    marginTop: 6,
+    minHeight: 28,
   },
   proBadge: {
     fontSize: 9,

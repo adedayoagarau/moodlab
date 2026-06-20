@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -43,6 +44,7 @@ const WORKFLOW_LUTS: Record<string, string> = {
 export default function EditorScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { height: windowHeight } = useWindowDimensions();
   const canvasRef = useCanvasRef();
   const savedProjectId = useRef<string | undefined>(undefined);
   const params = useLocalSearchParams<{
@@ -132,6 +134,10 @@ export default function EditorScreen() {
     () => luts.find((l) => l.id === recipe.lutId),
     [luts, recipe.lutId],
   );
+
+  const panelHeight = Math.round(Math.min(windowHeight * 0.36, 360));
+  const toolbarHeight = 52 + Math.max(insets.bottom, 8);
+  const savingBannerBottom = toolbarHeight + 12;
 
   const updateRecipe = useCallback((patch: Partial<typeof recipe>) => {
     setRecipe((r) => mergeEditRecipe(r, patch));
@@ -263,22 +269,27 @@ export default function EditorScreen() {
           {recipe.textLayers.map((layer) => (
             <View
               key={layer.id}
-              style={[
-                styles.textOverlay,
-                {
-                  left: `${Math.round(layer.x * 100)}%`,
-                  top: `${Math.round(layer.y * 100)}%`,
-                  transform: [{ translateX: -80 }, { scale: layer.scale }],
-                },
-              ]}
+              style={{
+                position: 'absolute',
+                left: `${Math.round(layer.x * 100)}%`,
+                top: `${Math.round(layer.y * 100)}%`,
+                width: 0,
+                alignItems: 'center',
+              }}
               pointerEvents="none">
-              <Text style={styles.overlayText}>{layer.text}</Text>
+              <View
+                style={[
+                  styles.textOverlay,
+                  { transform: [{ scale: layer.scale }] },
+                ]}>
+                <Text style={styles.overlayText}>{layer.text}</Text>
+              </View>
             </View>
           ))}
         </LutSkiaViewport>
       </View>
 
-      <View style={[styles.panel, tool === 'beauty' && styles.panelBeauty]}>
+      <View style={[styles.panel, { height: panelHeight }]}>
         {tool === 'mood' ? (
           <MoodPanel
             luts={luts}
@@ -296,6 +307,7 @@ export default function EditorScreen() {
             onChange={(key, value) =>
               updateRecipe({ adjustments: { ...recipe.adjustments, [key]: value } })
             }
+            onReset={() => updateRecipe({ adjustments: {} })}
           />
         ) : null}
         {tool === 'beauty' ? (
@@ -326,9 +338,9 @@ export default function EditorScreen() {
         ) : null}
       </View>
 
-      <EditorToolbar active={tool} onSelect={setTool} />
+      <EditorToolbar active={tool} onSelect={setTool} bottomInset={insets.bottom} />
       {saving ? (
-        <View style={styles.savingBanner}>
+        <View style={[styles.savingBanner, { bottom: savingBannerBottom }]}>
           <Text style={styles.savingText}>Saving…</Text>
         </View>
       ) : null}
@@ -383,12 +395,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textOverlay: {
-    position: 'absolute',
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
     paddingVertical: 8,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     borderRadius: theme.radius.sm,
-    maxWidth: '80%',
+    maxWidth: 280,
   },
   overlayText: {
     color: theme.color.text.primary,
@@ -397,10 +408,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   panel: {
-    maxHeight: 280,
-  },
-  panelBeauty: {
-    maxHeight: 340,
+    flexShrink: 0,
+    minHeight: 0,
+    overflow: 'hidden',
   },
   empty: {
     flex: 1,
@@ -418,7 +428,6 @@ const styles = StyleSheet.create({
   },
   savingBanner: {
     position: 'absolute',
-    bottom: 80,
     alignSelf: 'center',
     backgroundColor: theme.color.glass,
     paddingHorizontal: 16,

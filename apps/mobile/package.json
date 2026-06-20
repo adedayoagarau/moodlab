@@ -17,6 +17,7 @@
     "@moodlab/lut-engine": "workspace:*",
     "@moodlab/shared": "workspace:*",
     "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/slider": "5.0.1",
     "@react-native-ml-kit/face-detection": "^2.0.1",
     "@shopify/react-native-skia": "2.6.2",
     "expo": "~56.0.12",

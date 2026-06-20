@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { EditorPanelShell } from '@/components/editor/EditorPanelShell';
 import { theme } from '@/constants/theme';
 import type { TextLayer } from '@moodlab/shared';
 
@@ -14,8 +15,7 @@ type Props = {
 
 export function TextPanel({ templates, layers, onAddTemplate, onClear }: Props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Text templates</Text>
+    <EditorPanelShell title="Text" subtitle="Tap a template to add it to your image">
       <View style={styles.grid}>
         {templates.map((t) => (
           <Pressable key={t.id} style={styles.templateBtn} onPress={() => onAddTemplate(t)}>
@@ -27,64 +27,61 @@ export function TextPanel({ templates, layers, onAddTemplate, onClear }: Props) 
         <View style={styles.layers}>
           <Text style={styles.subLabel}>Layers ({layers.length})</Text>
           {layers.map((layer) => (
-            <Text key={layer.id} style={styles.layerText} numberOfLines={1}>
+            <Text key={layer.id} style={styles.layerText} numberOfLines={2}>
               {layer.text}
             </Text>
           ))}
-          <Pressable onPress={onClear}>
+          <Pressable style={styles.clearBtn} onPress={onClear}>
             <Text style={styles.clear}>Clear all</Text>
           </Pressable>
         </View>
       ) : null}
-    </View>
+    </EditorPanelShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: theme.space[4],
-    backgroundColor: theme.color.surface.default,
-    borderTopWidth: 1,
-    borderTopColor: theme.color.stroke.subtle,
-    gap: 12,
-  },
-  heading: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: theme.color.text.muted,
-    letterSpacing: 0.5,
-  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
   },
   templateBtn: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+    minHeight: 44,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: theme.radius.sm,
     backgroundColor: theme.color.surface.elevated,
+    justifyContent: 'center',
   },
   templateLabel: {
-    fontSize: 13,
+    fontSize: 14,
     color: theme.color.text.primary,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   layers: {
-    gap: 6,
+    gap: 8,
+    marginTop: 4,
   },
   subLabel: {
     fontSize: 12,
-    color: theme.color.text.secondary,
+    fontWeight: '600',
+    color: theme.color.text.muted,
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
   },
   layerText: {
     fontSize: 14,
     color: theme.color.text.primary,
     fontStyle: 'italic',
+    lineHeight: 20,
+  },
+  clearBtn: {
+    paddingVertical: 10,
   },
   clear: {
-    fontSize: 13,
+    fontSize: 14,
     color: theme.color.accent.red,
-    marginTop: 4,
+    fontWeight: '600',
   },
 });

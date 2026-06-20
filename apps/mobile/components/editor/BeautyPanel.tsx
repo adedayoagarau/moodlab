@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 
+import { SegmentedControl } from '@/components/editor/SegmentedControl';
 import { StrengthSlider } from '@/components/editor/StrengthSlider';
 import { theme } from '@/constants/theme';
 import {
@@ -25,7 +26,8 @@ const TABS: { id: BeautyTab; label: string }[] = [
   { id: 'lips', label: 'Lips' },
 ];
 
-const SKIN_LEVELS: BeautySettings['skinProtection'][] = ['off', 'low', 'medium', 'high'];
+const SKIN_LEVELS = ['off', 'low', 'medium', 'high'] as const;
+type SkinProtectionLevel = (typeof SKIN_LEVELS)[number];
 
 type Props = {
   beauty: BeautySettings;
@@ -55,10 +57,9 @@ export function BeautyPanel({
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Beauty Studio</Text>
-      <Text style={styles.tagline}>Polished portraits. Protected melanin. Kept texture.</Text>
       <Text style={styles.detectionBadge}>
-        Face: {DETECTION_LABELS[faceDetectionSource]}
-        {hasSkinMask ? ' · skin mask active' : ''}
+        {DETECTION_LABELS[faceDetectionSource]}
+        {hasSkinMask ? ' · skin mask' : ''}
       </Text>
 
       <View style={styles.tabRow}>
@@ -72,7 +73,11 @@ export function BeautyPanel({
         ))}
       </View>
 
-      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
         {tab === 'auto' ? (
           <View style={styles.section}>
             <Text style={styles.sectionLabel}>One-tap looks</Text>
@@ -109,7 +114,7 @@ export function BeautyPanel({
         {tab === 'skin' ? (
           <View style={styles.section}>
             <View style={styles.toggleRow}>
-              <View>
+              <View style={styles.toggleCopy}>
                 <Text style={styles.controlLabel}>Melanin Guard</Text>
                 <Text style={styles.controlHint}>Protects depth + undertone under LUTs</Text>
               </View>
@@ -120,20 +125,12 @@ export function BeautyPanel({
               />
             </View>
 
-            <Text style={styles.sectionLabel}>Skin protection (LUT on face)</Text>
-            <View style={styles.steps}>
-              {SKIN_LEVELS.map((level) => (
-                <Pressable
-                  key={level}
-                  style={[
-                    styles.stepBtn,
-                    beauty.skinProtection === level && styles.stepBtnActive,
-                  ]}
-                  onPress={() => setBeautyKey('skinProtection', level)}>
-                  <Text style={styles.stepText}>{level}</Text>
-                </Pressable>
-              ))}
-            </View>
+            <Text style={styles.sectionLabel}>Skin protection</Text>
+            <SegmentedControl<SkinProtectionLevel>
+              options={SKIN_LEVELS.map((level) => ({ value: level, label: level }))}
+              value={beauty.skinProtection ?? 'medium'}
+              onChange={(level) => setBeautyKey('skinProtection', level)}
+            />
 
             <StrengthSlider
               label="Smooth"
@@ -156,12 +153,12 @@ export function BeautyPanel({
               onChange={(v) => setBeautyKey('reduceShine', v)}
             />
             <StrengthSlider
-              label="Ash fix (Melanin)"
+              label="Ash fix"
               value={beauty.melaninAshFix ?? 0}
               onChange={(v) => setBeautyKey('melaninAshFix', v)}
             />
             <StrengthSlider
-              label="Warmth protect (Melanin)"
+              label="Warmth protect"
               value={beauty.melaninWarmthProtect ?? 0}
               onChange={(v) => setBeautyKey('melaninWarmthProtect', v)}
             />
@@ -192,9 +189,6 @@ export function BeautyPanel({
             />
             <Text style={styles.hint}>
               Face tools use {DETECTION_LABELS[faceDetectionSource].toLowerCase()}.
-              {hasSkinMask
-                ? ' Person segmentation drives skin-safe beauty in preview and native export.'
-                : ' Build with expo prebuild for ML Kit + RenderCore segmentation.'}
             </Text>
           </View>
         ) : null}
@@ -206,9 +200,6 @@ export function BeautyPanel({
               value={beauty.eyeBrightness ?? 0}
               onChange={(v) => setBeautyKey('eyeBrightness', v)}
             />
-            <Text style={styles.hint}>
-              Brightens the upper face / eye zone for clearer catchlights and alertness.
-            </Text>
           </View>
         ) : null}
 
@@ -219,9 +210,6 @@ export function BeautyPanel({
               value={beauty.lipColorBoost ?? 0}
               onChange={(v) => setBeautyKey('lipColorBoost', v)}
             />
-            <Text style={styles.hint}>
-              Subtle saturation + warmth on the lip zone — not a full lipstick filter.
-            </Text>
           </View>
         ) : null}
       </ScrollView>
@@ -231,43 +219,41 @@ export function BeautyPanel({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    minHeight: 0,
     paddingHorizontal: theme.space[4],
     paddingTop: theme.space[3],
     paddingBottom: theme.space[2],
     backgroundColor: theme.color.surface.default,
     borderTopWidth: 1,
     borderTopColor: theme.color.stroke.subtle,
-    maxHeight: 320,
   },
   heading: {
     fontSize: 12,
     fontWeight: '600',
     color: theme.color.text.muted,
     letterSpacing: 0.5,
-  },
-  tagline: {
-    fontSize: 12,
-    color: theme.color.text.secondary,
-    marginTop: 2,
-    marginBottom: 6,
+    textTransform: 'uppercase',
   },
   detectionBadge: {
-    fontSize: 10,
+    fontSize: 11,
     color: theme.color.text.muted,
-    marginBottom: 10,
-    opacity: 0.85,
+    marginTop: 4,
+    marginBottom: theme.space[2],
   },
   tabRow: {
     flexDirection: 'row',
     gap: 6,
-    marginBottom: 8,
+    marginBottom: theme.space[2],
   },
   tab: {
     flex: 1,
+    minHeight: 36,
     paddingVertical: 8,
     borderRadius: theme.radius.sm,
     backgroundColor: theme.color.surface.elevated,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   tabActive: {
     backgroundColor: theme.color.surface.raised,
@@ -275,7 +261,7 @@ const styles = StyleSheet.create({
     borderColor: theme.color.accent.gold,
   },
   tabText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '600',
     color: theme.color.text.muted,
   },
@@ -283,11 +269,14 @@ const styles = StyleSheet.create({
     color: theme.color.accent.gold,
   },
   scroll: {
-    flexGrow: 0,
+    flex: 1,
+    minHeight: 0,
+  },
+  scrollContent: {
+    paddingBottom: theme.space[4],
   },
   section: {
-    gap: 10,
-    paddingBottom: 12,
+    gap: 14,
   },
   sectionLabel: {
     fontSize: 11,
@@ -303,39 +292,39 @@ const styles = StyleSheet.create({
   },
   presetCard: {
     width: '47%',
-    padding: 10,
+    padding: 12,
     borderRadius: theme.radius.md,
     backgroundColor: theme.color.surface.elevated,
-    minHeight: 72,
+    minHeight: 76,
   },
   presetCardActive: {
     borderWidth: 1,
     borderColor: theme.color.accent.gold,
   },
   presetName: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '700',
     color: theme.color.text.primary,
   },
   presetDesc: {
-    fontSize: 10,
+    fontSize: 11,
     color: theme.color.text.secondary,
     marginTop: 4,
-    lineHeight: 14,
+    lineHeight: 15,
   },
   proBadge: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: '700',
     color: theme.color.accent.gold,
     marginTop: 6,
   },
   resetBtn: {
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   resetText: {
     color: theme.color.text.secondary,
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '600',
   },
   toggleRow: {
@@ -344,43 +333,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 12,
   },
+  toggleCopy: {
+    flex: 1,
+  },
   controlLabel: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: theme.color.text.primary,
   },
   controlHint: {
-    fontSize: 11,
+    fontSize: 12,
     color: theme.color.text.muted,
     marginTop: 2,
-    maxWidth: 220,
-  },
-  steps: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  stepBtn: {
-    flex: 1,
-    paddingVertical: 8,
-    borderRadius: theme.radius.sm,
-    backgroundColor: theme.color.surface.elevated,
-    alignItems: 'center',
-  },
-  stepBtnActive: {
-    borderWidth: 1,
-    borderColor: theme.color.accent.gold,
-    backgroundColor: theme.color.surface.raised,
-  },
-  stepText: {
-    fontSize: 11,
-    color: theme.color.text.primary,
-    fontWeight: '500',
-    textTransform: 'capitalize',
   },
   hint: {
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 12,
+    lineHeight: 17,
     color: theme.color.text.muted,
-    marginTop: 4,
   },
 });

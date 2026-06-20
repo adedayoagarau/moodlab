@@ -1,5 +1,6 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { EditorPanelShell } from '@/components/editor/EditorPanelShell';
 import { theme } from '@/constants/theme';
 import { EXPORT_PRESETS, type ExportPresetId } from '@moodlab/shared';
 
@@ -13,9 +14,9 @@ const PRESET_IDS = Object.keys(EXPORT_PRESETS) as ExportPresetId[];
 
 export function ExportPanel({ exporting, onExport, onSaveProject }: Props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Export</Text>
-      <Text style={styles.subheading}>Pick a platform — share sheet opens with your edited image</Text>
+    <EditorPanelShell
+      title="Export"
+      subtitle="Pick a format — share sheet opens with your edited image">
       <View style={styles.grid}>
         {PRESET_IDS.map((id) => {
           const preset = EXPORT_PRESETS[id];
@@ -26,7 +27,9 @@ export function ExportPanel({ exporting, onExport, onSaveProject }: Props) {
               disabled={exporting}
               onPress={() => onExport(id)}>
               <Text style={styles.exportLabel}>{preset.label}</Text>
-              <Text style={styles.exportMeta}>{preset.aspect} · {preset.width}×{preset.height}</Text>
+              <Text style={styles.exportMeta}>
+                {preset.aspect} · {preset.width}×{preset.height}
+              </Text>
             </Pressable>
           );
         })}
@@ -37,32 +40,14 @@ export function ExportPanel({ exporting, onExport, onSaveProject }: Props) {
       {exporting ? (
         <View style={styles.exportingRow}>
           <ActivityIndicator color={theme.color.accent.gold} />
-          <Text style={styles.exportingText}>Capturing edit…</Text>
+          <Text style={styles.exportingText}>Rendering export…</Text>
         </View>
       ) : null}
-    </View>
+    </EditorPanelShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: theme.space[4],
-    backgroundColor: theme.color.surface.default,
-    borderTopWidth: 1,
-    borderTopColor: theme.color.stroke.subtle,
-    gap: 12,
-  },
-  heading: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: theme.color.text.muted,
-    letterSpacing: 0.5,
-  },
-  subheading: {
-    fontSize: 13,
-    color: theme.color.text.secondary,
-    marginTop: -4,
-  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -70,9 +55,11 @@ const styles = StyleSheet.create({
   },
   exportBtn: {
     width: '47%',
+    minHeight: 64,
     padding: theme.space[3],
     borderRadius: theme.radius.md,
     backgroundColor: theme.color.surface.elevated,
+    justifyContent: 'center',
   },
   exportBtnDisabled: {
     opacity: 0.6,
@@ -85,13 +72,14 @@ const styles = StyleSheet.create({
   exportMeta: {
     fontSize: 11,
     color: theme.color.text.muted,
-    marginTop: 2,
+    marginTop: 4,
   },
   saveBtn: {
     backgroundColor: theme.color.accent.gold,
     paddingVertical: 14,
     borderRadius: theme.radius.md,
     alignItems: 'center',
+    marginTop: 4,
   },
   saveBtnText: {
     fontSize: 16,
@@ -103,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     justifyContent: 'center',
+    paddingTop: 4,
   },
   exportingText: {
     fontSize: 13,
