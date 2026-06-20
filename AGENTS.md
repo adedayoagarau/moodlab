@@ -72,7 +72,10 @@ Agent skills are installed globally (`~/.agents/skills`). See `docs/SKILLS.md`. 
 | Agent | Cursor subagent | Doc |
 |-------|-----------------|-----|
 | LUT Developer | [`.cursor/agents/lut-developer.md`](.cursor/agents/lut-developer.md) | [`docs/agents/LUT_DEVELOPER.md`](docs/agents/LUT_DEVELOPER.md) |
+| Catalog Loop Runner | [`.cursor/agents/catalog-loop-runner.md`](.cursor/agents/catalog-loop-runner.md) | [`docs/agents/LUT_CATALOG_MASTER_PLAN.md`](docs/agents/LUT_CATALOG_MASTER_PLAN.md) |
 
 **Use in Cursor:** Ask Agent to delegate to `lut-developer`, or say *"Act as the LUT Developer"*. Full workflow: [`docs/agents/CURSOR_LUT_WORKFLOW.md`](docs/agents/CURSOR_LUT_WORKFLOW.md).
+
+**Catalog expansion `/loop`:** Master plan at [`docs/agents/LUT_CATALOG_MASTER_PLAN.md`](docs/agents/LUT_CATALOG_MASTER_PLAN.md). Loop config: [`.cursor/loop/catalog-expansion.md`](.cursor/loop/catalog-expansion.md). Paste Phase A prompt to reach 100 mood LUTs, then Phase B for 1000 filter presets.
 
 LUT authoring: edit `data/lut_registry.yaml` → `pnpm lut:generate` → `pnpm lut:validate` → `pnpm lut:sync-catalog` → app picks up via API.

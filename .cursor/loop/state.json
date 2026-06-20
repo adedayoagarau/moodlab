@@ -1,0 +1,34 @@
+{
+  "loopActive": true,
+  "activatedAt": "2026-06-19",
+  "phase": "A",
+  "phaseName": "100 Mood LUTs",
+  "goal": {
+    "moodLuts": 100,
+    "filterPresets": 1000
+  },
+  "progress": {
+    "moodLutsShipped": 51,
+    "moodLutsRemaining": 49,
+    "filterPresetsShipped": 0,
+    "filterPresetsRemaining": 1000
+  },
+  "currentBatch": {
+    "turn": 0,
+    "maxTurns": 15,
+    "batchSize": 10,
+    "nextGroups": [
+      "melanin-portrait-studio",
+      "music-cover-art",
+      "film-nostalgia",
+      "luxury-editorial",
+      "viral-social",
+      "dark-night-mood",
+      "bw-editorial"
+    ]
+  },
+  "lastAction": null,
+  "lastCommit": null,
+  "blockers": [],
+  "notes": "Loop activated. Paste Phase A prompt from .cursor/loop/catalog-expansion.md into Composer with /loop."
+}

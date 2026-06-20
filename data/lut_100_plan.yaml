@@ -1,0 +1,185 @@
+# 100 Mood LUT manifest — 10 groups × 10
+# status: shipped | planned
+# Execute via lut-developer subagent + /loop (see .cursor/loop/catalog-expansion.md)
+
+target: 100
+shipped: 51
+remaining: 49
+
+groups:
+  - id: melanin-portrait-studio
+    name: Melanin Portrait Studio
+    packId: melanin-gold
+    plan: pro
+    defaultSkinProtection: high
+    luts:
+      - { id: melanin-gold, name: "Melanin Gold", status: shipped }
+      - { id: afrobeat-warm-cover, name: "Afrobeat Warm Cover", status: shipped }
+      - { id: brown-editorial, name: "Brown Editorial", status: shipped }
+      - { id: golden-studio, name: "Golden Studio", status: shipped }
+      - { id: highlife-soft, name: "Highlife Soft", status: shipped }
+      - { id: shadow-skin, name: "Shadow Skin", status: shipped }
+      - { id: luxury-matte-black, name: "Luxury Matte Black", status: shipped }
+      - { id: honey-studio, name: "Honey Studio", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.11, saturation: 0.04, lift: 0.04 } }
+      - { id: cocoa-soft, name: "Cocoa Soft", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.08, saturation: 0.02, lift: 0.05 } }
+      - { id: amber-glow-portrait, name: "Amber Glow Portrait", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.13, saturation: 0.05, lift: 0.03 } }
+
+  - id: sunny-creator
+    name: Sunny Creator
+    packId: sunny-starts
+    plan: free
+    defaultSkinProtection: medium
+    luts:
+      - { id: sunny-cover-glow, name: "Sunny Cover Glow", status: shipped }
+      - { id: golden-hour-film, name: "Golden Hour Film", status: shipped }
+      - { id: blue-sky-summer, name: "Blue Sky Summer", status: shipped }
+      - { id: clean-viral, name: "Clean Viral", status: shipped }
+      - { id: hazy-dream, name: "Hazy Dream", status: shipped }
+      - { id: summer-pop, name: "Summer Pop", status: shipped }
+      - { id: beach-glow, name: "Beach Glow", status: shipped }
+      - { id: sun-kissed, name: "Sun Kissed", status: shipped }
+      - { id: morning-glow, name: "Morning Glow", status: shipped }
+      - { id: patio-warmth, name: "Patio Warmth", status: shipped }
+
+  - id: cinematic-blockbuster
+    name: Cinematic Blockbuster
+    packId: dark-cinematic
+    plan: free
+    defaultSkinProtection: high
+    luts:
+      - { id: teal-horizon, name: "Teal Horizon", status: shipped }
+      - { id: blockbuster-teal, name: "Blockbuster Teal", status: shipped }
+      - { id: bleach-bypass, name: "Bleach Bypass", status: shipped }
+      - { id: anamorphic-flare, name: "Anamorphic Flare", status: shipped }
+      - { id: epic-scope, name: "Epic Scope", status: shipped }
+      - { id: cinema-warm, name: "Cinema Warm", status: shipped }
+      - { id: teal-sunset, name: "Teal Sunset", status: shipped }
+      - { id: muted-blockbuster, name: "Muted Blockbuster", status: shipped }
+      - { id: silver-noir, name: "Silver Noir", status: shipped }
+      - { id: noir-shadow, name: "Noir Shadow", status: shipped }
+
+  - id: streetwear-flash
+    name: Streetwear Flash
+    packId: creator-cover
+    plan: pro
+    defaultSkinProtection: medium
+    luts:
+      - { id: street-flash, name: "Street Flash", status: shipped }
+      - { id: alley-flash, name: "Alley Flash", status: shipped }
+      - { id: block-contrast, name: "Block Contrast", status: shipped }
+      - { id: hype-block, name: "Hype Block", status: shipped }
+      - { id: urban-punch, name: "Urban Punch", status: shipped }
+      - { id: flash-raw, name: "Flash Raw", status: shipped }
+      - { id: street-hype, name: "Street Hype", status: shipped }
+      - { id: concrete-drift, name: "Concrete Drift", status: shipped }
+      - { id: grit-alley, name: "Grit Alley", status: shipped }
+      - { id: muted-street, name: "Muted Street", status: shipped }
+
+  - id: music-cover-art
+    name: Music Cover Art
+    packId: creator-cover
+    plan: pro
+    defaultSkinProtection: high
+    luts:
+      - { id: amapiano-neon-warm, name: "Amapiano Neon Warm", status: shipped }
+      - { id: film-memory-gold, name: "Film Memory Gold", status: shipped }
+      - { id: rnb-purple-night, name: "R&B Purple Night", status: shipped }
+      - { id: hip-hop-punch, name: "Hip Hop Punch", status: planned, recipe: neon_warm, params: { warmth: 0.06, contrast: 0.18, saturation: 0.08 } }
+      - { id: alt-indie-soft, name: "Alt Indie Soft", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.06, warmth: 0.04 } }
+      - { id: drill-dark-cover, name: "Drill Dark Cover", status: planned, recipe: cool_moody, params: { cool: 0.1, saturation: -0.08, lift: -0.03 } }
+      - { id: gospel-gold-cover, name: "Gospel Gold Cover", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.15, saturation: 0.06, lift: 0.04 } }
+      - { id: rollout-neon, name: "Rollout Neon", status: planned, recipe: neon_warm, params: { warmth: 0.1, contrast: 0.14, saturation: 0.12 } }
+      - { id: thumbnail-punch, name: "Thumbnail Punch", status: planned, recipe: neon_warm, params: { warmth: 0.05, contrast: 0.2, saturation: 0.06 } }
+      - { id: cover-art-warm, name: "Cover Art Warm", status: planned, recipe: warm_glow, params: { warmth: 0.12, lift: 0.04, saturation: 0.08 } }
+
+  - id: film-nostalgia
+    name: Film Nostalgia
+    packId: creator-cover
+    plan: pro
+    defaultSkinProtection: medium
+    luts:
+      - { id: analog-fade, name: "Analog Fade", status: shipped }
+      - { id: kodak-gold-mood, name: "Kodak Gold Mood", status: planned, recipe: film_fade, params: { warmth: 0.12, fade: 0.08, saturation: -0.04 } }
+      - { id: faded-memory, name: "Faded Memory", status: planned, recipe: film_fade, params: { fade: 0.14, saturation: -0.1, warmth: 0.02 } }
+      - { id: cross-process-mood, name: "Cross Process Mood", status: planned, recipe: cool_moody, params: { cool: 0.12, saturation: 0.1, lift: 0.02 } }
+      - { id: expired-warmth, name: "Expired Warmth", status: planned, recipe: film_fade, params: { fade: 0.1, warmth: 0.08, saturation: -0.08 } }
+      - { id: grain-memory, name: "Grain Memory", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.12, contrast: 0.06 } }
+      - { id: summer-film-01, name: "Summer Film 01", status: planned, recipe: warm_glow, params: { warmth: 0.1, lift: 0.03, saturation: -0.02 } }
+      - { id: disposable-camera, name: "Disposable Camera", status: planned, recipe: film_fade, params: { fade: 0.08, saturation: 0.04, contrast: 0.08 } }
+      - { id: vintage-roll, name: "Vintage Roll", status: planned, recipe: film_fade, params: { warmth: 0.06, fade: 0.1, saturation: -0.06 } }
+
+  - id: luxury-editorial
+    name: Luxury Editorial
+    packId: melanin-gold
+    plan: pro
+    defaultSkinProtection: medium
+    luts:
+      - { id: brown-editorial, name: "Brown Editorial", status: shipped }
+      - { id: luxury-matte-black, name: "Luxury Matte Black", status: shipped }
+      - { id: runway-cool, name: "Runway Cool", status: planned, recipe: cool_moody, params: { cool: 0.06, saturation: -0.1, lift: 0.01 } }
+      - { id: fashion-gold, name: "Fashion Gold", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.1, saturation: 0.03, lift: 0.02 } }
+      - { id: matte-cream, name: "Matte Cream", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.08, warmth: 0.04 } }
+      - { id: premium-bw-mood, name: "Premium BW Mood", status: planned, recipe: bw_editorial, params: { contrast: 0.12, fade: 0.03 } }
+      - { id: cool-minimal, name: "Cool Minimal", status: planned, recipe: cool_moody, params: { cool: 0.04, saturation: -0.14, lift: 0.02 } }
+      - { id: velvet-shadow, name: "Velvet Shadow", status: planned, recipe: cool_moody, params: { cool: 0.08, saturation: -0.06, lift: -0.02 } }
+      - { id: champagne-luxe, name: "Champagne Luxe", status: planned, recipe: warm_glow, params: { warmth: 0.08, lift: 0.04, saturation: -0.04 } }
+      - { id: obsidian-edit, name: "Obsidian Edit", status: planned, recipe: bw_editorial, params: { contrast: 0.14, fade: 0.01 } }
+
+  - id: viral-social
+    name: Viral Social
+    packId: sunny-starts
+    plan: free
+    defaultSkinProtection: medium
+    luts:
+      - { id: clean-viral, name: "Clean Viral", status: shipped }
+      - { id: clean-bright, name: "Clean Bright", status: shipped }
+      - { id: lemonade-bright, name: "Lemonade Bright", status: shipped }
+      - { id: summer-pop, name: "Summer Pop", status: shipped }
+      - { id: punchy-scroll, name: "Punchy Scroll", status: planned, recipe: warm_glow, params: { warmth: 0.05, lift: 0.06, saturation: 0.1 } }
+      - { id: pastel-pop, name: "Pastel Pop", status: planned, recipe: warm_glow, params: { warmth: 0.03, lift: 0.08, saturation: 0.06 } }
+      - { id: tiktok-bright, name: "TikTok Bright", status: planned, recipe: warm_glow, params: { warmth: 0.04, lift: 0.1, saturation: 0.08 } }
+      - { id: high-sat-viral, name: "High Sat Viral", status: planned, recipe: neon_warm, params: { warmth: 0.04, contrast: 0.08, saturation: 0.14 } }
+      - { id: soft-social, name: "Soft Social", status: planned, recipe: warm_glow, params: { warmth: 0.06, lift: 0.05, saturation: -0.02 } }
+      - { id: feed-clean, name: "Feed Clean", status: planned, recipe: warm_glow, params: { warmth: 0.02, lift: 0.04, saturation: 0.04 } }
+
+  - id: dark-night-mood
+    name: Dark Night Mood
+    packId: dark-cinematic
+    plan: free
+    defaultSkinProtection: high
+    luts:
+      - { id: dark-room-blue, name: "Dark Room Blue", status: shipped }
+      - { id: lagos-night, name: "Lagos Night", status: shipped }
+      - { id: rnb-purple-night, name: "R&B Purple Night", status: shipped }
+      - { id: noir-shadow, name: "Noir Shadow", status: shipped }
+      - { id: urban-noir, name: "Urban Noir", status: planned, recipe: cool_moody, params: { cool: 0.14, saturation: -0.1, lift: -0.04 } }
+      - { id: low-key-portrait, name: "Low Key Portrait", status: planned, recipe: cool_moody, params: { cool: 0.08, saturation: -0.06, lift: -0.03 } }
+      - { id: cover-darkness, name: "Cover Darkness", status: planned, recipe: cool_moody, params: { cool: 0.12, saturation: -0.12, lift: -0.05 } }
+      - { id: midnight-blue, name: "Midnight Blue", status: planned, recipe: cool_moody, params: { cool: 0.16, saturation: -0.04, lift: -0.02 } }
+      - { id: neon-night, name: "Neon Night", status: planned, recipe: cinematic_teal_orange, params: { teal: 0.14, warmth: 0.06, saturation: 0.08 } }
+      - { id: moody-bedroom, name: "Moody Bedroom", status: planned, recipe: cool_moody, params: { cool: 0.06, saturation: -0.08, lift: -0.01 } }
+
+  - id: bw-editorial
+    name: Black & White Editorial
+    packId: dark-cinematic
+    plan: pro
+    defaultSkinProtection: medium
+    luts:
+      - { id: magazine-bw, name: "Magazine BW", status: shipped }
+      - { id: high-contrast-bw, name: "High Contrast BW", status: planned, recipe: bw_editorial, params: { contrast: 0.16, fade: 0.0 } }
+      - { id: soft-matte-bw, name: "Soft Matte BW", status: planned, recipe: bw_editorial, params: { contrast: 0.04, fade: 0.08 } }
+      - { id: film-noir-bw, name: "Film Noir BW", status: planned, recipe: bw_editorial, params: { contrast: 0.12, fade: 0.02 } }
+      - { id: warm-sepia-mood, name: "Warm Sepia Mood", status: planned, recipe: film_fade, params: { warmth: 0.1, fade: 0.06, saturation: -0.2 } }
+      - { id: silver-editorial, name: "Silver Editorial", status: planned, recipe: bw_editorial, params: { contrast: 0.1, fade: 0.04 } }
+      - { id: charcoal-portrait, name: "Charcoal Portrait", status: planned, recipe: bw_editorial, params: { contrast: 0.08, fade: 0.03 } }
+      - { id: ink-magazine, name: "Ink Magazine", status: planned, recipe: bw_editorial, params: { contrast: 0.18, fade: 0.0 } }
+      - { id: matte-noir, name: "Matte Noir", status: planned, recipe: bw_editorial, params: { contrast: 0.06, fade: 0.1 } }
+      - { id: classic-bw, name: "Classic BW", status: planned, recipe: bw_editorial, params: { contrast: 0.08, fade: 0.02 } }
+
+# Note: Some LUTs appear in multiple groups conceptually but exist once in registry.
+# Unique shipped count = 51. Planned unique additions = 49 (dedupe golden-hour-film, clean-viral, etc. when adding).
+
+dedupeRules:
+  - Each id appears once in lut_registry.yaml
+  - Groups are organizational; cross-group duplicates are marked with note, not re-added
+  - When adding planned LUTs, skip ids already in registry

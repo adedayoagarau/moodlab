@@ -1,0 +1,210 @@
+# Filter & Camera Preset Taxonomy — ~1000 presets
+# Tier 2 catalog (film stocks, camera profiles, cinema, specialty)
+# Implements as .cube via filter_registry.yaml (Phase 2) — same lut-studio pipeline
+
+target: 1000
+current: 0
+kind: filter_preset
+
+naming:
+  idFormat: kebab-case-manufacturer-stock
+  displayName: "Manufacturer Stock ISO" or camera profile name
+  examples:
+    - "Kodak Portra 400"
+    - "Fuji Classic Chrome"
+    - "Canon Neutral Profile"
+
+metadataFields:
+  - kind              # filter_preset | mood_lut
+  - manufacturer
+  - stock
+  - iso
+  - format            # 35mm | 120 | instant | digital | cinema
+  - character         # tags: warm, cool, portrait, landscape, high-contrast
+  - skinProtectionDefault
+  - recommendedEffects
+
+families:
+  - id: kodak
+    name: Kodak
+    targetCount: 120
+    stocks:
+      colorPortrait:
+        - { stock: Portra 160, variants: [over, normal, under, push-1] }
+        - { stock: Portra 400, variants: [over, normal, under, push-1, push-2] }
+        - { stock: Portra 800, variants: [over, normal, under, push-1] }
+        - { stock: Ektar 100, variants: [normal, over] }
+        - { stock: Gold 200, variants: [normal, over, under] }
+        - { stock: ColorPlus 200, variants: [normal] }
+        - { stock: Ultramax 400, variants: [normal, over] }
+      slide:
+        - { stock: Ektachrome E100, variants: [normal, over] }
+        - { stock: Elite Chrome 100, variants: [normal] }
+      bw:
+        - { stock: Tri-X 400, variants: [normal, push-1, push-2] }
+        - { stock: T-Max 100, variants: [normal] }
+        - { stock: T-Max 400, variants: [normal, push-1] }
+        - { stock: Plus-X 125, variants: [normal] }
+      cinema:
+        - { stock: Vision3 50D, variants: [normal, over] }
+        - { stock: Vision3 250D, variants: [normal] }
+        - { stock: Vision3 500T, variants: [normal, push-1, push-2] }
+        - { stock: Vision3 200T, variants: [normal] }
+        - { stock: Double-X 5222, variants: [normal, push-1] }
+
+  - id: fuji
+    name: Fuji
+    targetCount: 120
+    stocks:
+      colorNegative:
+        - { stock: Pro 400H, variants: [normal, over, under] }
+        - { stock: Pro 160NS, variants: [normal] }
+        - { stock: Superia 400, variants: [normal, over] }
+        - { stock: Superia 800, variants: [normal] }
+        - { stock: C200, variants: [normal, over] }
+      slide:
+        - { stock: Velvia 50, variants: [normal, over] }
+        - { stock: Velvia 100, variants: [normal] }
+        - { stock: Provia 100F, variants: [normal, over] }
+        - { stock: Astia 100F, variants: [normal] }
+      bw:
+        - { stock: Acros 100 II, variants: [normal, push-1] }
+        - { stock: Neopan 400, variants: [normal] }
+      digitalSim:
+        - { stock: Classic Chrome, variants: [weak, strong] }
+        - { stock: Classic Neg, variants: [weak, strong] }
+        - { stock: Nostalgic Neg, variants: [normal] }
+        - { stock: Eterna, variants: [normal, cinema] }
+        - { stock: Eterna Bleach Bypass, variants: [normal] }
+        - { stock: Pro Neg Hi, variants: [normal] }
+        - { stock: Pro Neg Std, variants: [normal] }
+
+  - id: ilford
+    name: Ilford
+    targetCount: 80
+    stocks:
+      - { stock: HP5 Plus, iso: 400, variants: [normal, push-1, push-2] }
+      - { stock: Delta 100, iso: 100, variants: [normal] }
+      - { stock: Delta 400, iso: 400, variants: [normal, push-1] }
+      - { stock: Delta 3200, iso: 3200, variants: [normal] }
+      - { stock: FP4 Plus, iso: 125, variants: [normal] }
+      - { stock: Pan F Plus, iso: 50, variants: [normal] }
+      - { stock: Ortho Plus, iso: 80, variants: [normal] }
+      - { stock: XP2 Super, iso: 400, variants: [normal] }
+
+  - id: agfa-konica-other
+    name: Agfa / Konica / Other
+    targetCount: 80
+    stocks:
+      - { stock: Agfa Vista 200, variants: [normal, over] }
+      - { stock: Agfa Vista 400, variants: [normal] }
+      - { stock: Konica Centuria 400, variants: [normal] }
+      - { stock: Lomography Color 400, variants: [normal] }
+      - { stock: Lomography Purple, variants: [normal] }
+      - { stock: Lomography Redscale, variants: [normal] }
+      - { stock: Cinestill 800T, variants: [normal, push-1] }
+      - { stock: Cinestill 50D, variants: [normal] }
+      - { stock: Rollei Color Reversal, variants: [normal] }
+
+  - id: cinema
+    name: Cinema Film
+    targetCount: 100
+    stocks:
+      - { stock: Kodak Vision3 500T, variants: [tungsten, daylight-converted] }
+      - { stock: Fuji Eterna Vivid 160, variants: [normal] }
+      - { stock: Fuji Eterna 500T, variants: [normal] }
+      - { stock: Bleach Bypass Cinema, variants: [light, heavy] }
+      - { stock: Technicolor 2-Strip, variants: [normal] }
+      - { stock: Technicolor 3-Strip, variants: [normal] }
+      - { stock: Kodak Eastman Double-X, variants: [normal, push-1] }
+
+  - id: instant-vintage
+    name: Instant / Expired / Vintage
+    targetCount: 80
+    stocks:
+      - { stock: Polaroid 600, variants: [normal, faded] }
+      - { stock: Polaroid SX-70, variants: [normal] }
+      - { stock: Instax Mini, variants: [normal, over] }
+      - { stock: Expired Warm Shift, variants: [light, heavy] }
+      - { stock: Expired Cool Shift, variants: [light, heavy] }
+      - { stock: Faded Chemical Magenta, variants: [normal] }
+      - { stock: Vintage Kodachrome Sim, variants: [normal] }
+
+  - id: canon-nikon-sony
+    name: Canon / Nikon / Sony Digital
+    targetCount: 120
+    profiles:
+      canon:
+        - { profile: Standard, variants: [normal] }
+        - { profile: Portrait, variants: [normal] }
+        - { profile: Landscape, variants: [normal] }
+        - { profile: Neutral, variants: [normal] }
+        - { profile: Faithful, variants: [normal] }
+        - { profile: Fine Detail, variants: [normal] }
+      nikon:
+        - { profile: Standard, variants: [normal] }
+        - { profile: Neutral, variants: [normal] }
+        - { profile: Vivid, variants: [normal] }
+        - { profile: Portrait, variants: [normal] }
+        - { profile: Flat, variants: [normal] }
+      sony:
+        - { profile: Standard, variants: [normal] }
+        - { profile: Vivid, variants: [normal] }
+        - { profile: Portrait, variants: [normal] }
+        - { profile: Neutral, variants: [normal] }
+        - { profile: Clear, variants: [normal] }
+        - { profile: Deep, variants: [normal] }
+        - { profile: Real, variants: [normal] }
+
+  - id: leica-hasselblad-phase
+    name: Leica / Hasselblad / Medium Format Digital
+    targetCount: 80
+    profiles:
+      - { profile: Leica Natural, variants: [normal] }
+      - { profile: Leica Vivid, variants: [normal] }
+      - { profile: Hasselblad Natural, variants: [normal] }
+      - { profile: Hasselblad Vibrant, variants: [normal] }
+      - { profile: Phase One Natural, variants: [normal] }
+      - { profile: Phase One Vibrant, variants: [normal] }
+
+  - id: mobile-social
+    name: Mobile / Social Camera
+    targetCount: 80
+    profiles:
+      - { profile: iPhone Vivid, variants: [normal] }
+      - { profile: iPhone Warm, variants: [normal] }
+      - { profile: iPhone Cool, variants: [normal] }
+      - { profile: Samsung Vivid, variants: [normal] }
+      - { profile: Google Pixel Real, variants: [normal] }
+      - { profile: VSCO A6 Sim, variants: [normal] }
+      - { profile: VSCO C1 Sim, variants: [normal] }
+      - { profile: Disposable 35mm Sim, variants: [normal] }
+      - { profile: Webcam Warm, variants: [normal] }
+
+  - id: specialty
+    name: Specialty / Cross-process / Infrared
+    targetCount: 140
+    types:
+      - { type: Cross Process E6-C41, variants: [light, heavy] }
+      - { type: Cross Process C41-E6, variants: [light, heavy] }
+      - { type: Infrared False Color, variants: [720nm, 850nm sim] }
+      - { type: Infrared B&W, variants: [normal] }
+      - { type: Technicolor, variants: [2-strip, 3-strip] }
+      - { type: Duotone, variants: [teal-orange, purple-gold, blue-yellow] }
+      - { type: Split Tone, variants: [warm-shadow, cool-shadow] }
+      - { type: Log to Rec709, variants: [generic-log, s-log3, v-log, c-log] }
+
+batchPlanning:
+  phase1_moodLuts: 100
+  phase2_filterPresets: 1000
+  batchSize: 20
+  batchesTo1000: 50
+  recipeStrategy:
+    filmStock: film_stock_emulation   # new recipe — Phase 2
+    cameraProfile: camera_profile     # new recipe — Phase 2
+    specialty: parametric from specialty types
+
+loopIntegration:
+  stateFile: .cursor/loop/state.json
+  loopPrompt: .cursor/loop/catalog-expansion.md
+  subagent: lut-developer
