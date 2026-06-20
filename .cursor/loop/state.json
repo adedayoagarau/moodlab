@@ -8,25 +8,25 @@
     "filterPresets": 1000
   },
   "progress": {
-    "moodLutsShipped": 61,
-    "moodLutsRemaining": 39,
+    "moodLutsShipped": 71,
+    "moodLutsRemaining": 29,
     "filterPresetsShipped": 0,
     "filterPresetsRemaining": 1000
   },
   "currentBatch": {
-    "turn": 1,
+    "turn": 2,
     "maxTurns": 15,
     "batchSize": 10,
     "nextGroups": [
       "film-nostalgia",
-      "luxury-editorial",
       "viral-social",
       "dark-night-mood",
-      "bw-editorial"
+      "bw-editorial",
+      "luxury-editorial"
     ]
   },
-  "lastAction": "Loop turn 1: shipped honey-studio, cocoa-soft, amber-glow-portrait, hip-hop-punch, alt-indie-soft, drill-dark-cover, gospel-gold-cover, rollout-neon, thumbnail-punch, cover-art-warm",
+  "lastAction": "Loop turn 2: shipped kodak-gold-mood, faded-memory, cross-process-mood, expired-warmth, grain-memory, runway-cool, fashion-gold, matte-cream, premium-bw-mood, cool-minimal",
   "lastCommit": null,
   "blockers": [],
-  "notes": "Turn 2: batch 10 from film-nostalgia + luxury-editorial groups."
+  "notes": "Turn 3: film-nostalgia remainder (3) + viral-social (6) + 1 from dark-night or luxury."
 }

@@ -876,3 +876,143 @@ luts:
       skinProtectionDefault: high
       recommendedEffects: { glow: 0.14, vignette: 0.08 }
 
+  # Loop turn 2 — film-nostalgia (5) + luxury-editorial (5)
+
+  - id: kodak-gold-mood
+    name: Kodak Gold Mood
+    packId: creator-cover
+    categories: [Film, Music Cover]
+    plan: pro
+    tags: [film, kodak, gold, nostalgia]
+    grade:
+      type: film_fade
+      params: { warmth: 0.12, fade: 0.08, saturation: -0.04 }
+    metadata:
+      defaultStrength: 0.74
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.16, glow: 0.1 }
+
+  - id: faded-memory
+    name: Faded Memory
+    packId: creator-cover
+    categories: [Film]
+    plan: pro
+    tags: [film, faded, nostalgia]
+    grade:
+      type: film_fade
+      params: { fade: 0.14, saturation: -0.1, warmth: 0.02 }
+    metadata:
+      defaultStrength: 0.7
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.18 }
+
+  - id: cross-process-mood
+    name: Cross Process Mood
+    packId: creator-cover
+    categories: [Film, Cinematic]
+    plan: pro
+    tags: [film, cross-process, moody]
+    grade:
+      type: cool_moody
+      params: { cool: 0.12, saturation: 0.1, lift: 0.02 }
+    metadata:
+      defaultStrength: 0.76
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.14 }
+
+  - id: expired-warmth
+    name: Expired Warmth
+    packId: creator-cover
+    categories: [Film]
+    plan: pro
+    tags: [film, expired, warm]
+    grade:
+      type: film_fade
+      params: { fade: 0.1, warmth: 0.08, saturation: -0.08 }
+    metadata:
+      defaultStrength: 0.72
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.2 }
+
+  - id: grain-memory
+    name: Grain Memory
+    packId: creator-cover
+    categories: [Film]
+    plan: pro
+    tags: [film, grain, memory]
+    grade:
+      type: film_fade
+      params: { fade: 0.06, saturation: -0.12, contrast: 0.06 }
+    metadata:
+      defaultStrength: 0.73
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.22 }
+
+  - id: runway-cool
+    name: Runway Cool
+    packId: melanin-gold
+    categories: [Luxury, Portrait]
+    plan: pro
+    tags: [luxury, runway, cool, editorial]
+    grade:
+      type: cool_moody
+      params: { cool: 0.06, saturation: -0.1, lift: 0.01 }
+    metadata:
+      defaultStrength: 0.71
+      skinProtectionDefault: medium
+      recommendedEffects: { vignette: 0.1 }
+
+  - id: fashion-gold
+    name: Fashion Gold
+    packId: melanin-gold
+    categories: [Luxury, Portrait]
+    plan: pro
+    tags: [luxury, fashion, gold, portrait, skin-safe]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.1, saturation: 0.03, lift: 0.02, skinProtection: 0.45 }
+    metadata:
+      defaultStrength: 0.73
+      skinProtectionDefault: high
+
+  - id: matte-cream
+    name: Matte Cream
+    packId: melanin-gold
+    categories: [Luxury, Portrait]
+    plan: pro
+    tags: [luxury, matte, cream, editorial]
+    grade:
+      type: film_fade
+      params: { fade: 0.06, saturation: -0.08, warmth: 0.04 }
+    metadata:
+      defaultStrength: 0.69
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.08 }
+
+  - id: premium-bw-mood
+    name: Premium BW Mood
+    packId: melanin-gold
+    categories: [Luxury, Black and White]
+    plan: pro
+    tags: [luxury, bw, editorial]
+    grade:
+      type: bw_editorial
+      params: { contrast: 0.12, fade: 0.03 }
+    metadata:
+      defaultStrength: 0.82
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.1 }
+
+  - id: cool-minimal
+    name: Cool Minimal
+    packId: melanin-gold
+    categories: [Luxury]
+    plan: pro
+    tags: [luxury, cool, minimal]
+    grade:
+      type: cool_moody
+      params: { cool: 0.04, saturation: -0.14, lift: 0.02 }
+    metadata:
+      defaultStrength: 0.7
+      skinProtectionDefault: medium
+

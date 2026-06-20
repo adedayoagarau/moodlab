@@ -3,8 +3,8 @@
 # Execute via lut-developer subagent + /loop (see .cursor/loop/catalog-expansion.md)
 
 target: 100
-shipped: 61
-remaining: 39
+shipped: 71
+remaining: 29
 
 groups:
   - id: melanin-portrait-studio
@@ -99,11 +99,11 @@ groups:
     defaultSkinProtection: medium
     luts:
       - { id: analog-fade, name: "Analog Fade", status: shipped }
-      - { id: kodak-gold-mood, name: "Kodak Gold Mood", status: planned, recipe: film_fade, params: { warmth: 0.12, fade: 0.08, saturation: -0.04 } }
-      - { id: faded-memory, name: "Faded Memory", status: planned, recipe: film_fade, params: { fade: 0.14, saturation: -0.1, warmth: 0.02 } }
-      - { id: cross-process-mood, name: "Cross Process Mood", status: planned, recipe: cool_moody, params: { cool: 0.12, saturation: 0.1, lift: 0.02 } }
-      - { id: expired-warmth, name: "Expired Warmth", status: planned, recipe: film_fade, params: { fade: 0.1, warmth: 0.08, saturation: -0.08 } }
-      - { id: grain-memory, name: "Grain Memory", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.12, contrast: 0.06 } }
+      - { id: kodak-gold-mood, name: "Kodak Gold Mood", status: shipped, recipe: film_fade, params: { warmth: 0.12, fade: 0.08, saturation: -0.04 } }
+      - { id: faded-memory, name: "Faded Memory", status: shipped, recipe: film_fade, params: { fade: 0.14, saturation: -0.1, warmth: 0.02 } }
+      - { id: cross-process-mood, name: "Cross Process Mood", status: shipped, recipe: cool_moody, params: { cool: 0.12, saturation: 0.1, lift: 0.02 } }
+      - { id: expired-warmth, name: "Expired Warmth", status: shipped, recipe: film_fade, params: { fade: 0.1, warmth: 0.08, saturation: -0.08 } }
+      - { id: grain-memory, name: "Grain Memory", status: shipped, recipe: film_fade, params: { fade: 0.06, saturation: -0.12, contrast: 0.06 } }
       - { id: summer-film-01, name: "Summer Film 01", status: planned, recipe: warm_glow, params: { warmth: 0.1, lift: 0.03, saturation: -0.02 } }
       - { id: disposable-camera, name: "Disposable Camera", status: planned, recipe: film_fade, params: { fade: 0.08, saturation: 0.04, contrast: 0.08 } }
       - { id: vintage-roll, name: "Vintage Roll", status: planned, recipe: film_fade, params: { warmth: 0.06, fade: 0.1, saturation: -0.06 } }
@@ -116,11 +116,11 @@ groups:
     luts:
       - { id: brown-editorial, name: "Brown Editorial", status: shipped }
       - { id: luxury-matte-black, name: "Luxury Matte Black", status: shipped }
-      - { id: runway-cool, name: "Runway Cool", status: planned, recipe: cool_moody, params: { cool: 0.06, saturation: -0.1, lift: 0.01 } }
-      - { id: fashion-gold, name: "Fashion Gold", status: planned, recipe: skin_safe_portrait, params: { warmth: 0.1, saturation: 0.03, lift: 0.02 } }
-      - { id: matte-cream, name: "Matte Cream", status: planned, recipe: film_fade, params: { fade: 0.06, saturation: -0.08, warmth: 0.04 } }
-      - { id: premium-bw-mood, name: "Premium BW Mood", status: planned, recipe: bw_editorial, params: { contrast: 0.12, fade: 0.03 } }
-      - { id: cool-minimal, name: "Cool Minimal", status: planned, recipe: cool_moody, params: { cool: 0.04, saturation: -0.14, lift: 0.02 } }
+      - { id: runway-cool, name: "Runway Cool", status: shipped, recipe: cool_moody, params: { cool: 0.06, saturation: -0.1, lift: 0.01 } }
+      - { id: fashion-gold, name: "Fashion Gold", status: shipped, recipe: skin_safe_portrait, params: { warmth: 0.1, saturation: 0.03, lift: 0.02 } }
+      - { id: matte-cream, name: "Matte Cream", status: shipped, recipe: film_fade, params: { fade: 0.06, saturation: -0.08, warmth: 0.04 } }
+      - { id: premium-bw-mood, name: "Premium BW Mood", status: shipped, recipe: bw_editorial, params: { contrast: 0.12, fade: 0.03 } }
+      - { id: cool-minimal, name: "Cool Minimal", status: shipped, recipe: cool_moody, params: { cool: 0.04, saturation: -0.14, lift: 0.02 } }
       - { id: velvet-shadow, name: "Velvet Shadow", status: planned, recipe: cool_moody, params: { cool: 0.08, saturation: -0.06, lift: -0.02 } }
       - { id: champagne-luxe, name: "Champagne Luxe", status: planned, recipe: warm_glow, params: { warmth: 0.08, lift: 0.04, saturation: -0.04 } }
       - { id: obsidian-edit, name: "Obsidian Edit", status: planned, recipe: bw_editorial, params: { contrast: 0.14, fade: 0.01 } }

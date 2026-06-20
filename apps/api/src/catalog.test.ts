@@ -6,7 +6,7 @@ describe('catalog', () => {
     const packs = getPacks();
     expect(packs.length).toBeGreaterThan(0);
     const luts = getLuts();
-    expect(luts.length).toBeGreaterThanOrEqual(61);
+    expect(luts.length).toBeGreaterThanOrEqual(71);
     expect(luts.some((l) => l.id === 'golden-studio')).toBe(true);
   });
 

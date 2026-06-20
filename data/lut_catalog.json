@@ -72,11 +72,16 @@
         "amber-glow-portrait",
         "brown-editorial",
         "cocoa-soft",
+        "cool-minimal",
+        "fashion-gold",
         "golden-studio",
         "highlife-soft",
         "honey-studio",
         "luxury-matte-black",
+        "matte-cream",
         "melanin-gold",
+        "premium-bw-mood",
+        "runway-cool",
         "shadow-skin"
       ]
     },
@@ -99,13 +104,18 @@
         "block-contrast",
         "concrete-drift",
         "cover-art-warm",
+        "cross-process-mood",
         "drill-dark-cover",
+        "expired-warmth",
+        "faded-memory",
         "film-memory-gold",
         "flash-raw",
         "gospel-gold-cover",
+        "grain-memory",
         "grit-alley",
         "hip-hop-punch",
         "hype-block",
+        "kodak-gold-mood",
         "muted-street",
         "rollout-neon",
         "skate-garage",
@@ -1471,6 +1481,222 @@
         "cover",
         "warm",
         "portrait"
+      ]
+    },
+    {
+      "id": "kodak-gold-mood",
+      "name": "Kodak Gold Mood",
+      "packId": "creator-cover",
+      "categories": [
+        "Film",
+        "Music Cover"
+      ],
+      "file": "luts/original/kodak-gold-mood.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.74,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.16,
+        "glow": 0.1
+      },
+      "tags": [
+        "film",
+        "kodak",
+        "gold",
+        "nostalgia"
+      ]
+    },
+    {
+      "id": "faded-memory",
+      "name": "Faded Memory",
+      "packId": "creator-cover",
+      "categories": [
+        "Film"
+      ],
+      "file": "luts/original/faded-memory.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.7,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.18
+      },
+      "tags": [
+        "film",
+        "faded",
+        "nostalgia"
+      ]
+    },
+    {
+      "id": "cross-process-mood",
+      "name": "Cross Process Mood",
+      "packId": "creator-cover",
+      "categories": [
+        "Film",
+        "Cinematic"
+      ],
+      "file": "luts/original/cross-process-mood.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.76,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.14
+      },
+      "tags": [
+        "film",
+        "cross-process",
+        "moody"
+      ]
+    },
+    {
+      "id": "expired-warmth",
+      "name": "Expired Warmth",
+      "packId": "creator-cover",
+      "categories": [
+        "Film"
+      ],
+      "file": "luts/original/expired-warmth.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.72,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.2
+      },
+      "tags": [
+        "film",
+        "expired",
+        "warm"
+      ]
+    },
+    {
+      "id": "grain-memory",
+      "name": "Grain Memory",
+      "packId": "creator-cover",
+      "categories": [
+        "Film"
+      ],
+      "file": "luts/original/grain-memory.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.73,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.22
+      },
+      "tags": [
+        "film",
+        "grain",
+        "memory"
+      ]
+    },
+    {
+      "id": "runway-cool",
+      "name": "Runway Cool",
+      "packId": "melanin-gold",
+      "categories": [
+        "Luxury",
+        "Portrait"
+      ],
+      "file": "luts/original/runway-cool.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.71,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "vignette": 0.1
+      },
+      "tags": [
+        "luxury",
+        "runway",
+        "cool",
+        "editorial"
+      ]
+    },
+    {
+      "id": "fashion-gold",
+      "name": "Fashion Gold",
+      "packId": "melanin-gold",
+      "categories": [
+        "Luxury",
+        "Portrait"
+      ],
+      "file": "luts/original/fashion-gold.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.73,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "tags": [
+        "luxury",
+        "fashion",
+        "gold",
+        "portrait",
+        "skin-safe"
+      ]
+    },
+    {
+      "id": "matte-cream",
+      "name": "Matte Cream",
+      "packId": "melanin-gold",
+      "categories": [
+        "Luxury",
+        "Portrait"
+      ],
+      "file": "luts/original/matte-cream.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.69,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.08
+      },
+      "tags": [
+        "luxury",
+        "matte",
+        "cream",
+        "editorial"
+      ]
+    },
+    {
+      "id": "premium-bw-mood",
+      "name": "Premium BW Mood",
+      "packId": "melanin-gold",
+      "categories": [
+        "Luxury",
+        "Black and White"
+      ],
+      "file": "luts/original/premium-bw-mood.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.82,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "recommendedEffects": {
+        "grain": 0.1
+      },
+      "tags": [
+        "luxury",
+        "bw",
+        "editorial"
+      ]
+    },
+    {
+      "id": "cool-minimal",
+      "name": "Cool Minimal",
+      "packId": "melanin-gold",
+      "categories": [
+        "Luxury"
+      ],
+      "file": "luts/original/cool-minimal.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.7,
+      "skinProtectionDefault": "medium",
+      "plan": "pro",
+      "tags": [
+        "luxury",
+        "cool",
+        "minimal"
       ]
     }
   ]
