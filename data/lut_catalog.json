@@ -11,11 +11,21 @@
       "plan": "free",
       "coverColor": "#F5B85B",
       "lutIds": [
+        "beach-glow",
         "blue-sky-summer",
+        "clean-bright",
         "clean-viral",
         "creamy-indoor",
         "golden-hour-film",
         "green-remover",
+        "hazy-dream",
+        "lemonade-bright",
+        "morning-glow",
+        "patio-warmth",
+        "poolside-light",
+        "soft-sunrise",
+        "summer-pop",
+        "sun-kissed",
         "sunny-cover-glow"
       ]
     },
@@ -31,10 +41,20 @@
       "plan": "free",
       "coverColor": "#3D4F7C",
       "lutIds": [
+        "anamorphic-flare",
+        "bleach-bypass",
+        "blockbuster-teal",
+        "cinema-warm",
         "dark-room-blue",
+        "epic-scope",
         "lagos-night",
         "magazine-bw",
-        "rnb-purple-night"
+        "muted-blockbuster",
+        "noir-shadow",
+        "rnb-purple-night",
+        "silver-noir",
+        "teal-horizon",
+        "teal-sunset"
       ]
     },
     {
@@ -759,6 +779,459 @@
         "street",
         "hype",
         "viral"
+      ]
+    },
+    {
+      "id": "teal-horizon",
+      "name": "Teal Horizon",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic"
+      ],
+      "file": "luts/original/teal-horizon.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.79,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "vignette": 0.14,
+        "grain": 0.08
+      },
+      "tags": [
+        "cinematic",
+        "teal",
+        "orange",
+        "portrait"
+      ]
+    },
+    {
+      "id": "blockbuster-teal",
+      "name": "Blockbuster Teal",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Music Cover"
+      ],
+      "file": "luts/original/blockbuster-teal.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.81,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "vignette": 0.16,
+        "grain": 0.1
+      },
+      "tags": [
+        "cinematic",
+        "teal",
+        "cover",
+        "portrait"
+      ]
+    },
+    {
+      "id": "bleach-bypass",
+      "name": "Bleach Bypass",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Film"
+      ],
+      "file": "luts/original/bleach-bypass.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.77,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "grain": 0.16,
+        "vignette": 0.12
+      },
+      "tags": [
+        "cinematic",
+        "bleach",
+        "gritty"
+      ]
+    },
+    {
+      "id": "silver-noir",
+      "name": "Silver Noir",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Dark"
+      ],
+      "file": "luts/original/silver-noir.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.8,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "vignette": 0.2,
+        "grain": 0.12
+      },
+      "tags": [
+        "cinematic",
+        "noir",
+        "dark",
+        "portrait"
+      ]
+    },
+    {
+      "id": "anamorphic-flare",
+      "name": "Anamorphic Flare",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic"
+      ],
+      "file": "luts/original/anamorphic-flare.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.78,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.14,
+        "vignette": 0.1
+      },
+      "tags": [
+        "cinematic",
+        "flare",
+        "warm",
+        "portrait"
+      ]
+    },
+    {
+      "id": "muted-blockbuster",
+      "name": "Muted Blockbuster",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic"
+      ],
+      "file": "luts/original/muted-blockbuster.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.76,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "grain": 0.1,
+        "vignette": 0.14
+      },
+      "tags": [
+        "cinematic",
+        "muted",
+        "film"
+      ]
+    },
+    {
+      "id": "cinema-warm",
+      "name": "Cinema Warm",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Portrait"
+      ],
+      "file": "luts/original/cinema-warm.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.77,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.1,
+        "grain": 0.08
+      },
+      "tags": [
+        "cinematic",
+        "warm",
+        "portrait"
+      ]
+    },
+    {
+      "id": "noir-shadow",
+      "name": "Noir Shadow",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Dark"
+      ],
+      "file": "luts/original/noir-shadow.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.82,
+      "skinProtectionDefault": "high",
+      "plan": "free",
+      "recommendedEffects": {
+        "vignette": 0.22,
+        "grain": 0.14
+      },
+      "tags": [
+        "cinematic",
+        "noir",
+        "shadow",
+        "portrait"
+      ]
+    },
+    {
+      "id": "teal-sunset",
+      "name": "Teal Sunset",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic",
+        "Music Cover"
+      ],
+      "file": "luts/original/teal-sunset.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.8,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "glow": 0.12,
+        "vignette": 0.12
+      },
+      "tags": [
+        "cinematic",
+        "teal",
+        "sunset",
+        "portrait"
+      ]
+    },
+    {
+      "id": "epic-scope",
+      "name": "Epic Scope",
+      "packId": "dark-cinematic",
+      "categories": [
+        "Cinematic"
+      ],
+      "file": "luts/original/epic-scope.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.83,
+      "skinProtectionDefault": "high",
+      "plan": "pro",
+      "recommendedEffects": {
+        "vignette": 0.18,
+        "grain": 0.1
+      },
+      "tags": [
+        "cinematic",
+        "epic",
+        "wide"
+      ]
+    },
+    {
+      "id": "hazy-dream",
+      "name": "Hazy Dream",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Portrait"
+      ],
+      "file": "luts/original/hazy-dream.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.71,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.14
+      },
+      "tags": [
+        "sunny",
+        "hazy",
+        "soft",
+        "portrait"
+      ]
+    },
+    {
+      "id": "summer-pop",
+      "name": "Summer Pop",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Viral"
+      ],
+      "file": "luts/original/summer-pop.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.74,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.1
+      },
+      "tags": [
+        "sunny",
+        "summer",
+        "pop",
+        "bright"
+      ]
+    },
+    {
+      "id": "clean-bright",
+      "name": "Clean Bright",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Viral"
+      ],
+      "file": "luts/original/clean-bright.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.68,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "tags": [
+        "sunny",
+        "clean",
+        "bright",
+        "viral"
+      ]
+    },
+    {
+      "id": "morning-glow",
+      "name": "Morning Glow",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Portrait"
+      ],
+      "file": "luts/original/morning-glow.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.73,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.16
+      },
+      "tags": [
+        "sunny",
+        "morning",
+        "soft",
+        "portrait"
+      ]
+    },
+    {
+      "id": "sun-kissed",
+      "name": "Sun Kissed",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Portrait"
+      ],
+      "file": "luts/original/sun-kissed.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.75,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.12
+      },
+      "tags": [
+        "sunny",
+        "warm",
+        "portrait",
+        "golden"
+      ]
+    },
+    {
+      "id": "poolside-light",
+      "name": "Poolside Light",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny"
+      ],
+      "file": "luts/original/poolside-light.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.72,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "tags": [
+        "sunny",
+        "pool",
+        "bright",
+        "summer"
+      ]
+    },
+    {
+      "id": "lemonade-bright",
+      "name": "Lemonade Bright",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Viral"
+      ],
+      "file": "luts/original/lemonade-bright.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.7,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "tags": [
+        "sunny",
+        "bright",
+        "citrus",
+        "viral"
+      ]
+    },
+    {
+      "id": "beach-glow",
+      "name": "Beach Glow",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny"
+      ],
+      "file": "luts/original/beach-glow.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.76,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.18,
+        "grain": 0.06
+      },
+      "tags": [
+        "sunny",
+        "beach",
+        "golden",
+        "warm"
+      ]
+    },
+    {
+      "id": "soft-sunrise",
+      "name": "Soft Sunrise",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Portrait"
+      ],
+      "file": "luts/original/soft-sunrise.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.72,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "glow": 0.14
+      },
+      "tags": [
+        "sunny",
+        "sunrise",
+        "soft",
+        "portrait"
+      ]
+    },
+    {
+      "id": "patio-warmth",
+      "name": "Patio Warmth",
+      "packId": "sunny-starts",
+      "categories": [
+        "Sunny",
+        "Portrait"
+      ],
+      "file": "luts/original/patio-warmth.cube",
+      "cubeSize": 33,
+      "defaultStrength": 0.74,
+      "skinProtectionDefault": "medium",
+      "plan": "free",
+      "recommendedEffects": {
+        "grain": 0.08,
+        "glow": 0.1
+      },
+      "tags": [
+        "sunny",
+        "patio",
+        "warm",
+        "outdoor"
       ]
     }
   ]

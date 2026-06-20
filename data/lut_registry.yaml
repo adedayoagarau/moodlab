@@ -453,3 +453,285 @@ luts:
       defaultStrength: 0.8
       skinProtectionDefault: medium
       recommendedEffects: { sharpen: 0.1, grain: 0.08 }
+
+  # --- Cinematic batch (taxonomy: teal-orange, bleach-bypass, noir, anamorphic-flare, muted-blockbuster) ---
+
+  - id: teal-horizon
+    name: Teal Horizon
+    packId: dark-cinematic
+    categories: [Cinematic]
+    plan: free
+    tags: [cinematic, teal, orange, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.14, warmth: 0.1, saturation: 0.05 }
+    metadata:
+      defaultStrength: 0.79
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.14, grain: 0.08 }
+
+  - id: blockbuster-teal
+    name: Blockbuster Teal
+    packId: dark-cinematic
+    categories: [Cinematic, Music Cover]
+    plan: free
+    tags: [cinematic, teal, cover, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.16, warmth: 0.12, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.81
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.16, grain: 0.1 }
+
+  - id: bleach-bypass
+    name: Bleach Bypass
+    packId: dark-cinematic
+    categories: [Cinematic, Film]
+    plan: free
+    tags: [cinematic, bleach, gritty]
+    grade:
+      type: film_fade
+      params: { fade: 0.02, saturation: -0.18, contrast: 0.14, warmth: 0.02 }
+    metadata:
+      defaultStrength: 0.77
+      skinProtectionDefault: high
+      recommendedEffects: { grain: 0.16, vignette: 0.12 }
+
+  - id: silver-noir
+    name: Silver Noir
+    packId: dark-cinematic
+    categories: [Cinematic, Dark]
+    plan: free
+    tags: [cinematic, noir, dark, portrait]
+    grade:
+      type: cool_moody
+      params: { cool: 0.1, saturation: -0.14, lift: -0.04 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.2, grain: 0.12 }
+
+  - id: anamorphic-flare
+    name: Anamorphic Flare
+    packId: dark-cinematic
+    categories: [Cinematic]
+    plan: pro
+    tags: [cinematic, flare, warm, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.1, warmth: 0.14, saturation: 0.08 }
+    metadata:
+      defaultStrength: 0.78
+      skinProtectionDefault: high
+      recommendedEffects: { glow: 0.14, vignette: 0.1 }
+
+  - id: muted-blockbuster
+    name: Muted Blockbuster
+    packId: dark-cinematic
+    categories: [Cinematic]
+    plan: free
+    tags: [cinematic, muted, film]
+    grade:
+      type: film_fade
+      params: { fade: 0.04, saturation: -0.12, contrast: 0.08, warmth: 0.04 }
+    metadata:
+      defaultStrength: 0.76
+      skinProtectionDefault: high
+      recommendedEffects: { grain: 0.1, vignette: 0.14 }
+
+  - id: cinema-warm
+    name: Cinema Warm
+    packId: dark-cinematic
+    categories: [Cinematic, Portrait]
+    plan: free
+    tags: [cinematic, warm, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.08, warmth: 0.16, saturation: 0.04 }
+    metadata:
+      defaultStrength: 0.77
+      skinProtectionDefault: high
+      recommendedEffects: { glow: 0.1, grain: 0.08 }
+
+  - id: noir-shadow
+    name: Noir Shadow
+    packId: dark-cinematic
+    categories: [Cinematic, Dark]
+    plan: free
+    tags: [cinematic, noir, shadow, portrait]
+    grade:
+      type: cool_moody
+      params: { cool: 0.12, saturation: -0.1, lift: -0.05 }
+    metadata:
+      defaultStrength: 0.82
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.22, grain: 0.14 }
+
+  - id: teal-sunset
+    name: Teal Sunset
+    packId: dark-cinematic
+    categories: [Cinematic, Music Cover]
+    plan: pro
+    tags: [cinematic, teal, sunset, portrait]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.12, warmth: 0.14, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.8
+      skinProtectionDefault: high
+      recommendedEffects: { glow: 0.12, vignette: 0.12 }
+
+  - id: epic-scope
+    name: Epic Scope
+    packId: dark-cinematic
+    categories: [Cinematic]
+    plan: pro
+    tags: [cinematic, epic, wide]
+    grade:
+      type: cinematic_teal_orange
+      params: { teal: 0.15, warmth: 0.11, saturation: 0.07 }
+    metadata:
+      defaultStrength: 0.83
+      skinProtectionDefault: high
+      recommendedEffects: { vignette: 0.18, grain: 0.1 }
+
+  # --- Sunny batch (taxonomy: golden-hour, blue-sky, clean-bright, summer-pop, hazy-dream) ---
+
+  - id: hazy-dream
+    name: Hazy Dream
+    packId: sunny-starts
+    categories: [Sunny, Portrait]
+    plan: free
+    tags: [sunny, hazy, soft, portrait]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.06, lift: 0.05, saturation: -0.04 }
+    metadata:
+      defaultStrength: 0.71
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.14 }
+
+  - id: summer-pop
+    name: Summer Pop
+    packId: sunny-starts
+    categories: [Sunny, Viral]
+    plan: free
+    tags: [sunny, summer, pop, bright]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.08, lift: 0.06, saturation: 0.12 }
+    metadata:
+      defaultStrength: 0.74
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.1 }
+
+  - id: clean-bright
+    name: Clean Bright
+    packId: sunny-starts
+    categories: [Sunny, Viral]
+    plan: free
+    tags: [sunny, clean, bright, viral]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.04, lift: 0.05, saturation: 0.06 }
+    metadata:
+      defaultStrength: 0.68
+      skinProtectionDefault: medium
+
+  - id: morning-glow
+    name: Morning Glow
+    packId: sunny-starts
+    categories: [Sunny, Portrait]
+    plan: free
+    tags: [sunny, morning, soft, portrait]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.1, lift: 0.07, saturation: 0.04 }
+    metadata:
+      defaultStrength: 0.73
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.16 }
+
+  - id: sun-kissed
+    name: Sun Kissed
+    packId: sunny-starts
+    categories: [Sunny, Portrait]
+    plan: free
+    tags: [sunny, warm, portrait, golden]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.12, saturation: 0.06, lift: 0.04, skinProtection: 0.45 }
+    metadata:
+      defaultStrength: 0.75
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.12 }
+
+  - id: poolside-light
+    name: Poolside Light
+    packId: sunny-starts
+    categories: [Sunny]
+    plan: free
+    tags: [sunny, pool, bright, summer]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.05, lift: 0.08, saturation: 0.08 }
+    metadata:
+      defaultStrength: 0.72
+      skinProtectionDefault: medium
+
+  - id: lemonade-bright
+    name: Lemonade Bright
+    packId: sunny-starts
+    categories: [Sunny, Viral]
+    plan: free
+    tags: [sunny, bright, citrus, viral]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.07, lift: 0.09, saturation: 0.1 }
+    metadata:
+      defaultStrength: 0.7
+      skinProtectionDefault: medium
+
+  - id: beach-glow
+    name: Beach Glow
+    packId: sunny-starts
+    categories: [Sunny]
+    plan: free
+    tags: [sunny, beach, golden, warm]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.14, lift: 0.05, saturation: 0.08 }
+    metadata:
+      defaultStrength: 0.76
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.18, grain: 0.06 }
+
+  - id: soft-sunrise
+    name: Soft Sunrise
+    packId: sunny-starts
+    categories: [Sunny, Portrait]
+    plan: free
+    tags: [sunny, sunrise, soft, portrait]
+    grade:
+      type: skin_safe_portrait
+      params: { warmth: 0.1, saturation: 0.04, lift: 0.06, skinProtection: 0.4 }
+    metadata:
+      defaultStrength: 0.72
+      skinProtectionDefault: medium
+      recommendedEffects: { glow: 0.14 }
+
+  - id: patio-warmth
+    name: Patio Warmth
+    packId: sunny-starts
+    categories: [Sunny, Portrait]
+    plan: free
+    tags: [sunny, patio, warm, outdoor]
+    grade:
+      type: warm_glow
+      params: { warmth: 0.11, lift: 0.04, saturation: 0.05 }
+    metadata:
+      defaultStrength: 0.74
+      skinProtectionDefault: medium
+      recommendedEffects: { grain: 0.08, glow: 0.1 }
+

@@ -14,7 +14,7 @@ function validateAll(): Issue[] {
   const lutIdsByPack = new Map<string, string[]>();
   for (const lut of registry.luts) {
     const list = lutIdsByPack.get(lut.packId) ?? [];
-    list.push(lut.id);
+    if (!list.includes(lut.id)) list.push(lut.id);
     lutIdsByPack.set(lut.packId, list);
   }
 

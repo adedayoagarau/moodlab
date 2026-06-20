@@ -12,6 +12,14 @@ export function loadRegistry(path = REGISTRY_PATH): LutRegistry {
   if (!parsed.packs?.length || !parsed.luts?.length) {
     throw new Error('Invalid lut_registry.yaml: missing packs or luts');
   }
+
+  // Deduplicate by id (last entry wins) — guards against accidental duplicate YAML blocks
+  const byId = new Map<string, (typeof parsed.luts)[0]>();
+  for (const lut of parsed.luts) {
+    byId.set(lut.id, lut);
+  }
+  parsed.luts = [...byId.values()];
+
   return parsed;
 }
 

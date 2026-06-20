@@ -153,6 +153,6 @@ batchPlanning:
     - pnpm lut:sync-catalog
 
 currentScale:
-  luts: 20
+  luts: 51
   packs: 4
   target: 1000
