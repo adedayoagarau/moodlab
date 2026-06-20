@@ -883,7 +883,7 @@ luts:
     packId: creator-cover
     categories: [Film, Music Cover]
     plan: pro
-    tags: [film, kodak, gold, nostalgia]
+    tags: [film, kodak, gold, nostalgia, portrait]
     grade:
       type: film_fade
       params: { warmth: 0.12, fade: 0.08, saturation: -0.04 }
